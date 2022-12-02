@@ -7,22 +7,12 @@ void DynamicObject::setPosition(Vector2f position)
 
 void DynamicObject::setDirection(Direction direction)
 {
-	this->direction = direction;
-
 	if (this->direction == Direction::UP)
-	{
-		sprite.setRotation(0);
-	}
+		this->sprite.setTextureRect(IntRect(0, 0, this->w, this->h));
 	else if (this->direction == Direction::LEFT)
-	{
-		sprite.setRotation(270);
-	}
+		this->sprite.setTextureRect(IntRect(this->w * 1, 0, this->w, this->h));
 	else if (this->direction == Direction::DOWN)
-	{
-		sprite.setRotation(180);
-	}
+		this->sprite.setTextureRect(IntRect(this->w * 2, 0, this->w, this->h));
 	else if (this->direction == Direction::RIGHT)
-	{
-		sprite.setRotation(90);
-	}
+		this->sprite.setTextureRect(IntRect(this->w * 3, 0, this->w, this->h));
 }

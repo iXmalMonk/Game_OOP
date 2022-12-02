@@ -5,7 +5,7 @@
 
 class Tank : public DynamicObject
 {
-	
+
 };
 
 #endif // !_TANK_H

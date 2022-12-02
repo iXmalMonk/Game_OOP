@@ -2,10 +2,9 @@
 #define _GAMEOBJECT_H
 
 #include <SFML/Graphics.hpp>
-#include <iostream>
+#include "Main.h"
 
 using namespace sf;
-using namespace std;
 
 class GameObject
 {
@@ -13,6 +12,7 @@ protected:
 	Vector2f position;
 	Texture texture;
 	Sprite sprite;
+	int w, h;
 
 public:
 	virtual void update(float time) = 0;

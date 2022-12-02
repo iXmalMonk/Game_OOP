@@ -7,7 +7,7 @@ class Player : public Tank
 {
 public:
 	Player();
-	void update(float time);
+	void update(float time) override;
 };
 
 #endif // !_PLAYER_H

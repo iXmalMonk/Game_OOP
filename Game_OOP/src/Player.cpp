@@ -2,11 +2,13 @@
 
 Player::Player()
 {
-	this->position.x = 320;
-	this->position.y = 240;
+	this->position.x = WINDOW_W / 2;
+	this->position.y = WINDOW_H / 2;
 	this->texture.loadFromFile("png/playerTank.png");
 	this->sprite.setTexture(this->texture);
-	this->velocity = 0.015;
+	this->w = 64;
+	this->h = 64;
+	this->velocity = 0.01;
 	this->direction = Direction::UP;
 }
 
@@ -14,20 +16,25 @@ void Player::update(float time)
 {
 	if (Keyboard::isKeyPressed(Keyboard::W))
 	{
-		setDirection(Direction::UP);
+		this->direction = Direction::UP;
+		this->position.y -= this->velocity * time;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::A))
+	else if (Keyboard::isKeyPressed(Keyboard::A))
 	{
-		setDirection(Direction::LEFT);
+		this->direction = Direction::LEFT;
+		this->position.x -= this->velocity * time;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::S))
+	else if (Keyboard::isKeyPressed(Keyboard::S))
 	{
-		setDirection(Direction::DOWN);
+		this->direction = Direction::DOWN;
+		this->position.y += this->velocity * time;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::D))
+	else if (Keyboard::isKeyPressed(Keyboard::D))
 	{
-		setDirection(Direction::RIGHT);
+		this->direction = Direction::RIGHT;
+		this->position.x += this->velocity * time;
 	}
 
-	setPosition(position);
+	setDirection(this->direction);
+	setPosition(this->position);
 }
