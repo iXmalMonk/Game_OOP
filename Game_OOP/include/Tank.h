@@ -5,7 +5,8 @@
 
 class Tank : public DynamicObject
 {
-
+protected:
+	int healthPoints;
 };
 
 #endif // !_TANK_H

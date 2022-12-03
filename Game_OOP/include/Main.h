@@ -1,8 +1,13 @@
 #ifndef _MAIN_H
 #define _MAIN_H
 
-#define WINDOW_W 1920
-#define WINDOW_H 1080
+#include <list>
+
+using namespace std;
+
+#define WINDOW_W 1280
+#define WINDOW_H 720
+#define WINDOW_TITLE "Game"
 
 #define FPS 60
 

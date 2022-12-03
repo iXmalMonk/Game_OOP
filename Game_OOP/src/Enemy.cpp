@@ -10,6 +10,7 @@ Enemy::Enemy()
 	this->h = 64;
 	this->velocity = 0.01;
 	this->direction = Direction::DOWN;
+	this->healthPoints = 100;
 }
 
 void Enemy::update(float time)
