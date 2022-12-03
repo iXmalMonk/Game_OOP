@@ -8,6 +8,29 @@ using namespace sf;
 
 class GameObject
 {
+// ------------------------------
+public:
+	enum class MessageType {Create, Death};
+
+	struct Message
+	{
+		MessageType messageType;
+		GameObject* gameObject;
+
+		union
+		{
+			struct 
+			{
+				GameObject* object;
+			} create;
+
+			struct
+			{
+				GameObject* object;
+			} death;
+		};
+	};
+// ------------------------------
 protected:
 	Vector2f position;
 	Texture texture;

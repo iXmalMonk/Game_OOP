@@ -1,8 +1,7 @@
-#include "../include/Game.h"
+#include "..\include\Game.h"
 
 int main()
 {
-	Game game;
-	game.entry();
-	return game.exit();
+	const auto game = (new Game)->entry();
+	return game->exit() ? 0 : 1;
 }

@@ -1,13 +1,13 @@
 #include "..\include\Game.h"
 
-Game::Game() : time(0)
+Game::Game() : time(0), installed(false), uninstalled(true)
 {
 	this->window = nullptr;
 	this->event = nullptr;
 	this->clock = nullptr;
 }
 
-void Game::install()
+bool Game::install()
 {
 	if (this->window == nullptr)
 		this->window = new RenderWindow(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
@@ -21,9 +21,13 @@ void Game::install()
 	this->gameObjects.push_back(new Player);
 	this->gameObjects.push_back(new Enemy);
 	this->gameObjects.push_back(new Projectile);
+
+	this->uninstalled = false;
+
+	return true;
 }
 
-void Game::uninstall()
+bool Game::uninstall()
 {
 	delete this->window;
 	delete this->event;
@@ -33,12 +37,22 @@ void Game::uninstall()
 	this->event = nullptr;
 	this->clock = nullptr;
 
+	for (auto gameObject : this->gameObjects)
+		delete gameObject;
+
 	this->gameObjects.clear();
+
+	this->installed = false;
+
+	return true;
 }
 
-void Game::entry()
+Game* Game::entry()
 {
-	this->install();
+	if (!this->installed)
+		this->installed = this->install();
+	else
+		this->window->create(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
 
 	while (this->window->isOpen())
 	{
@@ -51,24 +65,39 @@ void Game::entry()
 		this->time = (*this->clock).getElapsedTime().asMicroseconds() / FPS;
 		(*this->clock).restart();
 
-		for (auto gameObject : gameObjects)
+		for (auto gameObject : this->gameObjects)
 			gameObject->update(time);
+
+		// ------------------------------
+		for (auto message : this->messages)
+		{
+			switch (message->messageType)
+			{
+			case GameObject::MessageType::Create:
+				this->gameObjects.push_back(message->create.object);
+				break;
+
+			case GameObject::MessageType::Death:
+				auto object = find(this->gameObjects.begin(), this->gameObjects.end(), message->death.object);
+				delete* object;
+				this->gameObjects.erase(object);
+				break;
+			}
+		}
+		// ------------------------------
 
 		this->window->clear();
 
-		for (auto gameObject : gameObjects)
+		for (auto gameObject : this->gameObjects)
 			this->window->draw(gameObject->getSprite());
 
 		this->window->display();
 	}
 
-	this->uninstall();
+	return this;
 }
 
-int Game::exit()
+bool Game::exit()
 {
-	return (this->window == nullptr and
-		this->event == nullptr and
-		this->clock == nullptr and
-		this->gameObjects.empty()) ? 0 : 1;
+	return !this->uninstalled ? this->uninstalled = this->uninstall() : !this->uninstalled;
 }
