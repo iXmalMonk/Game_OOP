@@ -21,11 +21,9 @@ private:
 public:
 	static Game* create();
 	static Game* destroy();
-
 	Game* entry();
 	bool exit();
-
-	void receiveMessage(GameObject::Message* message);
+	void receiveMessage(GameObject::Message* _message);
 };
 
 #endif // !_GAME_H

@@ -61,7 +61,7 @@ bool Game::exit()
 	return !instance ? true : false;
 }
 
-void Game::receiveMessage(GameObject::Message* message)
+void Game::receiveMessage(GameObject::Message* _message)
 {
-	messages.push_back(message);
+	messages.push_back(_message);
 }

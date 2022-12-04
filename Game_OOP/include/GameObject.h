@@ -26,10 +26,11 @@ protected:
 
 public:
 	GameObject();
+	void sendMessage(Message* _message);
+	Sprite getSprite();
+	void setPosition(Vector2f _position);
 
-	void sendMessage(Message* message);
-
-	virtual void update(float time) = 0;
+	virtual void update(float _time) = 0;
 };
 
 #endif // !_GAMEOBJECT_H
