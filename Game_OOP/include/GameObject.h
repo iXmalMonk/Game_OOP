@@ -11,9 +11,18 @@ struct Game; //
 class GameObject
 {
 public:
+	enum class MessageType { SHOOT };
+
 	struct Message
 	{
+		Message(MessageType _messageType, GameObject* _gameObject)
+		{
+			messageType = _messageType;
+			gameObject = _gameObject;
+		}
 
+		MessageType messageType;
+		GameObject* gameObject;
 	};
 
 protected:

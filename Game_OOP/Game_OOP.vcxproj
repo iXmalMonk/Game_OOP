@@ -23,12 +23,14 @@
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Main.h" />
+    <ClInclude Include="include\Tank.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\DynamicObject.cpp" />
     <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\GameObject.cpp" />
     <ClCompile Include="source\Main.cpp" />
+    <ClCompile Include="source\Tank.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
