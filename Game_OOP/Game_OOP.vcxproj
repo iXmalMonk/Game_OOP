@@ -18,6 +18,16 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\Main.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Game.cpp" />
+    <ClCompile Include="source\GameObject.cpp" />
+    <ClCompile Include="source\Main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -144,26 +154,6 @@
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="src\DynamicObject.cpp" />
-    <ClCompile Include="src\Enemy.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
-    <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\Projectile.cpp" />
-    <ClCompile Include="src\Tank.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\DynamicObject.h" />
-    <ClInclude Include="include\Enemy.h" />
-    <ClInclude Include="include\Game.h" />
-    <ClInclude Include="include\GameObject.h" />
-    <ClInclude Include="include\Main.h" />
-    <ClInclude Include="include\Player.h" />
-    <ClInclude Include="include\Projectile.h" />
-    <ClInclude Include="include\Tank.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

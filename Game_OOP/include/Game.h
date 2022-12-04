@@ -2,23 +2,18 @@
 #define _GAME_H
 
 #include "GameObject.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Projectile.h"
 
 class Game
 {
 private:
 	static Game* instance;
-
+	
+	Clock* clock;
+	Event* event;
 	RenderWindow* window;
 
-	Event* event;
-
-	Clock* clock;
 	float time;
 
-	list<GameObject*> gameObjects;
 	list<GameObject::Message*> messages;
 
 	Game();
