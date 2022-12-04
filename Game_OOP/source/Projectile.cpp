@@ -1,32 +1,41 @@
 #include "..\include\Projectile.h"
 
-Projectile::Projectile(Vector2f _position, Direction _direction)
+Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h)
 {
 	w = 16;
 	h = 16;
-	if (_direction == Direction::UP)
+
+	switch (_direction)
 	{
-		position.x = _position.x + w + w / 2;
-		position.y = _position.y - h;
+	case Direction::UP:
+		//position.x = _position.x + w + w / 2;
+		//position.y = _position.y - h;
+		position.x = _position.x + (_w / (_w / w)) + (_w / (_w / w) / 2);
+		position.y = _position.y - (_h / (_h / h));
+		break;
+	case Direction::DOWN:
+		//position.x = _position.x + w + w / 2;
+		//position.y = _position.y + h * 4;
+		position.x = _position.x + (_w / (_w / w)) + (_w / (_w / w) / 2);
+		position.y = _position.y + _h;
+		break;
+	case Direction::LEFT:
+		//position.x = _position.x - w;
+		//position.y = _position.y + h + h / 2;
+		position.x = _position.x - (_w / (_w / w));
+		position.y = _position.y + (_h / (_h / h)) + (_h / (_h / h) / 2);
+		break;
+	case Direction::RIGHT:
+		//position.x = _position.x + w * 4;
+		//position.y = _position.y + h + h / 2;
+		position.x = _position.x + _w;
+		position.y = _position.y + (_h / (_h / h)) + (_h / (_h / h) / 2);
+		break;
 	}
-	else if (_direction == Direction::DOWN)
-	{
-		position.x = _position.x + w + w / 2;
-		position.y = _position.y + h * 4;
-	}
-	else if (_direction == Direction::LEFT)
-	{
-		position.x = _position.x - w;
-		position.y = _position.y + h + h / 2;
-	}
-	else if (_direction == Direction::RIGHT)
-	{
-		position.x = _position.x + w * 4;
-		position.y = _position.y + h + h / 2;
-	}
+
 	texture.loadFromFile("png/projectile.png");
 	sprite.setTexture(texture);
-	velocity = 0.015;
+	velocity = 0.03;
 	direction = _direction;
 
 	setPosition(position);
@@ -35,14 +44,21 @@ Projectile::Projectile(Vector2f _position, Direction _direction)
 
 void Projectile::update(float _time)
 {
-	if (direction == Direction::UP)
+	switch (direction)
+	{
+	case Direction::UP:
 		position.y -= velocity * _time;
-	if (direction == Direction::LEFT)
-		position.x -= velocity * _time;
-	if (direction == Direction::DOWN)
+		break;
+	case Direction::DOWN:
 		position.y += velocity * _time;
-	if (direction == Direction::RIGHT)
+		break;
+	case Direction::LEFT:
+		position.x -= velocity * _time;
+		break;
+	case Direction::RIGHT:
 		position.x += velocity * _time;
+		break;
+	}
 
 	if (position.x + w >= WINDOW_W)
 		sendMessage(new Message(MessageType::DESTROY, this));

@@ -31,19 +31,34 @@ Vector2f GameObject::getPosition()
 
 void GameObject::setDirection()
 {
-	if (direction == Direction::NONE)
-		return;
-	if (direction == Direction::UP)
+	switch (direction)
+	{
+	case Direction::UP:
 		sprite.setTextureRect(IntRect(0, 0, w, h));
-	else if (direction == Direction::DOWN)
+		break;
+	case Direction::DOWN:
 		sprite.setTextureRect(IntRect(w * 2, 0, w, h));
-	else if (direction == Direction::LEFT)
+		break;
+	case Direction::LEFT:
 		sprite.setTextureRect(IntRect(w * 1, 0, w, h));
-	else if (direction == Direction::RIGHT)
+		break;
+	case Direction::RIGHT:
 		sprite.setTextureRect(IntRect(w * 3, 0, w, h));
+		break;
+	}
 }
 
 GameObject::Direction GameObject::getDirection()
 {
 	return direction;
+}
+
+int GameObject::getW()
+{
+	return w;
+}
+
+int GameObject::getH()
+{
+	return h;
 }

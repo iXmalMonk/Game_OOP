@@ -18,6 +18,10 @@ Game::~Game()
 	for (auto object : gameObjects)
 		delete object;
 	gameObjects.clear();
+
+	for (auto message : messages)
+		delete message;
+	messages.clear();
 }
 
 Game* Game::create()
@@ -60,7 +64,11 @@ Game* Game::entry()
 			switch (message->messageType)
 			{
 			case GameObject::MessageType::SHOOT:
-				gameObjects.push_back(new Projectile(message->gameObject->getPosition(), message->gameObject->getDirection()));
+				gameObjects.push_back(new Projectile(
+					message->gameObject->getPosition(),
+					message->gameObject->getDirection(),
+					message->gameObject->getW(),
+					message->gameObject->getH()));
 				delete message;
 				cout << "SHOOT" << endl;
 				break;
@@ -72,7 +80,6 @@ Game* Game::entry()
 				cout << "DESTROY" << endl;
 				break;
 			}
-			
 		}
 		messages.clear();
 

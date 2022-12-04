@@ -6,7 +6,7 @@
 class Projectile : public DynamicObject
 {
 public:
-	Projectile(Vector2f _position, Direction _direction);
+	Projectile(Vector2f _position, Direction _direction, int _w, int _h);
 	void update(float _time) override;
 };
 

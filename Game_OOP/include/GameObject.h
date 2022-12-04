@@ -44,6 +44,8 @@ public:
 	Vector2f getPosition();
 	void setDirection();
 	Direction getDirection();
+	int getW();
+	int getH();
 
 	virtual void update(float _time) = 0;
 };
