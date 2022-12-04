@@ -5,7 +5,12 @@
 
 class Tank : public DynamicObject
 {
+private:
+	float cooldown;
+	float cooldownTime;
 public:
+	Tank();
+	bool readyToShoot(float _time);
 	void shoot();
 };
 

@@ -17,7 +17,7 @@ Player::Player()
 
 void Player::update(float _time)
 {
-	if (Keyboard::isKeyPressed(Keyboard::Space))
+	if (readyToShoot(_time) and Keyboard::isKeyPressed(Keyboard::Space))
 		shoot();
 
 	if (Keyboard::isKeyPressed(Keyboard::W))
