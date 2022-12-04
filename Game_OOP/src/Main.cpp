@@ -2,6 +2,6 @@
 
 int main()
 {
-	const auto game = (new Game)->entry();
-	return game->exit() ? 0 : 1;
+	const auto game = Game::create()->entry();
+	return game->destroy()->exit() ? 0 : 1;
 }

@@ -10,6 +10,8 @@ Projectile::Projectile()
 	this->h = 16;
 	this->velocity = 0.05;
 	this->direction = Direction::DOWN;
+	setDirection(this->direction);
+	setPosition(this->position);
 	this->damage = 50;
 }
 
@@ -24,6 +26,5 @@ void Projectile::update(float time)
 	if (this->direction == Direction::RIGHT)
 		this->position.x += this->velocity * time;
 
-	setDirection(this->direction);
 	setPosition(this->position);
 }

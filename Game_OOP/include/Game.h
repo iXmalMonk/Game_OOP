@@ -1,14 +1,16 @@
 #ifndef _GAME_H
 #define _GAME_H
 
-#include "..\include\GameObject.h"
-#include "..\include\Player.h"
-#include "..\include\Enemy.h"
-#include "..\include\Projectile.h"
+#include "GameObject.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Projectile.h"
 
 class Game
 {
 private:
+	static Game* instance;
+
 	RenderWindow* window;
 
 	Event* event;
@@ -17,20 +19,18 @@ private:
 	float time;
 
 	list<GameObject*> gameObjects;
-
-	// ------------------------------
 	list<GameObject::Message*> messages;
-	// ------------------------------
 
-	bool installed;
-	bool uninstalled;
-
-	bool install();
-	bool uninstall();
-public:
 	Game();
+	~Game();
+public:
+	static Game* create();
+	static Game* destroy();
+
 	Game* entry();
 	bool exit();
+
+	void receiveMessage(GameObject::Message* message);
 };
 
 #endif // !_GAME_H
