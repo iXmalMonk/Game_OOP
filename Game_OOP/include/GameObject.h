@@ -11,8 +11,9 @@ struct Game; //
 class GameObject
 {
 public:
-	enum class MessageType { SHOOT };
-
+	enum class MessageType { SHOOT, DESTROY };
+	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
+	
 	struct Message
 	{
 		Message(MessageType _messageType, GameObject* _gameObject)
@@ -31,6 +32,8 @@ protected:
 	Sprite sprite;
 	int w, h;
 
+	Direction direction;
+
 	static Game* instance; //
 
 public:
@@ -38,6 +41,9 @@ public:
 	void sendMessage(Message* _message);
 	Sprite getSprite();
 	void setPosition(Vector2f _position);
+	Vector2f getPosition();
+	void setDirection();
+	Direction getDirection();
 
 	virtual void update(float _time) = 0;
 };

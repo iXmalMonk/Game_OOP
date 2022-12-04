@@ -4,7 +4,7 @@
 
 Game* GameObject::instance = nullptr; //
 
-GameObject::GameObject() : position(), texture(), sprite(), w(0), h(0)
+GameObject::GameObject() : position(), texture(), sprite(), w(0), h(0), direction(Direction::NONE)
 {
 	instance = Game::create(); //
 }
@@ -22,4 +22,28 @@ Sprite GameObject::getSprite()
 void GameObject::setPosition(Vector2f _position)
 {
 	sprite.setPosition(_position);
+}
+
+Vector2f GameObject::getPosition()
+{
+	return position;
+}
+
+void GameObject::setDirection()
+{
+	if (direction == Direction::NONE)
+		return;
+	if (direction == Direction::UP)
+		sprite.setTextureRect(IntRect(0, 0, w, h));
+	else if (direction == Direction::DOWN)
+		sprite.setTextureRect(IntRect(w * 2, 0, w, h));
+	else if (direction == Direction::LEFT)
+		sprite.setTextureRect(IntRect(w * 1, 0, w, h));
+	else if (direction == Direction::RIGHT)
+		sprite.setTextureRect(IntRect(w * 3, 0, w, h));
+}
+
+GameObject::Direction GameObject::getDirection()
+{
+	return direction;
 }

@@ -14,6 +14,10 @@ Game::~Game()
 	delete clock;
 	delete event;
 	delete window;
+
+	for (auto object : gameObjects)
+		delete object;
+	gameObjects.clear();
 }
 
 Game* Game::create()
@@ -37,6 +41,8 @@ Game* Game::destroy()
 
 Game* Game::entry()
 {
+	gameObjects.push_back(new Player);
+
 	if (!window->isOpen())
 		window->create(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
 
@@ -49,7 +55,35 @@ Game* Game::entry()
 		time = clock->getElapsedTime().asMicroseconds() / FPS;
 		clock->restart();
 
+		for (auto message : messages)
+		{
+			switch (message->messageType)
+			{
+			case GameObject::MessageType::SHOOT:
+				gameObjects.push_back(new Projectile(message->gameObject->getPosition(), message->gameObject->getDirection()));
+				delete message;
+				cout << "SHOOT" << endl;
+				break;
+			case GameObject::MessageType::DESTROY:
+				auto object = find(gameObjects.begin(), gameObjects.end(), message->gameObject);
+				delete* object;
+				gameObjects.erase(object);
+				delete message;
+				cout << "DESTROY" << endl;
+				break;
+			}
+			
+		}
+		messages.clear();
+
+		for (auto object : gameObjects)
+			object->update(time);
+
 		window->clear();
+
+		for (auto object : gameObjects)
+			window->draw(object->getSprite());
+
 		window->display();
 	}
 

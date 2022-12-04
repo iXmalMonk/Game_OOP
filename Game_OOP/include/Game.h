@@ -2,6 +2,8 @@
 #define _GAME_H
 
 #include "GameObject.h"
+#include "Player.h"
+#include "Projectile.h"
 
 class Game
 {
@@ -14,6 +16,7 @@ private:
 
 	float time;
 
+	list<GameObject*> gameObjects;
 	list<GameObject::Message*> messages;
 
 	Game();

@@ -1,7 +1,8 @@
 #ifndef _MAIN_H
 #define _MAIN_H
 
-#include<list>
+#include <iostream>
+#include <list>
 using namespace std;
 
 #define WINDOW_W 640
