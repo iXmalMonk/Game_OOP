@@ -1,17 +1,13 @@
 #include "..\include\GameObject.h"
 
-#include "..\include\Game.h" //
-
-Game* GameObject::instance = nullptr; //
-
-GameObject::GameObject() : position(), texture(), sprite(), w(0), h(0), direction(Direction::NONE)
-{
-	instance = Game::create(); //
-}
-
 void GameObject::sendMessage(Message* _message)
 {
-	instance->receiveMessage(_message);
+	messages.push_back(_message);
+}
+
+list<GameObject::Message*> GameObject::getMessages()
+{
+	return messages;
 }
 
 Sprite GameObject::getSprite()

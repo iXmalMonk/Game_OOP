@@ -15,8 +15,8 @@ Game::~Game()
 	delete event;
 	delete window;
 
-	for (auto object : gameObjects)
-		delete object;
+	for (auto gameObject : gameObjects)
+		delete gameObject;
 	gameObjects.clear();
 
 	for (auto message : messages)
@@ -59,6 +59,8 @@ Game* Game::entry()
 		time = clock->getElapsedTime().asMicroseconds() / FPS;
 		clock->restart();
 
+		receiveMessage();
+
 		for (auto message : messages)
 		{
 			switch (message->messageType)
@@ -83,13 +85,13 @@ Game* Game::entry()
 		}
 		messages.clear();
 
-		for (auto object : gameObjects)
-			object->update(time);
+		for (auto gameObject : gameObjects)
+			gameObject->update(time);
 
 		window->clear();
 
-		for (auto object : gameObjects)
-			window->draw(object->getSprite());
+		for (auto gameObject : gameObjects)
+			window->draw(gameObject->getSprite());
 
 		window->display();
 	}
@@ -102,7 +104,9 @@ bool Game::exit()
 	return !instance ? true : false;
 }
 
-void Game::receiveMessage(GameObject::Message* _message)
+void Game::receiveMessage()
 {
-	messages.push_back(_message);
+	for (auto gameObject : gameObjects)
+		for (auto gameMessage : gameObject->getMessages())
+			messages.push_back(gameMessage);
 }
