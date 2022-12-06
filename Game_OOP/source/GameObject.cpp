@@ -1,8 +1,8 @@
 #include "..\include\GameObject.h"
 
-void GameObject::sendMessage(Message* _message)
+void GameObject::sendMessage(MessageType _messageType)
 {
-	messages.push_back(_message);
+	messages.push_back(new Message(_messageType, this));
 }
 
 list<GameObject::Message*> GameObject::getMessages()

@@ -36,7 +36,7 @@ protected:
 	Direction direction;
 
 public:
-	void sendMessage(Message* _message);
+	void sendMessage(MessageType _messageType);
 	list<Message*> getMessages();
 	Sprite getSprite();
 	void setPosition(Vector2f _position);
