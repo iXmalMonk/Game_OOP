@@ -8,6 +8,7 @@ class Player : public Tank
 public:
 	Player();
 	void update(float time) override;
+	void receiveMessage(Message* _message) override;
 };
 
 #endif // !_PLAYER_H

@@ -9,7 +9,7 @@ GameObject::GameObject() : position(), texture(), sprite(), w(0), h(0), gameObje
 	instance = Game::getInstance();
 }
 
-void GameObject::sendMessage(Message* _message)
+void GameObject::sendMessageInGame(Message* _message)
 {
 	instance->receiveMessage(_message);
 }
@@ -27,6 +27,16 @@ void GameObject::setPosition(Vector2f _position)
 Vector2f GameObject::getPosition()
 {
 	return position;
+}
+
+float GameObject::getX()
+{
+	return position.x;
+}
+
+float GameObject::getY()
+{
+	return position.y;
 }
 
 void GameObject::setDirection()
@@ -61,4 +71,9 @@ int GameObject::getW()
 int GameObject::getH()
 {
 	return h;
+}
+
+GameObject::GameObjectType GameObject::getGameObjectType()
+{
+	return gameObjectType;
 }

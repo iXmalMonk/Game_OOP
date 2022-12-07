@@ -54,6 +54,13 @@ void Player::update(float _time)
 			position.x = WINDOW_W - w;
 	}
 
+	sendMessageInGame(new Message(MessageType::MOVE, this, getPosition()));
 	setPosition(position);
 	setDirection();
+}
+
+void Player::receiveMessage(Message* _message)
+{
+	if (_message->gameObject->getGameObjectType() == GameObjectType::PROJECTILE)
+		cout << "Projectile: X = " << _message->gameObject->getX() << " Y = " << _message->gameObject->getY() << endl;
 }

@@ -26,6 +26,7 @@ public:
 	Game* entry();
 	bool exit();
 
+	void sendMessageInGameObject(GameObject::Message* _message, GameObject* _gameObject);
 	void receiveMessage(GameObject::Message* _message);
 };
 
