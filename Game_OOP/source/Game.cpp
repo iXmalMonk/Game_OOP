@@ -55,8 +55,12 @@ Game* Game::entry()
 		for (auto message : messages)
 		{
 			if (message->messageType == GameObject::MessageType::MOVE)
+			{
 				for (auto gameObject : gameObjects)
 					sendMessageInGameObject(message, gameObject);
+				delete message;
+				continue;
+			}
 
 			switch (message->messageType)
 			{
@@ -65,21 +69,18 @@ Game* Game::entry()
 					message->gameObject->getPosition(),
 					message->gameObject->getDirection(),
 					message->gameObject->getW(),
-					message->gameObject->getH()));
+					message->gameObject->getH(),
+					message->gameObject->getGameObjectType()));
 				delete message;
-				cout << "SHOOT" << endl;
+				//cout << "SHOOT" << endl;
 				break;
 			case GameObject::MessageType::DESTROY:
 				auto object = find(gameObjects.begin(), gameObjects.end(), message->gameObject);
 				delete* object;
 				gameObjects.erase(object);
 				delete message;
-				cout << "DESTROY" << endl;
+				//cout << "DESTROY" << endl;
 				break;
-			//case GameObject::MessageType::MOVE:
-			//	for (auto gameObject : gameObjects)
-			//		sendMessageInGameObject(message, gameObject);
-			//	break;
 			}
 		}
 		messages.clear();

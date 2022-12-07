@@ -1,6 +1,6 @@
 #include "..\include\Projectile.h"
 
-Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h)
+Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h, GameObjectType _gameObjectTypeWhoShooted)
 {
 	w = 16;
 	h = 16;
@@ -38,6 +38,7 @@ Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h)
 	velocity = 0.03;
 	direction = _direction;
 	gameObjectType = GameObjectType::PROJECTILE;
+	gameObjectTypeWhoShooted = _gameObjectTypeWhoShooted;
 
 	setPosition(position);
 	setDirection();
@@ -76,8 +77,31 @@ void Projectile::update(float _time)
 
 void Projectile::receiveMessage(Message* _message)
 {
-	if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
-		cout << "Projectile - Player: X = " << _message->gameObject->getX() << " Y = " << _message->gameObject->getY() << endl;
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY)
-		cout << "Projectile - Enemy: X = " << _message->gameObject->getX() << " Y = " << _message->gameObject->getY() << endl;
+	if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER and gameObjectTypeWhoShooted == GameObjectType::ENEMY)
+	{
+		if ((position.y + h) >= _message->gameObject->getY() and
+			position.y <= (_message->gameObject->getY() + _message->gameObject->getH()) and
+			(position.x + w) >= _message->gameObject->getX() and
+			position.x <= (_message->gameObject->getX() + _message->gameObject->getW()))
+		{
+			sendMessageInGame(new Message(MessageType::DESTROY, this));
+			cout << "Enemy hit the player" << endl;
+		}
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and gameObjectTypeWhoShooted == GameObjectType::PLAYER)
+	{
+		if ((position.y + h) >= _message->gameObject->getY() and
+			position.y <= (_message->gameObject->getY() + _message->gameObject->getH()) and
+			(position.x + w) >= _message->gameObject->getX() and
+			position.x <= (_message->gameObject->getX() + _message->gameObject->getW()))
+		{
+			sendMessageInGame(new Message(MessageType::DESTROY, this));
+			cout << "Player hit the enemy" << endl;
+		}
+	}
+}
+
+GameObject::GameObjectType Projectile::getGameObjectTypeWhoShooted()
+{
+	return gameObjectTypeWhoShooted;
 }

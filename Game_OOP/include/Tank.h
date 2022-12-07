@@ -6,6 +6,7 @@
 class Tank : public DynamicObject
 {
 private:
+	int healthPoints;
 	float cooldown;
 	float cooldownTime;
 public:

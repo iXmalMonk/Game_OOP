@@ -1,6 +1,6 @@
 #include "..\include\Tank.h"
 
-Tank::Tank() : cooldown(15000), cooldownTime(cooldown) {}
+Tank::Tank() : healthPoints(100), cooldown(15000), cooldownTime(cooldown) {}
 
 bool Tank::readyToShoot(float _time)
 {
