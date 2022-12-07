@@ -7,6 +7,7 @@ class Projectile : public DynamicObject
 {
 private:
 	GameObjectType gameObjectTypeWhoShooted;
+	bool checkCollisionProjectileWithGameObject(GameObject* _gameObject);
 public:
 	Projectile(Vector2f _position, Direction _direction, int _w, int _h, GameObjectType _gameObjectTypeWhoShooted);
 	void update(float _time) override;
