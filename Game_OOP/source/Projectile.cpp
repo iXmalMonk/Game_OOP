@@ -37,6 +37,7 @@ Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h)
 	sprite.setTexture(texture);
 	velocity = 0.03;
 	direction = _direction;
+	gameObjectType = GameObjectType::PROJECTILE;
 
 	setPosition(position);
 	setDirection();

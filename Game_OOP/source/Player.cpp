@@ -10,6 +10,7 @@ Player::Player()
 	sprite.setTexture(texture);
 	velocity = 0.01;
 	direction = Direction::UP;
+	gameObjectType = GameObjectType::PLAYER;
 
 	setPosition(position);
 	setDirection();

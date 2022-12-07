@@ -13,7 +13,8 @@ class GameObject
 public:
 	enum class MessageType { SHOOT, DESTROY };
 	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
-	
+	enum class GameObjectType { PLAYER, PROJECTILE, NONE };
+
 	struct Message
 	{
 		Message(MessageType _messageType, GameObject* _gameObject)
@@ -33,6 +34,7 @@ protected:
 	int w, h;
 
 	Direction direction;
+	GameObjectType gameObjectType;
 
 	static Game* instance;
 
@@ -46,7 +48,7 @@ public:
 	Direction getDirection();
 	int getW();
 	int getH();
-
+	
 	virtual void update(float _time) = 0;
 };
 

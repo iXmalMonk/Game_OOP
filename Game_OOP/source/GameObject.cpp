@@ -4,7 +4,7 @@
 
 Game* GameObject::instance = nullptr;
 
-GameObject::GameObject() : position(), texture(), sprite(), w(0), h(0), direction(Direction::NONE)
+GameObject::GameObject() : position(), texture(), sprite(), w(0), h(0), gameObjectType(GameObjectType::NONE), direction(Direction::NONE)
 {
 	instance = Game::getInstance();
 }
