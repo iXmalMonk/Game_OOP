@@ -8,7 +8,7 @@ Player::Player()
 	position.y = WINDOW_H / 2;
 	texture.loadFromFile("png/playerTank.png");
 	sprite.setTexture(texture);
-	velocity = 0.01;
+	velocity = 0.015;
 	direction = Direction::UP;
 	gameObjectType = GameObjectType::PLAYER;
 
@@ -62,5 +62,7 @@ void Player::update(float _time)
 void Player::receiveMessage(Message* _message)
 {
 	if (_message->gameObject->getGameObjectType() == GameObjectType::PROJECTILE)
-		cout << "Projectile: X = " << _message->gameObject->getX() << " Y = " << _message->gameObject->getY() << endl;
+		cout << "Player - Projectile: X = " << _message->gameObject->getX() << " Y = " << _message->gameObject->getY() << endl;
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY)
+		cout << "Player - Enemy: X = " << _message->gameObject->getX() << " Y = " << _message->gameObject->getY() << endl;
 }

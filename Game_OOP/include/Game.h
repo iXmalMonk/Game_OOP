@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Projectile.h"
 
 class Game

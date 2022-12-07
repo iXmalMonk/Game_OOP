@@ -35,6 +35,7 @@ Game* Game::getInstance()
 Game* Game::entry()
 {
 	gameObjects.push_back(new Player);
+	gameObjects.push_back(new Enemy);
 
 	if (!window->isOpen())
 		window->create(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);

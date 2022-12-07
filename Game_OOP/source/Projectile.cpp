@@ -77,5 +77,7 @@ void Projectile::update(float _time)
 void Projectile::receiveMessage(Message* _message)
 {
 	if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
-		cout << "Player: X = " << _message->gameObject->getX() << " Y = " << _message->gameObject->getY() << endl;
+		cout << "Projectile - Player: X = " << _message->gameObject->getX() << " Y = " << _message->gameObject->getY() << endl;
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY)
+		cout << "Projectile - Enemy: X = " << _message->gameObject->getX() << " Y = " << _message->gameObject->getY() << endl;
 }
