@@ -24,21 +24,10 @@ Game::~Game()
 	messages.clear();
 }
 
-Game* Game::create()
+Game* Game::getInstance()
 {
 	if (!instance)
 		instance = new Game;
-
-	return instance;
-}
-
-Game* Game::destroy()
-{
-	if (instance)
-	{
-		delete instance;
-		instance = nullptr;
-	}
 
 	return instance;
 }
@@ -59,7 +48,8 @@ Game* Game::entry()
 		time = clock->getElapsedTime().asMicroseconds() / FPS;
 		clock->restart();
 
-		receiveMessage();
+		for (auto gameObject : gameObjects)
+			gameObject->update(time);
 
 		for (auto message : messages)
 		{
@@ -85,9 +75,6 @@ Game* Game::entry()
 		}
 		messages.clear();
 
-		for (auto gameObject : gameObjects)
-			gameObject->update(time);
-
 		window->clear();
 
 		for (auto gameObject : gameObjects)
@@ -101,12 +88,16 @@ Game* Game::entry()
 
 bool Game::exit()
 {
+	if (instance)
+	{
+		delete instance;
+		instance = nullptr;
+	}
+
 	return !instance ? true : false;
 }
 
-void Game::receiveMessage()
+void Game::receiveMessage(GameObject::Message* _message)
 {
-	for (auto gameObject : gameObjects)
-		for (auto gameMessage : gameObject->getMessages())
-			messages.push_back(gameMessage);
+	messages.push_back(_message);
 }

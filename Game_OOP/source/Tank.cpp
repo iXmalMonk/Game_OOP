@@ -13,7 +13,7 @@ void Tank::shoot()
 {
 	if (cooldown <= cooldownTime)
 	{
-		sendMessage(MessageType::SHOOT);
+		sendMessage(new Message(MessageType::SHOOT, this));
 		cooldownTime = 0;
 	}
 }

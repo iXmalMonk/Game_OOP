@@ -6,6 +6,8 @@ using namespace sf;
 
 #include "Main.h"
 
+class Game;
+
 class GameObject
 {
 public:
@@ -24,9 +26,6 @@ public:
 		GameObject* gameObject;
 	};
 
-private:
-	list<Message*> messages;
-
 protected:
 	Vector2f position;
 	Texture texture;
@@ -35,9 +34,11 @@ protected:
 
 	Direction direction;
 
+	static Game* instance;
+
 public:
-	void sendMessage(MessageType _messageType);
-	list<Message*> getMessages();
+	GameObject();
+	void sendMessage(Message* _message);
 	Sprite getSprite();
 	void setPosition(Vector2f _position);
 	Vector2f getPosition();

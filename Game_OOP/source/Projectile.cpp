@@ -61,13 +61,13 @@ void Projectile::update(float _time)
 	}
 
 	if (position.x + w >= WINDOW_W)
-		sendMessage(MessageType::DESTROY);
+		sendMessage(new Message(MessageType::DESTROY, this));
 	else if (position.y + h >= WINDOW_H)
-		sendMessage(MessageType::DESTROY);
+		sendMessage(new Message(MessageType::DESTROY, this));
 	else if (position.x < 0)
-		sendMessage(MessageType::DESTROY);
+		sendMessage(new Message(MessageType::DESTROY, this));
 	else if (position.y < 0)
-		sendMessage(MessageType::DESTROY);
+		sendMessage(new Message(MessageType::DESTROY, this));
 
 	setPosition(position);
 }
