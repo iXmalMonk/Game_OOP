@@ -61,6 +61,5 @@ void Player::update(float _time)
 
 void Player::receiveMessage(Message* _message)
 {
-	if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY)
-		;//cout << "Player - Enemy: X = " << _message->gameObject->getX() << " Y = " << _message->gameObject->getY() << endl;
+	//if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY)
 }

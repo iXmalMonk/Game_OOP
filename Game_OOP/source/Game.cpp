@@ -72,14 +72,16 @@ Game* Game::entry()
 					message->gameObject->getH(),
 					message->gameObject->getGameObjectType()));
 				delete message;
-				//cout << "SHOOT" << endl;
+				if (MESSAGES_DEBUG_IN_GAME)
+					cout << "SHOOT" << endl;
 				break;
 			case GameObject::MessageType::DESTROY:
 				auto object = find(gameObjects.begin(), gameObjects.end(), message->gameObject);
 				delete* object;
 				gameObjects.erase(object);
 				delete message;
-				//cout << "DESTROY" << endl;
+				if (MESSAGES_DEBUG_IN_GAME)
+					cout << "DESTROY" << endl;
 				break;
 			}
 		}
