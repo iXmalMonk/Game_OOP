@@ -1,11 +1,11 @@
 #include "..\include\Enemy.h"
 
-Enemy::Enemy()
+Enemy::Enemy(Vector2f _position)
 {
 	w = 64;
 	h = 64;
-	position.x = 0;
-	position.y = 0;
+	position.x = _position.x;
+	position.y = _position.y;
 	texture.loadFromFile("png/enemyTank.png");
 	sprite.setTexture(texture);
 	velocity = 0.01;

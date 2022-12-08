@@ -8,7 +8,7 @@ bool Projectile::checkCollisionProjectileWithGameObject(GameObject* _gameObject)
 		position.x <= (_gameObject->getX() + _gameObject->getW());
 }
 
-Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h, GameObjectType _gameObjectTypeWhoShooted)
+Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted)
 {
 	w = 16;
 	h = 16;
@@ -47,6 +47,7 @@ Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h,
 	direction = _direction;
 	gameObjectType = GameObjectType::PROJECTILE;
 	gameObjectTypeWhoShooted = _gameObjectTypeWhoShooted;
+	gameObjectWhoShooted = _gameObjectWhoShooted;
 	damage = 25;
 
 	setPosition(position);
@@ -113,6 +114,15 @@ void Projectile::receiveMessage(Message* _message)
 			sendMessageInGame(new Message(MessageType::DESTROY, this));
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
 				cout << "Projectile hit the projectile" << endl;
+		}
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and gameObjectTypeWhoShooted == GameObjectType::ENEMY)
+	{
+		if (checkCollisionProjectileWithGameObject(_message->gameObject) and _message->gameObject != gameObjectWhoShooted)
+		{
+			sendMessageInGame(new Message(MessageType::DESTROY, this));
+			if (MESSAGES_DEBUG_IN_PROJECTILE)
+				cout << "Enemy hit the enemy" << endl;
 		}
 	}
 }

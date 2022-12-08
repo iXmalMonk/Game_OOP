@@ -22,6 +22,11 @@ private:
 
 	Game();
 	~Game();
+	void events();
+	void updateTime();
+	void updateGameObjects();
+	void messagesGameObjects();
+	void drawGameObjects();
 public:
 	static Game* getInstance();
 	Game* entry();
