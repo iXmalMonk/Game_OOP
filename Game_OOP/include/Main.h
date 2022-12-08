@@ -12,6 +12,8 @@ using namespace std;
 #define FPS 60
 
 #define MESSAGES_DEBUG_IN_GAME false
-#define MESSAGES_DEBUG_IN_PROJECTILE true
+#define MESSAGES_DEBUG_IN_PROJECTILE false
+#define MESSAGES_DEBUG_IN_PLAYER true
+#define MESSAGES_DEBUG_IN_ENEMY true
 
 #endif // !_MAIN_H

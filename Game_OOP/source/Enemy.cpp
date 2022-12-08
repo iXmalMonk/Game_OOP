@@ -69,5 +69,10 @@ void Enemy::update(float _time)
 
 void Enemy::receiveMessage(GameObject::Message* _message)
 {
-	//if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
+	if (_message->dealDamage.gameObject == this)
+	{
+		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
+		if (MESSAGES_DEBUG_IN_ENEMY)
+			cout << "Enemy HP: " << getHealthPoints() << endl;
+	}
 }

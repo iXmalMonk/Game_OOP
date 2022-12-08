@@ -2,41 +2,9 @@
 
 #include "..\include\Game.h"
 
-Game* GameObject::instance = nullptr;
-
-GameObject::GameObject() : position(), texture(), sprite(), w(0), h(0), gameObjectType(GameObjectType::NONE), direction(Direction::NONE)
-{
-	instance = Game::getInstance();
-}
-
-void GameObject::sendMessageInGame(Message* _message)
-{
-	instance->receiveMessage(_message);
-}
-
-Sprite GameObject::getSprite()
-{
-	return sprite;
-}
-
 void GameObject::setPosition(Vector2f _position)
 {
 	sprite.setPosition(_position);
-}
-
-Vector2f GameObject::getPosition()
-{
-	return position;
-}
-
-float GameObject::getX()
-{
-	return position.x;
-}
-
-float GameObject::getY()
-{
-	return position.y;
 }
 
 void GameObject::setDirection()
@@ -56,6 +24,38 @@ void GameObject::setDirection()
 		sprite.setTextureRect(IntRect(w * 3, 0, w, h));
 		break;
 	}
+}
+
+Game* GameObject::instance = nullptr;
+
+GameObject::GameObject() : position(), texture(), sprite(), w(0), h(0), gameObjectType(GameObjectType::NONE), direction(Direction::NONE)
+{
+	instance = Game::getInstance();
+}
+
+void GameObject::sendMessageInGame(Message* _message)
+{
+	instance->receiveMessage(_message);
+}
+
+Sprite GameObject::getSprite()
+{
+	return sprite;
+}
+
+Vector2f GameObject::getPosition()
+{
+	return position;
+}
+
+float GameObject::getX()
+{
+	return position.x;
+}
+
+float GameObject::getY()
+{
+	return position.y;
 }
 
 GameObject::Direction GameObject::getDirection()

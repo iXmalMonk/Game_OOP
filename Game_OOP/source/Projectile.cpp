@@ -47,6 +47,7 @@ Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h,
 	direction = _direction;
 	gameObjectType = GameObjectType::PROJECTILE;
 	gameObjectTypeWhoShooted = _gameObjectTypeWhoShooted;
+	damage = 25;
 
 	setPosition(position);
 	setDirection();
@@ -90,6 +91,7 @@ void Projectile::receiveMessage(Message* _message)
 		if (checkCollisionProjectileWithGameObject(_message->gameObject))
 		{
 			sendMessageInGame(new Message(MessageType::DESTROY, this));
+			sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _message->gameObject, damage));
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
 				cout << "Enemy hit the player" << endl;
 		}
@@ -99,6 +101,7 @@ void Projectile::receiveMessage(Message* _message)
 		if (checkCollisionProjectileWithGameObject(_message->gameObject))
 		{
 			sendMessageInGame(new Message(MessageType::DESTROY, this));
+			sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _message->gameObject, damage));
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
 				cout << "Player hit the enemy" << endl;
 		}

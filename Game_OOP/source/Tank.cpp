@@ -17,3 +17,13 @@ void Tank::shoot()
 		cooldownTime = 0;
 	}
 }
+
+int Tank::getHealthPoints()
+{
+	return healthPoints;
+}
+
+void Tank::setHealthPoints(int _healthPoints)
+{
+	healthPoints = _healthPoints;
+}

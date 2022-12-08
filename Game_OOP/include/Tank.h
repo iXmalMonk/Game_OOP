@@ -13,6 +13,8 @@ public:
 	Tank();
 	bool readyToShoot(float _time);
 	void shoot();
+	int getHealthPoints();
+	void setHealthPoints(int _healthPoints);
 };
 
 #endif // !_TANK_H

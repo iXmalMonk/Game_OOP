@@ -11,13 +11,13 @@ class Game;
 class GameObject
 {
 public:
-	enum class MessageType { SHOOT, DESTROY, MOVE };
+	enum class MessageType { SHOOT, DESTROY, DEALDAMAGE, MOVE };
 	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
 	enum class GameObjectType { PLAYER, ENEMY, PROJECTILE, NONE };
 
 	struct Message
 	{
-		Message(MessageType _messageType, GameObject* _gameObject) : move()
+		Message(MessageType _messageType, GameObject* _gameObject)
 		{
 			messageType = _messageType;
 			gameObject = _gameObject;
@@ -30,11 +30,25 @@ public:
 			move.position = _position;
 		}
 
+		Message(MessageType _messageType, GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage)
+		{
+			messageType = _messageType;
+			gameObject = _gameObjectWho;
+			dealDamage.gameObject = _gameObjectWhom;
+			dealDamage.damage = _damage;
+		}
+
 		MessageType messageType;
 		GameObject* gameObject;
 
 		union
 		{
+			struct
+			{
+				int damage;
+				GameObject* gameObject;
+			} dealDamage;
+
 			struct
 			{
 				Vector2f position;
@@ -53,15 +67,15 @@ protected:
 
 	static Game* instance;
 
+	void setPosition(Vector2f _position);
+	void setDirection();
 public:
 	GameObject();
 	void sendMessageInGame(Message* _message);
-	Sprite getSprite();
-	void setPosition(Vector2f _position);
 	Vector2f getPosition();
+	Sprite getSprite();
 	float getX();
 	float getY();
-	void setDirection();
 	Direction getDirection();
 	int getW();
 	int getH();

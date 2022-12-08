@@ -54,7 +54,8 @@ Game* Game::entry()
 
 		for (auto message : messages)
 		{
-			if (message->messageType == GameObject::MessageType::MOVE)
+			if (message->messageType == GameObject::MessageType::MOVE or
+				message->messageType == GameObject::MessageType::DEALDAMAGE)
 			{
 				for (auto gameObject : gameObjects)
 					sendMessageInGameObject(message, gameObject);

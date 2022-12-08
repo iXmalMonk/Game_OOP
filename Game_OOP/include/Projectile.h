@@ -6,6 +6,7 @@
 class Projectile : public DynamicObject
 {
 private:
+	int damage;
 	GameObjectType gameObjectTypeWhoShooted;
 	bool checkCollisionProjectileWithGameObject(GameObject* _gameObject);
 public:
