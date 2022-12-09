@@ -85,4 +85,12 @@ void Enemy::receiveMessage(GameObject::Message* _message)
 		if (MESSAGES_DEBUG_IN_ENEMY)
 			cout << "Enemy HP: " << getHealthPoints() << endl;
 	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
+	{
+		if (checkCollisionWithGameObject(_message->gameObject))
+		{
+			position.x -= dx;
+			position.y -= dy;
+		}
+	}
 }

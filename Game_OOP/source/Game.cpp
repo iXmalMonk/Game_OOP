@@ -81,6 +81,7 @@ void Game::messagesGameObjects()
 			break;
 		}
 	}
+
 	messages.clear();
 }
 
@@ -105,8 +106,7 @@ Game* Game::getInstance()
 Game* Game::entry()
 {
 	gameObjects.push_back(new Player);
-	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W / 2, 0)));
-	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
+	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W / 3, 0)));
 
 	if (!window->isOpen())
 	{
