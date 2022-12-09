@@ -4,9 +4,9 @@ Enemy::Enemy(Vector2f _position)
 {
 	position.x = _position.x;
 	position.y = _position.y;
-	texture.loadFromFile("png/enemyTank.png");
+	texture.loadFromFile(ENEMY_FILENAME_PNG);
 	sprite.setTexture(texture);
-	velocity = 0.01;
+	velocity = ENEMY_VELOCITY;
 	direction = Direction::DOWN;
 	gameObjectType = GameObjectType::ENEMY;
 

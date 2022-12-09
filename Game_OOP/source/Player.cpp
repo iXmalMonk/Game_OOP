@@ -4,9 +4,9 @@ Player::Player()
 {
 	position.x = WINDOW_W / 2;
 	position.y = WINDOW_H / 2;
-	texture.loadFromFile("png/playerTank.png");
+	texture.loadFromFile(PLAYER_FILENAME_PNG);
 	sprite.setTexture(texture);
-	velocity = 0.015;
+	velocity = PLAYER_VELOCITY;
 	direction = Direction::UP;
 	gameObjectType = GameObjectType::PLAYER;
 

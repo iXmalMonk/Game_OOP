@@ -33,14 +33,14 @@ Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h,
 		break;
 	}
 
-	texture.loadFromFile("png/projectile.png");
+	texture.loadFromFile(PROJECTILE_FILENAME_PNG);
 	sprite.setTexture(texture);
-	velocity = 0.03;
+	velocity = PROJECTILE_VELOCITY;
 	direction = _direction;
 	gameObjectType = GameObjectType::PROJECTILE;
 	gameObjectTypeWhoShooted = _gameObjectTypeWhoShooted;
 	gameObjectWhoShooted = _gameObjectWhoShooted;
-	damage = 25;
+	damage = PROJECTILE_DAMAGE;
 
 	setPosition(position);
 	setDirection();

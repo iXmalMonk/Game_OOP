@@ -53,8 +53,8 @@ void Game::messagesGameObjects()
 		{
 			for (auto gameObject : gameObjects)
 				sendMessageInGameObject(message, gameObject);
-			delete message;
-			continue;
+			//delete message;
+			//continue;
 		}
 
 		switch (message->messageType)
@@ -67,7 +67,7 @@ void Game::messagesGameObjects()
 				message->gameObject->getH(),
 				message->gameObject->getGameObjectType(),
 				message->gameObject));
-			delete message;
+			//delete message;
 			if (MESSAGES_DEBUG_IN_GAME)
 				cout << "SHOOT" << endl;
 			break;
@@ -75,11 +75,13 @@ void Game::messagesGameObjects()
 			auto object = find(gameObjects.begin(), gameObjects.end(), message->gameObject);
 			delete* object;
 			gameObjects.erase(object);
-			delete message;
+			//delete message;
 			if (MESSAGES_DEBUG_IN_GAME)
 				cout << "DESTROY" << endl;
 			break;
 		}
+
+		delete message;
 	}
 
 	messages.clear();
@@ -106,13 +108,12 @@ Game* Game::getInstance()
 Game* Game::entry()
 {
 	gameObjects.push_back(new Player);
-	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W / 2, 0)));
+	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
 
-	for(int i = 0; i < 10; i++)
-		for (int j = 0; j < 4; j++)
-			gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 4 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-
-	gameObjects.push_back(new BrickWall(Vector2f(STATICOBJECT_W, STATICOBJECT_H)));
+	for(int i = 0; i < 16; i++)
+		for (int j = 0; j < 8; j++)
+			if (i % 2 == 0)
+				gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 4 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
 
 	if (!window->isOpen())
 	{
