@@ -1,13 +1,5 @@
 #include "..\include\Projectile.h"
 
-bool Projectile::checkCollisionProjectileWithGameObject(GameObject* _gameObject)
-{
-	return (position.y + h) >= _gameObject->getY() and
-		position.y <= (_gameObject->getY() + _gameObject->getH()) and
-		(position.x + w) >= _gameObject->getX() and
-		position.x <= (_gameObject->getX() + _gameObject->getW());
-}
-
 Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted)
 {
 	w = 16;
@@ -59,18 +51,21 @@ void Projectile::update(float _time)
 	switch (direction)
 	{
 	case Direction::UP:
-		position.y -= velocity * _time;
-		break;
-	case Direction::DOWN:
-		position.y += velocity * _time;
+		dy = -velocity * _time;
 		break;
 	case Direction::LEFT:
-		position.x -= velocity * _time;
+		dx = -velocity * _time;
+		break;
+	case Direction::DOWN:
+		dy = velocity * _time;
 		break;
 	case Direction::RIGHT:
-		position.x += velocity * _time;
+		dx = velocity * _time;
 		break;
 	}
+
+	position.x += dx;
+	position.y += dy;
 
 	if (position.x + w >= WINDOW_W)
 		sendMessageInGame(new Message(MessageType::DESTROY, this));
@@ -89,7 +84,7 @@ void Projectile::receiveMessage(Message* _message)
 {
 	if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER and gameObjectTypeWhoShooted == GameObjectType::ENEMY)
 	{
-		if (checkCollisionProjectileWithGameObject(_message->gameObject))
+		if (checkCollisionWithGameObject(_message->gameObject))
 		{
 			sendMessageInGame(new Message(MessageType::DESTROY, this));
 			sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _message->gameObject, damage));
@@ -99,7 +94,7 @@ void Projectile::receiveMessage(Message* _message)
 	}
 	else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and gameObjectTypeWhoShooted == GameObjectType::PLAYER)
 	{
-		if (checkCollisionProjectileWithGameObject(_message->gameObject))
+		if (checkCollisionWithGameObject(_message->gameObject))
 		{
 			sendMessageInGame(new Message(MessageType::DESTROY, this));
 			sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _message->gameObject, damage));
@@ -109,7 +104,7 @@ void Projectile::receiveMessage(Message* _message)
 	}
 	else if (_message->gameObject->getGameObjectType() == GameObjectType::PROJECTILE and _message->gameObject != this)
 	{
-		if (checkCollisionProjectileWithGameObject(_message->gameObject))
+		if (checkCollisionWithGameObject(_message->gameObject))
 		{
 			sendMessageInGame(new Message(MessageType::DESTROY, this));
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
@@ -118,7 +113,7 @@ void Projectile::receiveMessage(Message* _message)
 	}
 	else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and gameObjectTypeWhoShooted == GameObjectType::ENEMY)
 	{
-		if (checkCollisionProjectileWithGameObject(_message->gameObject) and _message->gameObject != gameObjectWhoShooted)
+		if (checkCollisionWithGameObject(_message->gameObject) and _message->gameObject != gameObjectWhoShooted)
 		{
 			sendMessageInGame(new Message(MessageType::DESTROY, this));
 			if (MESSAGES_DEBUG_IN_PROJECTILE)

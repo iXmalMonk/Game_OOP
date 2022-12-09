@@ -30,7 +30,7 @@ private:
 public:
 	static Game* getInstance();
 	Game* entry();
-	bool exit();
+	int exit();
 
 	void sendMessageInGameObject(GameObject::Message* _message, GameObject* _gameObject);
 	void receiveMessage(GameObject::Message* _message);

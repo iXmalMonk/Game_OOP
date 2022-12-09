@@ -26,6 +26,14 @@ void GameObject::setDirection()
 	}
 }
 
+bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
+{
+	return (position.y + h) >= _gameObject->getY() and
+		position.y <= (_gameObject->getY() + _gameObject->getH()) and
+		(position.x + w) >= _gameObject->getX() and
+		position.x <= (_gameObject->getX() + _gameObject->getW());
+}
+
 Game* GameObject::instance = nullptr;
 
 GameObject::GameObject() : position(), texture(), sprite(), w(0), h(0), gameObjectType(GameObjectType::NONE), direction(Direction::NONE)

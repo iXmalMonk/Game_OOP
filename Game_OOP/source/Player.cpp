@@ -21,38 +21,41 @@ void Player::update(float _time)
 	if (readyToShoot(_time) and Keyboard::isKeyPressed(Keyboard::Space))
 		shoot();
 
+	dx = 0;
+	dy = 0;
+
 	if (Keyboard::isKeyPressed(Keyboard::W))
 	{
 		direction = Direction::UP;
-		position.y -= velocity * _time;
-
-		if (position.y < 0)
-			position.y = 0;
+		dy = -velocity * _time;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::A))
 	{
 		direction = Direction::LEFT;
-		position.x -= velocity * _time;
-
-		if (position.x < 0)
-			position.x = 0;
+		dx = -velocity * _time;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::S))
 	{
 		direction = Direction::DOWN;
-		position.y += velocity * _time;
-
-		if (position.y + h > WINDOW_H)
-			position.y = WINDOW_H - h;
+		dy = velocity * _time;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::D))
 	{
 		direction = Direction::RIGHT;
-		position.x += velocity * _time;
-
-		if (position.x + w > WINDOW_W)
-			position.x = WINDOW_W - w;
+		dx = velocity * _time;
 	}
+
+	position.x += dx;
+	position.y += dy;
+
+	if (position.y < 0)
+		position.y = 0;
+	if (position.x < 0)
+		position.x = 0;
+	if (position.y + h > WINDOW_H)
+		position.y = WINDOW_H - h;
+	if (position.x + w > WINDOW_W)
+		position.x = WINDOW_W - w;
 
 	sendMessageInGame(new Message(MessageType::MOVE, this, getPosition()));
 	setPosition(position);

@@ -69,6 +69,7 @@ protected:
 
 	void setPosition(Vector2f _position);
 	void setDirection();
+	bool checkCollisionWithGameObject(GameObject* _gameObject);
 public:
 	GameObject();
 	void sendMessageInGame(Message* _message);

@@ -7,6 +7,7 @@ Game::Game() : clock(nullptr), event(nullptr), window(nullptr), time(0)
 	clock = new Clock;
 	event = new Event;
 	window = new RenderWindow(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
+	window->setFramerateLimit(WINDOW_FPS);
 }
 
 Game::~Game()
@@ -33,7 +34,7 @@ void Game::events()
 
 void Game::updateTime()
 {
-	time = clock->getElapsedTime().asMicroseconds() / FPS;
+	time = clock->getElapsedTime().asMicroseconds() / TIME_COEFFICIENT;
 	clock->restart();
 }
 
@@ -108,7 +109,10 @@ Game* Game::entry()
 	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
 
 	if (!window->isOpen())
+	{
 		window->create(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
+		window->setFramerateLimit(WINDOW_FPS);
+	}
 
 	while (window->isOpen())
 	{
@@ -122,7 +126,7 @@ Game* Game::entry()
 	return this;
 }
 
-bool Game::exit()
+int Game::exit()
 {
 	if (instance)
 	{
@@ -130,7 +134,7 @@ bool Game::exit()
 		instance = nullptr;
 	}
 
-	return !instance ? true : false;
+	return 0;
 }
 
 void Game::sendMessageInGameObject(GameObject::Message* _message, GameObject* _gameObject)
