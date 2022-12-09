@@ -63,8 +63,6 @@ void Game::messagesGameObjects()
 			gameObjects.push_back(new Projectile(
 				message->gameObject->getPosition(),
 				message->gameObject->getDirection(),
-				message->gameObject->getW(),
-				message->gameObject->getH(),
 				message->gameObject->getGameObjectType(),
 				message->gameObject));
 			//delete message;

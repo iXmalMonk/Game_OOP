@@ -4,9 +4,9 @@ Player::Player()
 {
 	position.x = WINDOW_W / 2;
 	position.y = WINDOW_H / 2;
-	texture.loadFromFile(PLAYER_FILENAME_PNG);
+	texture.loadFromFile(FILENAME_PNG_PLAYER);
 	sprite.setTexture(texture);
-	velocity = PLAYER_VELOCITY;
+	velocity = VELOCITY_PLAYER;
 	direction = Direction::UP;
 	gameObjectType = GameObjectType::PLAYER;
 

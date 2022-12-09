@@ -10,7 +10,7 @@ private:
 	GameObjectType gameObjectTypeWhoShooted;
 	GameObject* gameObjectWhoShooted;
 public:
-	Projectile(Vector2f _position, Direction _direction, int _w, int _h, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted);
+	Projectile(Vector2f _position, Direction _direction, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted);
 	void update(float _time) override;
 	void receiveMessage(Message* _message) override;
 	GameObjectType getGameObjectTypeWhoShooted();

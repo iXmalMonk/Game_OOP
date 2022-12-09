@@ -1,6 +1,6 @@
 #include "..\include\Projectile.h"
 
-Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted)
+Projectile::Projectile(Vector2f _position, Direction _direction, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted)
 {
 	w = PROJECTILE_W;
 	h = PROJECTILE_H;
@@ -10,32 +10,40 @@ Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h,
 	case Direction::UP:
 		//position.x = _position.x + w + w / 2;
 		//position.y = _position.y - h;
-		position.x = _position.x + (_w / (_w / w)) + (_w / (_w / w) / 2);
-		position.y = _position.y - (_h / (_h / h));
+		//position.x = _position.x + (_w / (_w / w)) + (_w / (_w / w) / 2);
+		//position.y = _position.y - (_h / (_h / h));
+		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_UP;
+		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_UP;
 		break;
 	case Direction::DOWN:
 		//position.x = _position.x + w + w / 2;
 		//position.y = _position.y + h * 4;
-		position.x = _position.x + (_w / (_w / w)) + (_w / (_w / w) / 2);
-		position.y = _position.y + _h;
+		//position.x = _position.x + (_w / (_w / w)) + (_w / (_w / w) / 2);
+		//position.y = _position.y + _h;
+		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_DOWN;
+		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_DOWN;
 		break;
 	case Direction::LEFT:
 		//position.x = _position.x - w;
 		//position.y = _position.y + h + h / 2;
-		position.x = _position.x - (_w / (_w / w));
-		position.y = _position.y + (_h / (_h / h)) + (_h / (_h / h) / 2);
+		//position.x = _position.x - (_w / (_w / w));
+		//position.y = _position.y + (_h / (_h / h)) + (_h / (_h / h) / 2);
+		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_LEFT;
+		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_LEFT;
 		break;
 	case Direction::RIGHT:
 		//position.x = _position.x + w * 4;
 		//position.y = _position.y + h + h / 2;
-		position.x = _position.x + _w;
-		position.y = _position.y + (_h / (_h / h)) + (_h / (_h / h) / 2);
+		//position.x = _position.x + _w;
+		//position.y = _position.y + (_h / (_h / h)) + (_h / (_h / h) / 2);
+		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_RIGHT;
+		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_RIGHT;
 		break;
 	}
 
-	texture.loadFromFile(PROJECTILE_FILENAME_PNG);
+	texture.loadFromFile(FILENAME_PNG_PROJECTILE);
 	sprite.setTexture(texture);
-	velocity = PROJECTILE_VELOCITY;
+	velocity = VELOCITY_PROJECTILE;
 	direction = _direction;
 	gameObjectType = GameObjectType::PROJECTILE;
 	gameObjectTypeWhoShooted = _gameObjectTypeWhoShooted;
