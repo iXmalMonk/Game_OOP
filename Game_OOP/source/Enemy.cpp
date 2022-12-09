@@ -2,8 +2,6 @@
 
 Enemy::Enemy(Vector2f _position)
 {
-	w = 64;
-	h = 64;
 	position.x = _position.x;
 	position.y = _position.y;
 	texture.loadFromFile("png/enemyTank.png");
@@ -86,6 +84,14 @@ void Enemy::receiveMessage(GameObject::Message* _message)
 			cout << "Enemy HP: " << getHealthPoints() << endl;
 	}
 	else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
+	{
+		if (checkCollisionWithGameObject(_message->gameObject))
+		{
+			position.x -= dx;
+			position.y -= dy;
+		}
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{

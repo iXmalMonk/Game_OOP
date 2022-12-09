@@ -2,8 +2,8 @@
 
 Projectile::Projectile(Vector2f _position, Direction _direction, int _w, int _h, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted)
 {
-	w = 16;
-	h = 16;
+	w = PROJECTILE_W;
+	h = PROJECTILE_H;
 
 	switch (_direction)
 	{
@@ -118,6 +118,16 @@ void Projectile::receiveMessage(Message* _message)
 			sendMessageInGame(new Message(MessageType::DESTROY, this));
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
 				cout << "Enemy hit the enemy" << endl;
+		}
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
+	{
+		if (checkCollisionWithGameObject(_message->gameObject))
+		{
+			sendMessageInGame(new Message(MessageType::DESTROY, this));
+			sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _message->gameObject, NULL));
+			if (MESSAGES_DEBUG_IN_PROJECTILE)
+				cout << "Game object hit the brick wall" << endl;
 		}
 	}
 }

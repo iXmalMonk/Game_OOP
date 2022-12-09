@@ -106,7 +106,13 @@ Game* Game::getInstance()
 Game* Game::entry()
 {
 	gameObjects.push_back(new Player);
-	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W / 3, 0)));
+	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W / 2, 0)));
+
+	for(int i = 0; i < 10; i++)
+		for (int j = 0; j < 4; j++)
+			gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 4 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+
+	gameObjects.push_back(new BrickWall(Vector2f(STATICOBJECT_W, STATICOBJECT_H)));
 
 	if (!window->isOpen())
 	{

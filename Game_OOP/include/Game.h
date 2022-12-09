@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Projectile.h"
+#include "BrickWall.h"
 
 class Game
 {

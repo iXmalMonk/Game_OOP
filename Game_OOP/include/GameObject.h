@@ -13,7 +13,7 @@ class GameObject
 public:
 	enum class MessageType { SHOOT, DESTROY, DEALDAMAGE, MOVE };
 	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
-	enum class GameObjectType { PLAYER, ENEMY, PROJECTILE, NONE };
+	enum class GameObjectType { PLAYER, ENEMY, PROJECTILE, BRICKWALL, NONE };
 
 	struct Message
 	{

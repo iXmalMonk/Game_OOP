@@ -2,8 +2,6 @@
 
 Player::Player()
 {
-	w = 64;
-	h = 64;
 	position.x = WINDOW_W / 2;
 	position.y = WINDOW_H / 2;
 	texture.loadFromFile("png/playerTank.png");
@@ -71,6 +69,14 @@ void Player::receiveMessage(Message* _message)
 			cout << "Player HP: " << getHealthPoints() << endl;
 	}
 	else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY)
+	{
+		if (checkCollisionWithGameObject(_message->gameObject))
+		{
+			position.x -= dx;
+			position.y -= dy;
+		}
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
