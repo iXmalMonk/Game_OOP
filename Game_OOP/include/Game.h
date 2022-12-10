@@ -1,6 +1,7 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include "Console.h"
 #include "GameWindow.h"
 #include "GameObject.h"
 #include "Player.h"
@@ -22,6 +23,7 @@ private:
 	~Game();
 	void updateGameObjects();
 	void messagesGameObjects();
+	void setup();
 public:
 	static Game* getInstance();
 	Game* entry();

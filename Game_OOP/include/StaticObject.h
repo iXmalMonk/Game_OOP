@@ -12,5 +12,3 @@ public:
 };
 
 #endif // !_STATICOBJECT_H
-
-

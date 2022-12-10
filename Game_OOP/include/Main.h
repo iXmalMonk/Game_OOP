@@ -4,6 +4,8 @@
 #include <iostream>
 #include <list>
 #include <SFML/Graphics.hpp>
+#include <Windows.h>
+
 using namespace sf;
 using namespace std;
 
@@ -12,27 +14,25 @@ using namespace std;
 #define WINDOW_TITLE "Game"
 #define WINDOW_FPS 60
 
-#define TIME_COEFFICIENT WINDOW_FPS
-
 #define VELOCITY_PLAYER 0.015
 #define VELOCITY_ENEMY 0.01
 #define VELOCITY_PROJECTILE 0.03
 
-#define FILENAME_PNG_PLAYER "png/playerTank.png"
-#define FILENAME_PNG_ENEMY "png/enemyTank.png"
-#define FILENAME_PNG_PROJECTILE "png/projectile.png"
-#define FILENAME_PNG_BRICKWALL "png/brickWall.png"
+#define TIME_COEFFICIENT WINDOW_FPS
 
 #define TANK_W 64
 #define TANK_H 64
 #define TANK_COOLDOWN 5000
 #define TANK_HEALTHPOINTS 100
 
+#define STATICOBJECT_W 16
+#define STATICOBJECT_H 16
+
 #define PROJECTILE_W 16
 #define PROJECTILE_H 16
 #define PROJECTILE_DAMAGE 25
-#define PROJECTILE_MULTIPLICATION 0.375
 #define PROJECTILE_DIVISION 4
+#define PROJECTILE_MULTIPLICATION 0.375
 #define PROJECTILE_COEFFICIENT_X_FOR_UP TANK_W * PROJECTILE_MULTIPLICATION
 #define PROJECTILE_COEFFICIENT_Y_FOR_UP -(TANK_H / PROJECTILE_DIVISION)
 #define PROJECTILE_COEFFICIENT_X_FOR_DOWN TANK_W * PROJECTILE_MULTIPLICATION
@@ -42,17 +42,23 @@ using namespace std;
 #define PROJECTILE_COEFFICIENT_X_FOR_RIGHT TANK_W
 #define PROJECTILE_COEFFICIENT_Y_FOR_RIGHT TANK_H * PROJECTILE_MULTIPLICATION
 
-#define STATICOBJECT_W 16
-#define STATICOBJECT_H 16
+#define MESSAGES_DEBUG_IN_GAME false
+#define MESSAGES_DEBUG_IN_PLAYER false
+#define MESSAGES_DEBUG_IN_ENEMY false
+#define MESSAGES_DEBUG_IN_PROJECTILE true
 
 #define FRAME_UP 0
 #define FRAME_DOWN 2
 #define FRAME_LEFT 1
 #define FRAME_RIGHT 3
 
-#define MESSAGES_DEBUG_IN_GAME false
-#define MESSAGES_DEBUG_IN_PROJECTILE true
-#define MESSAGES_DEBUG_IN_PLAYER false
-#define MESSAGES_DEBUG_IN_ENEMY false
+#define FILENAME_PNG_PLAYER "png/playerTank.png"
+#define FILENAME_PNG_ENEMY "png/enemyTank.png"
+#define FILENAME_PNG_PROJECTILE "png/projectile.png"
+#define FILENAME_PNG_BRICKWALL "png/brickWall.png"
+
+// true - show console
+// false - hide console
+#define CONSOLE true
 
 #endif // !_MAIN_H

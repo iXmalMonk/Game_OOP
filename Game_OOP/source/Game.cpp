@@ -5,6 +5,8 @@ Game* Game::instance = nullptr;
 Game::Game() : gameWindow(nullptr)
 {
 	gameWindow = new GameWindow;
+
+	CONSOLE ? Console::ShowConsole() : Console::HideConsole();
 }
 
 Game::~Game()
@@ -67,6 +69,22 @@ void Game::messagesGameObjects()
 	messages.clear();
 }
 
+void Game::setup()
+{
+	static bool flag = true;
+	if (flag)
+	{
+		gameObjects.push_back(new Player);
+		gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
+
+		for (int i = 0; i < 16; i++)
+			for (int j = 0; j < 8; j++)
+				if (i % 2 == 0)
+					gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 4 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+		flag = false;
+	}
+}
+
 Game* Game::getInstance()
 {
 	if (!instance)
@@ -77,13 +95,7 @@ Game* Game::getInstance()
 
 Game* Game::entry()
 {
-	gameObjects.push_back(new Player);
-	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
-
-	for(int i = 0; i < 16; i++)
-		for (int j = 0; j < 8; j++)
-			if (i % 2 == 0)
-				gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 4 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+	setup();
 
 	if (!gameWindow->isOpen())
 		gameWindow->create();

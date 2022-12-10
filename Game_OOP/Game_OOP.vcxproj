@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BrickWall.h" />
+    <ClInclude Include="include\Console.h" />
     <ClInclude Include="include\DynamicObject.h" />
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\Game.h" />
@@ -33,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\BrickWall.cpp" />
+    <ClCompile Include="source\Console.cpp" />
     <ClCompile Include="source\DynamicObject.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\Game.cpp" />
