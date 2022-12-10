@@ -78,10 +78,19 @@ void Game::setup()
 		gameObjects.push_back(new Player);
 		gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
 
-		for (int i = 0; i < 16; i++)
-			for (int j = 0; j < 8; j++)
-				if (i % 2 == 0)
+		for (int i = 0; i < 10; i++)
+			for (int j = 0; j < 5; j++)
+				if (i % 3 == 0)
 					gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 4 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				else if (i % 3 == 1)
+					gameObjects.push_back(new Water(Vector2f(WINDOW_W / 4 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				else
+					gameObjects.push_back(new ConcreteWall(Vector2f(WINDOW_W / 4 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+		
+		//for (int i = 0; i < 10; i++)
+		//	for(int j = 0; j < 10; j++)
+		//		gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 4 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+
 		flag = false;
 	}
 }

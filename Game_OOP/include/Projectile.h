@@ -6,6 +6,7 @@
 class Projectile : public DynamicObject
 {
 private:
+	bool destroyed;
 	int damage;
 	GameObjectType gameObjectTypeWhoShooted;
 	GameObject* gameObjectWhoShooted;

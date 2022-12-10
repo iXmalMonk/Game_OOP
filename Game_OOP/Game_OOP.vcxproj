@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BrickWall.h" />
+    <ClInclude Include="include\ConcreteWall.h" />
     <ClInclude Include="include\Console.h" />
     <ClInclude Include="include\DynamicObject.h" />
     <ClInclude Include="include\Enemy.h" />
@@ -31,9 +32,11 @@
     <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\StaticObject.h" />
     <ClInclude Include="include\Tank.h" />
+    <ClInclude Include="include\Water.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\BrickWall.cpp" />
+    <ClCompile Include="source\ConcreteWall.cpp" />
     <ClCompile Include="source\Console.cpp" />
     <ClCompile Include="source\DynamicObject.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
@@ -45,6 +48,7 @@
     <ClCompile Include="source\Projectile.cpp" />
     <ClCompile Include="source\StaticObject.cpp" />
     <ClCompile Include="source\Tank.cpp" />
+    <ClCompile Include="source\Water.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

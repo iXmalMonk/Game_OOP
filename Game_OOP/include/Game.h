@@ -8,6 +8,8 @@
 #include "Enemy.h"
 #include "Projectile.h"
 #include "BrickWall.h"
+#include "Water.h"
+#include "ConcreteWall.h"
 
 class Game
 {

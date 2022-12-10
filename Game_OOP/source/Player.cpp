@@ -74,6 +74,7 @@ void Player::receiveMessage(Message* _message)
 		{
 			position.x -= dx;
 			position.y -= dy;
+			setPosition(position);
 		}
 	}
 	else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
@@ -82,6 +83,25 @@ void Player::receiveMessage(Message* _message)
 		{
 			position.x -= dx;
 			position.y -= dy;
+			setPosition(position);
+		}
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::WATER)
+	{
+		if (checkCollisionWithGameObject(_message->gameObject))
+		{
+			position.x -= dx;
+			position.y -= dy;
+			setPosition(position);
+		}
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
+	{
+		if (checkCollisionWithGameObject(_message->gameObject))
+		{
+			position.x -= dx;
+			position.y -= dy;
+			setPosition(position);
 		}
 	}
 }
