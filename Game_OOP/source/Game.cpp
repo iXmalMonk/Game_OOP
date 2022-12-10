@@ -6,7 +6,8 @@ Game::Game() : gameWindow(nullptr)
 {
 	gameWindow = new GameWindow;
 
-	CONSOLE ? Console::ShowConsole() : Console::HideConsole();
+	//CONSOLE ? Console::showConsole() : Console::hideConsole();
+	CONSOLE ? console::show() : console::hide();
 }
 
 Game::~Game()

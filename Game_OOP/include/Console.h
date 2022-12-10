@@ -3,12 +3,17 @@
 
 #include "Main.h"
 
-class Console
+//class Console
+//{
+//public:
+//	static void hideConsole();
+//	static void showConsole();
+//};
+
+namespace console
 {
-public:
-	static void HideConsole();
-	static void ShowConsole();
-};
+	void hide();
+	void show();
+}
 
 #endif // !_CONSOLE_H
-
