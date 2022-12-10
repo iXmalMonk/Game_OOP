@@ -1,9 +1,6 @@
 #ifndef _GAMEOBJECT_H
 #define _GAMEOBJECT_H
 
-#include <SFML/Graphics.hpp>
-using namespace sf;
-
 #include "Main.h"
 
 class Game;

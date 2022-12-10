@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <list>
+#include <SFML/Graphics.hpp>
+using namespace sf;
 using namespace std;
 
 #define WINDOW_W 640

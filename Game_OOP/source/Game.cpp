@@ -2,19 +2,14 @@
 
 Game* Game::instance = nullptr;
 
-Game::Game() : clock(nullptr), event(nullptr), window(nullptr), time(0)
+Game::Game() : gameWindow(nullptr)
 {
-	clock = new Clock;
-	event = new Event;
-	window = new RenderWindow(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
-	window->setFramerateLimit(WINDOW_FPS);
+	gameWindow = new GameWindow;
 }
 
 Game::~Game()
 {
-	delete clock;
-	delete event;
-	delete window;
+	delete gameWindow;
 
 	for (auto gameObject : gameObjects)
 		delete gameObject;
@@ -25,23 +20,10 @@ Game::~Game()
 	messages.clear();
 }
 
-void Game::events()
-{
-	while (window->pollEvent(*event))
-		if ((*event).type == Event::Closed)
-			window->close();
-}
-
-void Game::updateTime()
-{
-	time = clock->getElapsedTime().asMicroseconds() / TIME_COEFFICIENT;
-	clock->restart();
-}
-
 void Game::updateGameObjects()
 {
 	for (auto gameObject : gameObjects)
-		gameObject->update(time);
+		gameObject->update(gameWindow->getTime());
 }
 
 void Game::messagesGameObjects()
@@ -85,16 +67,6 @@ void Game::messagesGameObjects()
 	messages.clear();
 }
 
-void Game::drawGameObjects()
-{
-	window->clear();
-
-	for (auto gameObject : gameObjects)
-		window->draw(gameObject->getSprite());
-
-	window->display();
-}
-
 Game* Game::getInstance()
 {
 	if (!instance)
@@ -113,22 +85,22 @@ Game* Game::entry()
 			if (i % 2 == 0)
 				gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 4 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
 
-	if (!window->isOpen())
-	{
-		window->create(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
-		window->setFramerateLimit(WINDOW_FPS);
-	}
+	if (!gameWindow->isOpen())
+		gameWindow->create();
 
-	while (window->isOpen())
+	while (gameWindow->isOpen())
 	{
-		events();
-		updateTime();
+		gameWindow->events();
+		gameWindow->updateTime();
 		updateGameObjects();
 		messagesGameObjects();
-		drawGameObjects();
+		gameWindow->clear();
+		for (auto gameObject : gameObjects)
+			gameWindow->draw(gameObject->getSprite());
+		gameWindow->display();
 	}
 
-	return this;
+	return Game::getInstance();
 }
 
 int Game::exit()
