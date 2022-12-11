@@ -15,6 +15,7 @@ public:
 	void shoot();
 	int getHealthPoints();
 	void setHealthPoints(int _healthPoints);
+	void alive();
 };
 
 #endif // !_TANK_H

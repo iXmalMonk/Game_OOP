@@ -10,6 +10,7 @@
 #include "BrickWall.h"
 #include "Water.h"
 #include "ConcreteWall.h"
+#include "Forest.h"
 
 class Game
 {

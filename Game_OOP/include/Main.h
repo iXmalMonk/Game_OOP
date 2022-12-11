@@ -43,9 +43,11 @@ using namespace std;
 #define PROJECTILE_COEFFICIENT_Y_FOR_RIGHT TANK_H * PROJECTILE_MULTIPLICATION
 
 #define MESSAGES_DEBUG_IN_GAME false
-#define MESSAGES_DEBUG_IN_PLAYER false
-#define MESSAGES_DEBUG_IN_ENEMY false
-#define MESSAGES_DEBUG_IN_PROJECTILE true
+#define MESSAGES_DEBUG_IN_PLAYER true
+#define MESSAGES_DEBUG_IN_ENEMY true
+#define MESSAGES_DEBUG_IN_PROJECTILE false
+#define MESSAGES_DEBUG_IN_TANK true
+#define MESSAGES_DEBUG_IN_STATICOBJECT true
 
 #define FRAME_UP 0
 #define FRAME_DOWN 2
@@ -58,6 +60,7 @@ using namespace std;
 #define FILENAME_PNG_BRICKWALL "png/brickWall.png"
 #define FILENAME_PNG_WATER "png/water.png"
 #define FILENAME_PNG_CONCRETEWALL "png/concreteWall.png"
+#define FILENAME_PNG_FOREST "png/forest.png"
 
 // true - show console
 // false - hide console

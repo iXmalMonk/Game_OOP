@@ -8,11 +8,15 @@ StaticObject::StaticObject()
 
 void StaticObject::update(float _time)
 {
-	sendMessageInGame(new Message(MessageType::MOVE, this, getPosition()));
+	move(getPosition());
 }
 
 void StaticObject::receiveMessage(Message* _message)
 {
 	if (_message->dealDamage.gameObject == this)
-		sendMessageInGame(new Message(MessageType::DESTROY, this));
+	{
+		destroy();
+		if (MESSAGES_DEBUG_IN_STATICOBJECT)
+			cout << "Static object destroyed" << endl;
+	}
 }

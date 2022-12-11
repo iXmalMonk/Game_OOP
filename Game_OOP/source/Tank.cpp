@@ -31,3 +31,13 @@ void Tank::setHealthPoints(int _healthPoints)
 {
 	healthPoints = _healthPoints;
 }
+
+void Tank::alive()
+{
+	if (healthPoints <= 0)
+	{
+		destroy();
+		if (MESSAGES_DEBUG_IN_TANK)
+			cout << "Tank destroyed" << endl;
+	}
+}

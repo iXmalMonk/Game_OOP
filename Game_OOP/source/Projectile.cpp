@@ -1,6 +1,6 @@
 #include "..\include\Projectile.h"
 
-Projectile::Projectile(Vector2f _position, Direction _direction, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted) : destroyed(false)
+Projectile::Projectile(Vector2f _position, Direction _direction, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted)
 {
 	w = PROJECTILE_W;
 	h = PROJECTILE_H;
@@ -76,15 +76,15 @@ void Projectile::update(float _time)
 	position.y += dy;
 
 	if (position.x + w >= WINDOW_W)
-		sendMessageInGame(new Message(MessageType::DESTROY, this));
+		destroy();
 	else if (position.y + h >= WINDOW_H)
-		sendMessageInGame(new Message(MessageType::DESTROY, this));
+		destroy();
 	else if (position.x < 0)
-		sendMessageInGame(new Message(MessageType::DESTROY, this));
+		destroy();
 	else if (position.y < 0)
-		sendMessageInGame(new Message(MessageType::DESTROY, this));
+		destroy();
 
-	sendMessageInGame(new Message(MessageType::MOVE, this, getPosition()));
+	move(getPosition());
 	setPosition(position);
 }
 
@@ -94,12 +94,8 @@ void Projectile::receiveMessage(Message* _message)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
-			if (!destroyed)
-			{
-				sendMessageInGame(new Message(MessageType::DESTROY, this));
-				destroyed = true;
-			}
-			sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _message->gameObject, damage));
+			destroy();
+			dealDamage(_message->gameObject, damage);
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
 				cout << "Enemy hit the player" << endl;
 		}
@@ -108,12 +104,8 @@ void Projectile::receiveMessage(Message* _message)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
-			if (!destroyed)
-			{
-				sendMessageInGame(new Message(MessageType::DESTROY, this));
-				destroyed = true;
-			}
-			sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _message->gameObject, damage));
+			destroy();
+			dealDamage(_message->gameObject, damage);
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
 				cout << "Player hit the enemy" << endl;
 		}
@@ -122,11 +114,7 @@ void Projectile::receiveMessage(Message* _message)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
-			if (!destroyed)
-			{
-				sendMessageInGame(new Message(MessageType::DESTROY, this));
-				destroyed = true;
-			}
+			destroy();
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
 				cout << "Projectile hit the projectile" << endl;
 		}
@@ -135,11 +123,7 @@ void Projectile::receiveMessage(Message* _message)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject) and _message->gameObject != gameObjectWhoShooted)
 		{
-			if (!destroyed)
-			{
-				sendMessageInGame(new Message(MessageType::DESTROY, this));
-				destroyed = true;
-			}
+			destroy();
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
 				cout << "Enemy hit the enemy" << endl;
 		}
@@ -148,12 +132,8 @@ void Projectile::receiveMessage(Message* _message)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
-			if (!destroyed)
-			{
-				sendMessageInGame(new Message(MessageType::DESTROY, this));
-				destroyed = true;
-			}
-			sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _message->gameObject, NULL));
+			destroy();
+			dealDamage(_message->gameObject, NULL);
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
 				cout << "Game object hit the brick wall" << endl;
 		}
@@ -162,11 +142,7 @@ void Projectile::receiveMessage(Message* _message)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
-			if (!destroyed)
-			{
-				sendMessageInGame(new Message(MessageType::DESTROY, this));
-				destroyed = true;
-			}
+			destroy();
 			if (MESSAGES_DEBUG_IN_PROJECTILE)
 				cout << "Game object hit the concrete wall" << endl;
 		}

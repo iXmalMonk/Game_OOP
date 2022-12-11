@@ -10,7 +10,7 @@ class GameObject
 public:
 	enum class MessageType { SHOOT, DESTROY, DEALDAMAGE, MOVE };
 	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
-	enum class GameObjectType { PLAYER, ENEMY, PROJECTILE, BRICKWALL, WATER, CONCRETEWALL, NONE };
+	enum class GameObjectType { PLAYER, ENEMY, PROJECTILE, BRICKWALL, WATER, CONCRETEWALL, FOREST, NONE };
 
 	struct Message
 	{
@@ -52,6 +52,8 @@ public:
 			} move;
 		};
 	};
+private:
+	bool destroyed;
 
 protected:
 	Vector2f position;
@@ -67,6 +69,9 @@ protected:
 	void setPosition(Vector2f _position);
 	void setDirection();
 	bool checkCollisionWithGameObject(GameObject* _gameObject);
+	void destroy();
+	void dealDamage(GameObject* _gameObject, int _damage);
+	void move(Vector2f _position);
 public:
 	GameObject();
 	void sendMessageInGame(Message* _message);

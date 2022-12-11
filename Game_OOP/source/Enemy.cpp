@@ -70,7 +70,7 @@ void Enemy::update(float _time)
 	position.x += dx;
 	position.y += dy;
 
-	sendMessageInGame(new Message(MessageType::MOVE, this, getPosition()));
+	move(getPosition());
 	setPosition(position);
 	setDirection();
 }
@@ -82,6 +82,7 @@ void Enemy::receiveMessage(GameObject::Message* _message)
 		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
 		if (MESSAGES_DEBUG_IN_ENEMY)
 			cout << "Enemy HP: " << getHealthPoints() << endl;
+		alive();
 	}
 	else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
 	{

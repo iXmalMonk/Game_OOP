@@ -34,9 +34,28 @@ bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
 		position.x <= (_gameObject->getX() + _gameObject->getW());
 }
 
+void GameObject::destroy()
+{
+	if (!destroyed)
+	{
+		sendMessageInGame(new Message(MessageType::DESTROY, this));
+		destroyed = true;
+	}
+}
+
+void GameObject::dealDamage(GameObject* _gameObject, int _damage)
+{
+	sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _gameObject, _damage));
+}
+
+void GameObject::move(Vector2f _position)
+{
+	sendMessageInGame(new Message(MessageType::MOVE, this, _position));
+}
+
 Game* GameObject::instance = nullptr;
 
-GameObject::GameObject() : position(), texture(), sprite(), w(0), h(0), gameObjectType(GameObjectType::NONE), direction(Direction::NONE)
+GameObject::GameObject() : destroyed(false), position(), texture(), sprite(), w(0), h(0), gameObjectType(GameObjectType::NONE), direction(Direction::NONE)
 {
 	instance = Game::getInstance();
 }

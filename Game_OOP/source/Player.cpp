@@ -55,7 +55,7 @@ void Player::update(float _time)
 	if (position.x + w > WINDOW_W)
 		position.x = WINDOW_W - w;
 
-	sendMessageInGame(new Message(MessageType::MOVE, this, getPosition()));
+	move(getPosition());
 	setPosition(position);
 	setDirection();
 }
@@ -67,6 +67,7 @@ void Player::receiveMessage(Message* _message)
 		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
 		if (MESSAGES_DEBUG_IN_PLAYER)
 			cout << "Player HP: " << getHealthPoints() << endl;
+		alive();
 	}
 	else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY)
 	{
