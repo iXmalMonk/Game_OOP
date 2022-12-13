@@ -27,12 +27,12 @@ private:
 	void updateGameObjects();
 	void messagesGameObjects();
 	void setup();
+	void sendMessageInGameObject(GameObject::Message* _message, GameObject* _gameObject);
 public:
 	static Game* getInstance();
 	Game* entry();
 	int exit();
 
-	void sendMessageInGameObject(GameObject::Message* _message, GameObject* _gameObject);
 	void receiveMessage(GameObject::Message* _message);
 };
 

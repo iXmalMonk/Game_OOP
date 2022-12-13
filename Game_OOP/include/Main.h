@@ -9,8 +9,8 @@
 using namespace sf;
 using namespace std;
 
-#define WINDOW_W 1024
-#define WINDOW_H 768
+#define WINDOW_W 800
+#define WINDOW_H 600
 #define WINDOW_TITLE "Game"
 #define WINDOW_FPS 60
 
@@ -42,10 +42,12 @@ using namespace std;
 #define PROJECTILE_COEFFICIENT_X_FOR_RIGHT TANK_W
 #define PROJECTILE_COEFFICIENT_Y_FOR_RIGHT TANK_H * PROJECTILE_MULTIPLICATION
 
+// true - show messages
+// false - hide messages
 #define MESSAGES_DEBUG_IN_GAME false
 #define MESSAGES_DEBUG_IN_PLAYER true
 #define MESSAGES_DEBUG_IN_ENEMY true
-#define MESSAGES_DEBUG_IN_PROJECTILE false
+#define MESSAGES_DEBUG_IN_PROJECTILE true
 #define MESSAGES_DEBUG_IN_TANK true
 #define MESSAGES_DEBUG_IN_STATICOBJECT true
 

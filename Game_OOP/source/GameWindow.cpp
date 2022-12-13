@@ -4,7 +4,7 @@ GameWindow::GameWindow() : clock(nullptr), event(nullptr), renderWindow(nullptr)
 {
 	clock = new Clock;
 	event = new Event;
-	renderWindow = new RenderWindow(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
+	renderWindow = new RenderWindow(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE, Style::Titlebar);
 	renderWindow->setFramerateLimit(WINDOW_FPS);
 }
 
@@ -18,7 +18,7 @@ GameWindow::~GameWindow()
 void GameWindow::events()
 {
 	while (renderWindow->pollEvent(*event))
-		if ((*event).type == Event::Closed)
+		if (((*event).type == Event::Closed) or ((*event).type == Event::KeyPressed and (*event).key.code == Keyboard::Escape))
 			renderWindow->close();
 }
 
