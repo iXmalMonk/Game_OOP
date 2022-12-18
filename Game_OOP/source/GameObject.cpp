@@ -53,16 +53,16 @@ void GameObject::move(Vector2f _position)
 	sendMessageInGame(new Message(MessageType::MOVE, this, _position));
 }
 
-Game* GameObject::instance = nullptr;
+Game* GameObject::game = nullptr;
 
 GameObject::GameObject() : destroyed(false), position(), texture(), sprite(), w(0), h(0), gameObjectType(GameObjectType::NONE), direction(Direction::NONE)
 {
-	instance = Game::getInstance();
+	game = Game::getInstance();
 }
 
 void GameObject::sendMessageInGame(Message* _message)
 {
-	instance->receiveMessage(_message);
+	game->receiveMessage(_message);
 }
 
 Sprite GameObject::getSprite()

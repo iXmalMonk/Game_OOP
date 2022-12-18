@@ -8,7 +8,7 @@ class Game;
 class GameObject
 {
 public:
-	enum class MessageType { SHOOT, DESTROY, DEALDAMAGE, MOVE };
+	enum class MessageType { SHOOT, DESTROY, DEALDAMAGE, MOVE, CREATE };
 	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
 	enum class GameObjectType { PLAYER, ENEMY, PROJECTILE, BRICKWALL, WATER, CONCRETEWALL, FOREST, NONE };
 
@@ -50,6 +50,12 @@ public:
 			{
 				Vector2f position;
 			} move;
+
+			struct
+			{
+				GameObjectType gameObjectType;
+				Vector2f position;
+			} create;
 		};
 	};
 private:
@@ -64,7 +70,7 @@ protected:
 	Direction direction;
 	GameObjectType gameObjectType;
 
-	static Game* instance;
+	static Game* game;
 
 	void setPosition(Vector2f _position);
 	void setDirection();
