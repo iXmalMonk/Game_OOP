@@ -8,20 +8,21 @@ class Game;
 class GameController
 {
 private:
-	int maxPlayerLife;
-	int maxEnemyLife;
-	bool playerIsAlive;
-	int maxEnemiesOnMap;
-	int howManyEnemiesIsAlive;
-	bool mapCreated;
+	Game* game;
 
+	bool mapCreated;
+	bool playerIsAlive;
+
+	int howManyEnemiesIsAlive;
+	int maxEnemyLife;
+	int maxEnemiesOnMap;
+	int maxPlayerLife;
 	int xLeft;
 	int xMiddle;
 	int xRight;
 	int yUp;
 	int yDown;
 
-	Game* game;
 public:
 	GameController();
 	void update();

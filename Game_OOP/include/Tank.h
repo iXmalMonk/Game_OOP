@@ -6,9 +6,9 @@
 class Tank : public DynamicObject
 {
 private:
-	int healthPoints;
 	float cooldown;
 	float cooldownTime;
+	int healthPoints;
 public:
 	Tank();
 	bool readyToShoot(float _time);

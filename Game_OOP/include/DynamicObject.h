@@ -6,8 +6,8 @@
 class DynamicObject : public GameObject
 {
 protected:
-	float velocity;
 	float dx, dy;
+	float velocity;
 
 public:
 	DynamicObject();
