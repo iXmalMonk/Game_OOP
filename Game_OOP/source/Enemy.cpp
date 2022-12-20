@@ -14,6 +14,53 @@ Enemy::Enemy(Vector2f _position)
 	setDirection();
 }
 
+void Enemy::receiveMessage(GameObject::Message* _message)
+{
+	if (_message->dealDamage.gameObject == this)
+	{
+		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
+		if (MESSAGES_DEBUG_IN_ENEMY)
+			cout << "Enemy HP: " << getHealthPoints() << endl;
+		alive();
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
+	{
+		if (checkCollisionWithGameObject(_message->gameObject))
+		{
+			position.x -= dx;
+			position.y -= dy;
+			setPosition(position);
+		}
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
+	{
+		if (checkCollisionWithGameObject(_message->gameObject))
+		{
+			position.x -= dx;
+			position.y -= dy;
+			setPosition(position);
+		}
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::WATER)
+	{
+		if (checkCollisionWithGameObject(_message->gameObject))
+		{
+			position.x -= dx;
+			position.y -= dy;
+			setPosition(position);
+		}
+	}
+	else if (_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
+	{
+		if (checkCollisionWithGameObject(_message->gameObject))
+		{
+			position.x -= dx;
+			position.y -= dy;
+			setPosition(position);
+		}
+	}
+}
+
 void Enemy::update(float _time)
 {
 	if (readyToShoot(_time))
@@ -73,51 +120,4 @@ void Enemy::update(float _time)
 	move(getPosition());
 	setPosition(position);
 	setDirection();
-}
-
-void Enemy::receiveMessage(GameObject::Message* _message)
-{
-	if (_message->dealDamage.gameObject == this)
-	{
-		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
-		if (MESSAGES_DEBUG_IN_ENEMY)
-			cout << "Enemy HP: " << getHealthPoints() << endl;
-		alive();
-	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPosition(position);
-		}
-	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPosition(position);
-		}
-	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::WATER)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPosition(position);
-		}
-	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPosition(position);
-		}
-	}
 }

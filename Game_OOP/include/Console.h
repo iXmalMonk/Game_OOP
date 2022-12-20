@@ -3,13 +3,6 @@
 
 #include "Main.h"
 
-//class Console
-//{
-//public:
-//	static void hideConsole();
-//	static void showConsole();
-//};
-
 namespace console
 {
 	void hide();

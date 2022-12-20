@@ -2,11 +2,10 @@
 
 Game* Game::instance = nullptr;
 
-Game::Game() : gameWindow(nullptr)
+Game::Game()
 {
 	gameWindow = new GameWindow;
 
-	//CONSOLE ? Console::showConsole() : Console::hideConsole();
 	CONSOLE ? console::show() : console::hide();
 }
 
@@ -21,12 +20,6 @@ Game::~Game()
 	for (auto message : messages)
 		delete message;
 	messages.clear();
-}
-
-void Game::updateGameObjects()
-{
-	for (auto gameObject : gameObjects)
-		gameObject->update(gameWindow->getTime());
 }
 
 void Game::messagesGameObjects()
@@ -70,6 +63,11 @@ void Game::messagesGameObjects()
 	messages.clear();
 }
 
+void Game::sendMessageInGameObject(GameObject::Message* _message, GameObject* _gameObject)
+{
+	_gameObject->receiveMessage(_message);
+}
+
 void Game::setup()
 {
 	static bool flag = true;
@@ -93,17 +91,10 @@ void Game::setup()
 	}
 }
 
-void Game::sendMessageInGameObject(GameObject::Message* _message, GameObject* _gameObject)
+void Game::updateGameObjects()
 {
-	_gameObject->receiveMessage(_message);
-}
-
-Game* Game::getInstance()
-{
-	if (!instance)
-		instance = new Game;
-
-	return instance;
+	for (auto gameObject : gameObjects)
+		gameObject->update(gameWindow->getTime());
 }
 
 Game* Game::entry()
@@ -141,6 +132,14 @@ int Game::exit()
 	}
 
 	return 0;
+}
+
+Game* Game::getInstance()
+{
+	if (!instance)
+		instance = new Game;
+
+	return instance;
 }
 
 void Game::receiveMessage(GameObject::Message* _message)

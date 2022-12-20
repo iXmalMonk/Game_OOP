@@ -6,19 +6,13 @@ Tank::Tank() : healthPoints(TANK_HEALTHPOINTS), cooldown(TANK_COOLDOWN), cooldow
 	h = TANK_H;
 }
 
-bool Tank::readyToShoot(float _time)
+void Tank::alive()
 {
-	cooldown > cooldownTime ? cooldownTime += _time : cooldownTime = cooldown;
-
-	return cooldown <= cooldownTime ? true : false;
-}
-
-void Tank::shoot()
-{
-	if (cooldown <= cooldownTime)
+	if (healthPoints <= 0)
 	{
-		sendMessageInGame(new Message(MessageType::SHOOT, this));
-		cooldownTime = 0;
+		destroy();
+		if (MESSAGES_DEBUG_IN_TANK)
+			cout << "Tank destroyed" << endl;
 	}
 }
 
@@ -27,17 +21,23 @@ int Tank::getHealthPoints()
 	return healthPoints;
 }
 
+bool Tank::readyToShoot(float _time)
+{
+	cooldown > cooldownTime ? cooldownTime += _time : cooldownTime = cooldown;
+
+	return cooldown <= cooldownTime ? true : false;
+}
+
 void Tank::setHealthPoints(int _healthPoints)
 {
 	healthPoints = _healthPoints;
 }
 
-void Tank::alive()
+void Tank::shoot()
 {
-	if (healthPoints <= 0)
+	if (cooldown <= cooldownTime)
 	{
-		destroy();
-		if (MESSAGES_DEBUG_IN_TANK)
-			cout << "Tank destroyed" << endl;
+		sendMessageInGame(new Message(MessageType::SHOOT, this));
+		cooldownTime = 0;
 	}
 }

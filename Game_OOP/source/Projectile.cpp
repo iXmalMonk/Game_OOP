@@ -8,34 +8,18 @@ Projectile::Projectile(Vector2f _position, Direction _direction, GameObjectType 
 	switch (_direction)
 	{
 	case Direction::UP:
-		//position.x = _position.x + w + w / 2;
-		//position.y = _position.y - h;
-		//position.x = _position.x + (_w / (_w / w)) + (_w / (_w / w) / 2);
-		//position.y = _position.y - (_h / (_h / h));
 		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_UP;
 		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_UP;
 		break;
 	case Direction::DOWN:
-		//position.x = _position.x + w + w / 2;
-		//position.y = _position.y + h * 4;
-		//position.x = _position.x + (_w / (_w / w)) + (_w / (_w / w) / 2);
-		//position.y = _position.y + _h;
 		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_DOWN;
 		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_DOWN;
 		break;
 	case Direction::LEFT:
-		//position.x = _position.x - w;
-		//position.y = _position.y + h + h / 2;
-		//position.x = _position.x - (_w / (_w / w));
-		//position.y = _position.y + (_h / (_h / h)) + (_h / (_h / h) / 2);
 		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_LEFT;
 		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_LEFT;
 		break;
 	case Direction::RIGHT:
-		//position.x = _position.x + w * 4;
-		//position.y = _position.y + h + h / 2;
-		//position.x = _position.x + _w;
-		//position.y = _position.y + (_h / (_h / h)) + (_h / (_h / h) / 2);
 		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_RIGHT;
 		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_RIGHT;
 		break;
@@ -54,38 +38,9 @@ Projectile::Projectile(Vector2f _position, Direction _direction, GameObjectType 
 	setDirection();
 }
 
-void Projectile::update(float _time)
+GameObject::GameObjectType Projectile::getGameObjectTypeWhoShooted()
 {
-	switch (direction)
-	{
-	case Direction::UP:
-		dy = -velocity * _time;
-		break;
-	case Direction::LEFT:
-		dx = -velocity * _time;
-		break;
-	case Direction::DOWN:
-		dy = velocity * _time;
-		break;
-	case Direction::RIGHT:
-		dx = velocity * _time;
-		break;
-	}
-
-	position.x += dx;
-	position.y += dy;
-
-	if (position.x + w >= WINDOW_W)
-		destroy();
-	else if (position.y + h >= WINDOW_H)
-		destroy();
-	else if (position.x < 0)
-		destroy();
-	else if (position.y < 0)
-		destroy();
-
-	move(getPosition());
-	setPosition(position);
+	return gameObjectTypeWhoShooted;
 }
 
 void Projectile::receiveMessage(Message* _message)
@@ -149,7 +104,36 @@ void Projectile::receiveMessage(Message* _message)
 	}
 }
 
-GameObject::GameObjectType Projectile::getGameObjectTypeWhoShooted()
+void Projectile::update(float _time)
 {
-	return gameObjectTypeWhoShooted;
+	switch (direction)
+	{
+	case Direction::UP:
+		dy = -velocity * _time;
+		break;
+	case Direction::LEFT:
+		dx = -velocity * _time;
+		break;
+	case Direction::DOWN:
+		dy = velocity * _time;
+		break;
+	case Direction::RIGHT:
+		dx = velocity * _time;
+		break;
+	}
+
+	position.x += dx;
+	position.y += dy;
+
+	if (position.x + w >= WINDOW_W)
+		destroy();
+	else if (position.y + h >= WINDOW_H)
+		destroy();
+	else if (position.x < 0)
+		destroy();
+	else if (position.y < 0)
+		destroy();
+
+	move(getPosition());
+	setPosition(position);
 }

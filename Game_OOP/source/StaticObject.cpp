@@ -6,11 +6,6 @@ StaticObject::StaticObject()
 	h = STATICOBJECT_H;
 }
 
-void StaticObject::update(float _time)
-{
-	move(getPosition());
-}
-
 void StaticObject::receiveMessage(Message* _message)
 {
 	if (_message->dealDamage.gameObject == this)
@@ -19,4 +14,9 @@ void StaticObject::receiveMessage(Message* _message)
 		if (MESSAGES_DEBUG_IN_STATICOBJECT)
 			cout << "Static object destroyed" << endl;
 	}
+}
+
+void StaticObject::update(float _time)
+{
+	move(getPosition());
 }

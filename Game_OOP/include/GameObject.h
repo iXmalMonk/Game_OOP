@@ -8,26 +8,13 @@ class Game;
 class GameObject
 {
 public:
-	enum class MessageType { SHOOT, DESTROY, DEALDAMAGE, MOVE, CREATE };
 	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
-	enum class GameObjectType { PLAYER, ENEMY, PROJECTILE, BRICKWALL, WATER, CONCRETEWALL, FOREST, NONE };
+	enum class GameObjectType { BRICKWALL, CONCRETEWALL, ENEMY, FOREST, PLAYER, PROJECTILE, WATER, NONE };
+	enum class MessageType { CREATE, DEALDAMAGE, DESTROY, MOVE, SHOOT };
 
 	struct Message
 	{
-		Message(MessageType _messageType, GameObject* _gameObject)
-		{
-			messageType = _messageType;
-			gameObject = _gameObject;
-		}
-
-		Message(MessageType _messageType, GameObject* _gameObject, Vector2f _position)
-		{
-			messageType = _messageType;
-			gameObject = _gameObject;
-			move.position = _position;
-		}
-
-		Message(MessageType _messageType, GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage)
+		Message(MessageType _messageType, GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage) // DEALDAMAGE
 		{
 			messageType = _messageType;
 			gameObject = _gameObjectWho;
@@ -35,63 +22,77 @@ public:
 			dealDamage.damage = _damage;
 		}
 
-		MessageType messageType;
+		Message(MessageType _messageType, GameObject* _gameObject, Vector2f _position) // MOVE
+		{
+			messageType = _messageType;
+			gameObject = _gameObject;
+			move.position = _position;
+		}
+
+		Message(MessageType _messageType, GameObject* _gameObject) // SHOOT
+		{
+			messageType = _messageType;
+			gameObject = _gameObject;
+		}
+
 		GameObject* gameObject;
+		MessageType messageType;
 
 		union
 		{
 			struct
 			{
-				int damage;
+				GameObjectType gameObjectType;
+				Vector2f position;
+			} create;
+
+			struct
+			{
 				GameObject* gameObject;
+				int damage;
 			} dealDamage;
 
 			struct
 			{
 				Vector2f position;
 			} move;
-
-			struct
-			{
-				GameObjectType gameObjectType;
-				Vector2f position;
-			} create;
 		};
 	};
+
 private:
 	bool destroyed;
 
 protected:
-	Vector2f position;
-	Texture texture;
-	Sprite sprite;
-	int w, h;
-
 	Direction direction;
 	GameObjectType gameObjectType;
-
+	int w;
+	int h;
+	Sprite sprite;
 	static Game* game;
+	Texture texture;
+	Vector2f position;
 
-	void setPosition(Vector2f _position);
-	void setDirection();
 	bool checkCollisionWithGameObject(GameObject* _gameObject);
-	void destroy();
 	void dealDamage(GameObject* _gameObject, int _damage);
+	void destroy();
 	void move(Vector2f _position);
+	void setDirection();
+	void setPosition(Vector2f _position);
+
 public:
 	GameObject();
-	void sendMessageInGame(Message* _message);
-	Vector2f getPosition();
-	Sprite getSprite();
+	Direction getDirection();
 	float getX();
 	float getY();
-	Direction getDirection();
+	GameObjectType getGameObjectType();
 	int getW();
 	int getH();
-	GameObjectType getGameObjectType();
+	Sprite getSprite();
+	Vector2f getPosition();
+	void sendMessageInGame(Message* _message);
 
-	virtual void update(float _time) = 0;
 	virtual void receiveMessage(Message* _message) = 0;
+	virtual void update(float _time) = 0;
 };
 
 #endif // !_GAMEOBJECT_H

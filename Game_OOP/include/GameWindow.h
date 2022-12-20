@@ -8,21 +8,20 @@ class GameWindow
 private:
 	Clock* clock;
 	Event* event;
-	RenderWindow* renderWindow;
-
 	float time;
+	RenderWindow* renderWindow;
 
 public:
 	GameWindow();
 	~GameWindow();
-	void events();
-	void updateTime();
-	float getTime();
 	void clear();
-	void draw(Sprite _sprite);
-	void display();
-	bool isOpen();
 	void create();
+	void display();
+	void draw(Sprite _sprite);
+	void events();
+	float getTime();
+	bool isOpen();
+	void updateTime();
 };
 
 #endif // !_GAMEWINDOW_H

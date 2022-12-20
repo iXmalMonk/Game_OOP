@@ -2,9 +2,31 @@
 
 #include "..\include\Game.h"
 
-void GameObject::setPosition(Vector2f _position)
+bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
 {
-	sprite.setPosition(_position);
+	return (position.y + h) >= _gameObject->getY() and
+		position.y <= (_gameObject->getY() + _gameObject->getH()) and
+		(position.x + w) >= _gameObject->getX() and
+		position.x <= (_gameObject->getX() + _gameObject->getW());
+}
+
+void GameObject::dealDamage(GameObject* _gameObject, int _damage)
+{
+	sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _gameObject, _damage));
+}
+
+void GameObject::destroy()
+{
+	if (!destroyed)
+	{
+		sendMessageInGame(new Message(MessageType::DESTROY, this));
+		destroyed = true;
+	}
+}
+
+void GameObject::move(Vector2f _position)
+{
+	sendMessageInGame(new Message(MessageType::MOVE, this, _position));
 }
 
 void GameObject::setDirection()
@@ -26,31 +48,9 @@ void GameObject::setDirection()
 	}
 }
 
-bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
+void GameObject::setPosition(Vector2f _position)
 {
-	return (position.y + h) >= _gameObject->getY() and
-		position.y <= (_gameObject->getY() + _gameObject->getH()) and
-		(position.x + w) >= _gameObject->getX() and
-		position.x <= (_gameObject->getX() + _gameObject->getW());
-}
-
-void GameObject::destroy()
-{
-	if (!destroyed)
-	{
-		sendMessageInGame(new Message(MessageType::DESTROY, this));
-		destroyed = true;
-	}
-}
-
-void GameObject::dealDamage(GameObject* _gameObject, int _damage)
-{
-	sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _gameObject, _damage));
-}
-
-void GameObject::move(Vector2f _position)
-{
-	sendMessageInGame(new Message(MessageType::MOVE, this, _position));
+	sprite.setPosition(_position);
 }
 
 Game* GameObject::game = nullptr;
@@ -60,19 +60,9 @@ GameObject::GameObject() : destroyed(false), position(), texture(), sprite(), w(
 	game = Game::getInstance();
 }
 
-void GameObject::sendMessageInGame(Message* _message)
+GameObject::Direction GameObject::getDirection()
 {
-	game->receiveMessage(_message);
-}
-
-Sprite GameObject::getSprite()
-{
-	return sprite;
-}
-
-Vector2f GameObject::getPosition()
-{
-	return position;
+	return direction;
 }
 
 float GameObject::getX()
@@ -85,9 +75,9 @@ float GameObject::getY()
 	return position.y;
 }
 
-GameObject::Direction GameObject::getDirection()
+GameObject::GameObjectType GameObject::getGameObjectType()
 {
-	return direction;
+	return gameObjectType;
 }
 
 int GameObject::getW()
@@ -100,7 +90,17 @@ int GameObject::getH()
 	return h;
 }
 
-GameObject::GameObjectType GameObject::getGameObjectType()
+Sprite GameObject::getSprite()
 {
-	return gameObjectType;
+	return sprite;
+}
+
+Vector2f GameObject::getPosition()
+{
+	return position;
+}
+
+void GameObject::sendMessageInGame(Message* _message)
+{
+	game->receiveMessage(_message);
 }

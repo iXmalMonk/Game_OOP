@@ -15,32 +15,15 @@ GameWindow::~GameWindow()
 	delete renderWindow;
 }
 
-void GameWindow::events()
-{
-	while (renderWindow->pollEvent(*event))
-		if (((*event).type == Event::Closed) or ((*event).type == Event::KeyPressed and (*event).key.code == Keyboard::Escape))
-			renderWindow->close();
-}
-
-void GameWindow::updateTime()
-{
-	time = clock->getElapsedTime().asMicroseconds() / TIME_COEFFICIENT;
-	clock->restart();
-}
-
-float GameWindow::getTime()
-{
-	return time;
-}
-
 void GameWindow::clear()
 {
 	renderWindow->clear();
 }
 
-void GameWindow::draw(Sprite _sprite)
+void GameWindow::create()
 {
-	renderWindow->draw(_sprite);
+	renderWindow->create(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
+	renderWindow->setFramerateLimit(WINDOW_FPS);
 }
 
 void GameWindow::display()
@@ -48,13 +31,30 @@ void GameWindow::display()
 	renderWindow->display();
 }
 
+void GameWindow::draw(Sprite _sprite)
+{
+	renderWindow->draw(_sprite);
+}
+
+void GameWindow::events()
+{
+	while (renderWindow->pollEvent(*event))
+		if (((*event).type == Event::Closed) or ((*event).type == Event::KeyPressed and (*event).key.code == Keyboard::Escape))
+			renderWindow->close();
+}
+
+float GameWindow::getTime()
+{
+	return time;
+}
+
 bool GameWindow::isOpen()
 {
 	return renderWindow->isOpen();
 }
 
-void GameWindow::create()
+void GameWindow::updateTime()
 {
-	renderWindow->create(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
-	renderWindow->setFramerateLimit(WINDOW_FPS);
+	time = clock->getElapsedTime().asMicroseconds() / TIME_COEFFICIENT;
+	clock->restart();
 }
