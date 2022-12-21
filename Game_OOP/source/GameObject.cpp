@@ -4,10 +4,10 @@
 
 bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
 {
-	return (position.y + h) >= _gameObject->getY() and
-		position.y <= (_gameObject->getY() + _gameObject->getH()) and
-		(position.x + w) >= _gameObject->getX() and
-		position.x <= (_gameObject->getX() + _gameObject->getW());
+	return (position.y + h) > _gameObject->getY() and
+		position.y < (_gameObject->getY() + _gameObject->getH()) and
+		(position.x + w) > _gameObject->getX() and
+		position.x < (_gameObject->getX() + _gameObject->getW());
 }
 
 void GameObject::dealDamage(GameObject* _gameObject, int _damage)

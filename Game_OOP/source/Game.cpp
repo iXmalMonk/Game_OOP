@@ -74,18 +74,18 @@ void Game::setup()
 	if (flag)
 	{
 		gameObjects.push_back(new Player);
-		gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
+		//gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
 
 		for (int i = 0; i < 8; i++)
 			for(int j = 0; j < 8; j++)
-				if (j < 2)
-				gameObjects.push_back(new Forest(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-				else if (j < 4)
-				gameObjects.push_back(new Water(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-				else if (j < 6)
-				gameObjects.push_back(new ConcreteWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-				else
-				gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				// (j < 2)
+				gameObjects.push_back(new BrickWall(Vector2f(/*WINDOW_W / 6 + */j * STATICOBJECT_W,/* WINDOW_H / 4 + */i * STATICOBJECT_H)));
+				//else if (j < 4)
+				//gameObjects.push_back(new Water(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				//else if (j < 6)
+				//gameObjects.push_back(new ConcreteWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				//else
+				//gameObjects.push_back(new Forest(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
 
 		flag = false;
 	}
