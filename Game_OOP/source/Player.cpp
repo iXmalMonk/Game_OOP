@@ -1,18 +1,6 @@
 #include "..\include\Player.h"
 
-Player::Player()
-{
-	position.x = WINDOW_W / 2;
-	position.y = WINDOW_H / 2;
-	texture.loadFromFile(FILENAME_PNG_PLAYER);
-	sprite.setTexture(texture);
-	velocity = VELOCITY_PLAYER;
-	direction = Direction::UP;
-	gameObjectType = GameObjectType::PLAYER;
-
-	setPosition(position);
-	setDirection();
-}
+Player::Player(Vector2f _position) : Tank(VELOCITY_PLAYER, Direction::UP, GameObjectType::PLAYER, FILENAME_PNG_PLAYER, _position) {}
 
 void Player::receiveMessage(Message* _message)
 {

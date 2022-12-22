@@ -11,7 +11,7 @@ protected:
 	float velocity;
 
 public:
-	DynamicObject();
+	DynamicObject(float _velocity, Direction _direction, GameObjectType _gameObjectType, int _w, int _h, const char* _filename, Vector2f _position);
 };
 
 #endif // !_DYNAMICOBJECT_H

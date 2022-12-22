@@ -1,18 +1,6 @@
 #include "..\include\Enemy.h"
 
-Enemy::Enemy(Vector2f _position)
-{
-	position.x = _position.x;
-	position.y = _position.y;
-	texture.loadFromFile(FILENAME_PNG_ENEMY);
-	sprite.setTexture(texture);
-	velocity = VELOCITY_ENEMY;
-	direction = Direction::DOWN;
-	gameObjectType = GameObjectType::ENEMY;
-
-	setPosition(position);
-	setDirection();
-}
+Enemy::Enemy(Vector2f _position) : Tank(VELOCITY_ENEMY, Direction::DOWN, GameObjectType::ENEMY, FILENAME_PNG_ENEMY, _position) {}
 
 void Enemy::receiveMessage(GameObject::Message* _message)
 {

@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\StaticObjects">
+      <UniqueIdentifier>{a27e4ddf-2fd8-402f-8c57-9a66eb785d99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\DynamicObjects">
+      <UniqueIdentifier>{afb5cac9-143a-43d2-b9d0-f6c2c0946c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\StaticObjects">
+      <UniqueIdentifier>{ee9c57e3-6332-45dc-86f4-4fce6cf8891d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\DynamicObjects">
+      <UniqueIdentifier>{45884337-3f05-44fe-8791-e2a71cec46f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Main.h">
@@ -30,19 +42,7 @@
     <ClInclude Include="include\Tank.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="include\Player.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Projectile.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Enemy.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="include\StaticObject.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\BrickWall.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="include\GameWindow.h">
@@ -51,14 +51,26 @@
     <ClInclude Include="include\Console.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="include\Water.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="include\BrickWall.h">
+      <Filter>Файлы заголовков\StaticObjects</Filter>
     </ClInclude>
     <ClInclude Include="include\ConcreteWall.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\StaticObjects</Filter>
     </ClInclude>
     <ClInclude Include="include\Forest.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Water.h">
+      <Filter>Файлы заголовков\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemy.h">
+      <Filter>Файлы заголовков\DynamicObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Projectile.h">
+      <Filter>Файлы заголовков\DynamicObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player.h">
+      <Filter>Файлы заголовков\DynamicObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -77,19 +89,7 @@
     <ClCompile Include="source\Tank.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="source\Player.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Projectile.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Enemy.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="source\StaticObject.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="source\BrickWall.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="source\GameWindow.cpp">
@@ -98,14 +98,26 @@
     <ClCompile Include="source\Console.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="source\Water.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="source\Enemy.cpp">
+      <Filter>Исходные файлы\DynamicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Projectile.cpp">
+      <Filter>Исходные файлы\DynamicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>Исходные файлы\DynamicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BrickWall.cpp">
+      <Filter>Исходные файлы\StaticObjects</Filter>
     </ClCompile>
     <ClCompile Include="source\ConcreteWall.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\StaticObjects</Filter>
     </ClCompile>
     <ClCompile Include="source\Forest.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Water.cpp">
+      <Filter>Исходные файлы\StaticObjects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

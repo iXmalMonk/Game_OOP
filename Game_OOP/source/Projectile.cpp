@@ -1,41 +1,37 @@
 #include "..\include\Projectile.h"
 
-Projectile::Projectile(Vector2f _position, Direction _direction, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted)
+Vector2f Projectile::getPositionForProjectile(Vector2f _position, Direction _direction)
 {
-	w = PROJECTILE_W;
-	h = PROJECTILE_H;
+	Vector2f temporary;
 
 	switch (_direction)
 	{
-	case Direction::UP:
-		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_UP;
-		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_UP;
+	case GameObject::Direction::UP:
+		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_UP;
+		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_UP;
 		break;
-	case Direction::DOWN:
-		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_DOWN;
-		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_DOWN;
+	case GameObject::Direction::DOWN:
+		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_DOWN;
+		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_DOWN;
 		break;
-	case Direction::LEFT:
-		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_LEFT;
-		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_LEFT;
+	case GameObject::Direction::LEFT:
+		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_LEFT;
+		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_LEFT;
 		break;
-	case Direction::RIGHT:
-		position.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_RIGHT;
-		position.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_RIGHT;
+	case GameObject::Direction::RIGHT:
+		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_RIGHT;
+		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_RIGHT;
 		break;
 	}
 
-	texture.loadFromFile(FILENAME_PNG_PROJECTILE);
-	sprite.setTexture(texture);
-	velocity = VELOCITY_PROJECTILE;
-	direction = _direction;
-	gameObjectType = GameObjectType::PROJECTILE;
+	return temporary;
+}
+
+Projectile::Projectile(Vector2f _position, Direction _direction, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted) : DynamicObject(VELOCITY_PROJECTILE, _direction, GameObjectType::PROJECTILE, PROJECTILE_W, PROJECTILE_H, FILENAME_PNG_PROJECTILE, getPositionForProjectile(_position, _direction))
+{
 	gameObjectTypeWhoShooted = _gameObjectTypeWhoShooted;
 	gameObjectWhoShooted = _gameObjectWhoShooted;
 	damage = PROJECTILE_DAMAGE;
-
-	setPosition(position);
-	setDirection();
 }
 
 GameObject::GameObjectType Projectile::getGameObjectTypeWhoShooted()

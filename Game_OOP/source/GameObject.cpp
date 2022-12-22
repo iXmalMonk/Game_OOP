@@ -55,9 +55,21 @@ void GameObject::setPosition(Vector2f _position)
 
 Game* GameObject::game = nullptr;
 
-GameObject::GameObject() : destroyed(false), position(), texture(), sprite(), w(0), h(0), gameObjectType(GameObjectType::NONE), direction(Direction::NONE)
+GameObject::GameObject(Direction _direction, GameObjectType _gameObjectType, int _w, int _h, const char* _filename, Vector2f _position)
 {
+	destroyed = false;
+	direction = _direction;
+	gameObjectType = _gameObjectType;
+	w = _w;
+	h = _h;
+	texture.loadFromFile(_filename);
+	sprite.setTexture(texture);
+	position = _position;
+
 	game = Game::getInstance();
+
+	setDirection();
+	setPosition(_position);
 }
 
 GameObject::Direction GameObject::getDirection()

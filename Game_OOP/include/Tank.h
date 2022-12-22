@@ -11,7 +11,7 @@ private:
 	int healthPoints;
 
 public:
-	Tank();
+	Tank(float _velocity, Direction _direction, GameObjectType _gameObjectType, const char* _filename, Vector2f _position);
 	void alive();
 	int getHealthPoints();
 	bool readyToShoot(float _time);

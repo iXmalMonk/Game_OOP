@@ -73,7 +73,7 @@ void Game::setup()
 	static bool flag = true;
 	if (flag)
 	{
-		gameObjects.push_back(new Player);
+		gameObjects.push_back(new Player(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
 		//gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
 
 		for (int i = 0; i < 8; i++)

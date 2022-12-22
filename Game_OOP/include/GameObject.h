@@ -67,9 +67,9 @@ protected:
 	GameObjectType gameObjectType;
 	int w;
 	int h;
-	Sprite sprite;
-	static Game* game;
 	Texture texture;
+	static Game* game;
+	Sprite sprite;
 	Vector2f position;
 
 	bool checkCollisionWithGameObject(GameObject* _gameObject);
@@ -80,7 +80,7 @@ protected:
 	void setPosition(Vector2f _position);
 
 public:
-	GameObject();
+	GameObject(Direction _direction, GameObjectType _gameObjectType, int _w, int _h, const char* _filename, Vector2f _position);
 	Direction getDirection();
 	float getX();
 	float getY();

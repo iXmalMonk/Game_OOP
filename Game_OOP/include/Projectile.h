@@ -10,6 +10,8 @@ private:
 	GameObject* gameObjectWhoShooted;
 	int damage;
 
+	Vector2f getPositionForProjectile(Vector2f _position, Direction _direction);
+
 public:
 	Projectile(Vector2f _position, Direction _direction, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted);
 	GameObjectType getGameObjectTypeWhoShooted();
