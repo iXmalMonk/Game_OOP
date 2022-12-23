@@ -6,15 +6,14 @@
 class Projectile : public DynamicObject
 {
 private:
-	GameObjectType gameObjectTypeWhoShooted;
 	GameObject* gameObjectWhoShooted;
 	int damage;
 
+	void dealDamage(GameObject* _gameObject, int _damage);
 	Vector2f getPositionForProjectile(Vector2f _position, Direction _direction);
 
 public:
-	Projectile(Vector2f _position, Direction _direction, GameObjectType _gameObjectTypeWhoShooted, GameObject* _gameObjectWhoShooted);
-	GameObjectType getGameObjectTypeWhoShooted();
+	Projectile(Vector2f _position, Direction _direction, GameObject* _gameObjectWhoShooted);
 	void receiveMessage(Message* _message) override;
 	void update(float _time) override;
 };

@@ -4,41 +4,14 @@ Enemy::Enemy(Vector2f _position) : Tank(VELOCITY_ENEMY, Direction::DOWN, GameObj
 
 void Enemy::receiveMessage(GameObject::Message* _message)
 {
-	if (_message->dealDamage.gameObject == this)
+	if (_message->messageType == GameObject::MessageType::DEALDAMAGE and _message->dealDamage.gameObject == this)
 	{
 		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
 		if (MESSAGES_DEBUG_IN_ENEMY)
 			cout << "Enemy HP: " << getHealthPoints() << endl;
 		alive();
 	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPosition(position);
-		}
-	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPosition(position);
-		}
-	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::WATER)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPosition(position);
-		}
-	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
+	else if (_message->messageType == GameObject::MessageType::EMPTY and _message->gameObject->getGameObjectType() != GameObjectType::FOREST and _message->gameObject != this)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
@@ -57,55 +30,54 @@ void Enemy::update(float _time)
 	dx = 0;
 	dy = 0;
 
-	if (direction == Direction::UP)
+	if (getDirection() == Direction::UP)
 	{
 		if (position.y <= 0)
 		{
-			dx = velocity * _time;
+			dx = getVelocity() * _time;
 			position.y = 0;
-			direction = Direction::RIGHT;
+			setDirection(Direction::RIGHT);
 		}
 		else
-			dy = -velocity * _time;
+			dy = -getVelocity() * _time;
 	}
-	else if (direction == Direction::LEFT)
+	else if (getDirection() == Direction::LEFT)
 	{
 		if (position.x <= 0)
 		{
-			dy = -velocity * _time;
+			dy = -getVelocity() * _time;
 			position.x = 0;
-			direction = Direction::UP;
+			setDirection(Direction::UP);
 		}
 		else
-			dx = -velocity * _time;
+			dx = -getVelocity() * _time;
 	}
-	else if (direction == Direction::DOWN)
+	else if (getDirection() == Direction::DOWN)
 	{
-		if (position.y + h >= WINDOW_H)
+		if (position.y + getH() >= WINDOW_H)
 		{
-			dx = -velocity * _time;
-			position.y = WINDOW_H - h;
-			direction = Direction::LEFT;
+			dx = -getVelocity() * _time;
+			position.y = WINDOW_H - getH();
+			setDirection(Direction::LEFT);
 		}
 		else
-			dy = velocity * _time;
+			dy = getVelocity() * _time;
 	}
-	else if (direction == Direction::RIGHT)
+	else if (getDirection() == Direction::RIGHT)
 	{
-		if (position.x + w >= WINDOW_W)
+		if (position.x + getW() >= WINDOW_W)
 		{
-			dy = velocity * _time;
-			position.x = WINDOW_W - w;
-			direction = Direction::DOWN;
+			dy = getVelocity() * _time;
+			position.x = WINDOW_W - getW();
+			setDirection(Direction::DOWN);
 		}
 		else
-			dx = velocity * _time;
+			dx = getVelocity() * _time;
 	}
 
 	position.x += dx;
 	position.y += dy;
 
-	move(getPosition());
+	empty();
 	setPosition(position);
-	setDirection();
 }

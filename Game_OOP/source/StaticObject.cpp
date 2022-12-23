@@ -4,7 +4,7 @@ StaticObject::StaticObject(GameObjectType _gameObjectType, const char* _filename
 
 void StaticObject::receiveMessage(Message* _message)
 {
-	if (_message->dealDamage.gameObject == this)
+	if (_message->messageType == GameObject::MessageType::DEALDAMAGE and _message->dealDamage.gameObject == this)
 	{
 		destroy();
 		if (MESSAGES_DEBUG_IN_STATICOBJECT)
@@ -14,5 +14,5 @@ void StaticObject::receiveMessage(Message* _message)
 
 void StaticObject::update(float _time)
 {
-	move(getPosition());
+	empty();
 }

@@ -6,3 +6,8 @@ DynamicObject::DynamicObject(float _velocity, Direction _direction, GameObjectTy
 	dy = 0;
 	velocity = _velocity;
 }
+
+float DynamicObject::getVelocity()
+{
+	return velocity;
+}

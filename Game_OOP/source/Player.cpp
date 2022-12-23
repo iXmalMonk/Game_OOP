@@ -4,41 +4,14 @@ Player::Player(Vector2f _position) : Tank(VELOCITY_PLAYER, Direction::UP, GameOb
 
 void Player::receiveMessage(Message* _message)
 {
-	if (_message->dealDamage.gameObject == this)
+	if (_message->messageType == GameObject::MessageType::DEALDAMAGE and _message->dealDamage.gameObject == this)
 	{
 		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
 		if (MESSAGES_DEBUG_IN_PLAYER)
 			cout << "Player HP: " << getHealthPoints() << endl;
 		alive();
 	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPosition(position);
-		}
-	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPosition(position);
-		}
-	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::WATER)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPosition(position);
-		}
-	}
-	else if (_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
+	else if (_message->messageType == GameObject::MessageType::EMPTY and _message->gameObject->getGameObjectType() != GameObjectType::FOREST and _message->gameObject != this)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
@@ -59,23 +32,23 @@ void Player::update(float _time)
 
 	if (Keyboard::isKeyPressed(Keyboard::W))
 	{
-		direction = Direction::UP;
-		dy = -velocity * _time;
+		setDirection(Direction::UP);
+		dy = -getVelocity() * _time;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::A))
 	{
-		direction = Direction::LEFT;
-		dx = -velocity * _time;
+		setDirection(Direction::LEFT);
+		dx = -getVelocity() * _time;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::S))
 	{
-		direction = Direction::DOWN;
-		dy = velocity * _time;
+		setDirection(Direction::DOWN);
+		dy = getVelocity() * _time;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::D))
 	{
-		direction = Direction::RIGHT;
-		dx = velocity * _time;
+		setDirection(Direction::RIGHT);
+		dx = getVelocity() * _time;
 	}
 
 	position.x += dx;
@@ -85,12 +58,11 @@ void Player::update(float _time)
 		position.y = 0;
 	if (position.x < 0)
 		position.x = 0;
-	if (position.y + h > WINDOW_H)
-		position.y = WINDOW_H - h;
-	if (position.x + w > WINDOW_W)
-		position.x = WINDOW_W - w;
+	if (position.y + getH() > WINDOW_H)
+		position.y = WINDOW_H - getH();
+	if (position.x + getW() > WINDOW_W)
+		position.x = WINDOW_W - getW();
 
-	move(getPosition());
+	empty();
 	setPosition(position);
-	setDirection();
 }

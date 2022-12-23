@@ -26,7 +26,7 @@ void Game::messagesGameObjects()
 {
 	for (auto message : messages)
 	{
-		if (message->messageType == GameObject::MessageType::MOVE or
+		if (message->messageType == GameObject::MessageType::EMPTY or
 			message->messageType == GameObject::MessageType::DEALDAMAGE)
 		{
 			for (auto gameObject : gameObjects)
@@ -41,7 +41,6 @@ void Game::messagesGameObjects()
 			gameObjects.push_back(new Projectile(
 				message->gameObject->getPosition(),
 				message->gameObject->getDirection(),
-				message->gameObject->getGameObjectType(),
 				message->gameObject));
 			//delete message;
 			if (MESSAGES_DEBUG_IN_GAME)
@@ -74,18 +73,18 @@ void Game::setup()
 	if (flag)
 	{
 		gameObjects.push_back(new Player(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
-		//gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
+		gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
 
 		for (int i = 0; i < 8; i++)
 			for(int j = 0; j < 8; j++)
-				// (j < 2)
-				gameObjects.push_back(new BrickWall(Vector2f(/*WINDOW_W / 6 + */j * STATICOBJECT_W,/* WINDOW_H / 4 + */i * STATICOBJECT_H)));
-				//else if (j < 4)
-				//gameObjects.push_back(new Water(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-				//else if (j < 6)
-				//gameObjects.push_back(new ConcreteWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-				//else
-				//gameObjects.push_back(new Forest(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				if (j < 2)
+				gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				else if (j < 4)
+				gameObjects.push_back(new Water(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				else if (j < 6)
+				gameObjects.push_back(new ConcreteWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				else
+				gameObjects.push_back(new Forest(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
 
 		flag = false;
 	}

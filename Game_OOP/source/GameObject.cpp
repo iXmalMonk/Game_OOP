@@ -10,11 +10,6 @@ bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
 		position.x < (_gameObject->getX() + _gameObject->getW());
 }
 
-void GameObject::dealDamage(GameObject* _gameObject, int _damage)
-{
-	sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _gameObject, _damage));
-}
-
 void GameObject::destroy()
 {
 	if (!destroyed)
@@ -24,13 +19,15 @@ void GameObject::destroy()
 	}
 }
 
-void GameObject::move(Vector2f _position)
+void GameObject::empty()
 {
-	sendMessageInGame(new Message(MessageType::MOVE, this, _position));
+	sendMessageInGame(new Message(MessageType::EMPTY, this));
 }
 
-void GameObject::setDirection()
+void GameObject::setDirection(Direction _direction)
 {
+	direction = _direction;
+
 	switch (direction)
 	{
 	case Direction::UP:
@@ -68,23 +65,13 @@ GameObject::GameObject(Direction _direction, GameObjectType _gameObjectType, int
 
 	game = Game::getInstance();
 
-	setDirection();
+	setDirection(_direction);
 	setPosition(_position);
 }
 
 GameObject::Direction GameObject::getDirection()
 {
 	return direction;
-}
-
-float GameObject::getX()
-{
-	return position.x;
-}
-
-float GameObject::getY()
-{
-	return position.y;
 }
 
 GameObject::GameObjectType GameObject::getGameObjectType()
@@ -115,4 +102,14 @@ Vector2f GameObject::getPosition()
 void GameObject::sendMessageInGame(Message* _message)
 {
 	game->receiveMessage(_message);
+}
+
+float GameObject::getX()
+{
+	return position.x;
+}
+
+float GameObject::getY()
+{
+	return position.y;
 }
