@@ -1,8 +1,9 @@
 #include "..\include\Projectile.h"
+#include "..\include\Game.h"
 
 void Projectile::dealDamage(GameObject* _gameObject, int _damage)
 {
-	sendMessageInGame(new Message(MessageType::DEALDAMAGE, this, _gameObject, _damage));
+	Game::getInstance()->message(new Message(MessageType::DEALDAMAGE, this, _gameObject, _damage));
 }
 
 Vector2f Projectile::getPositionForProjectile(Vector2f _position, Direction _direction)
@@ -38,7 +39,7 @@ Projectile::Projectile(Vector2f _position, Direction _direction, GameObject* _ga
 	damage = PROJECTILE_DAMAGE;
 }
 
-void Projectile::receiveMessage(Message* _message)
+void Projectile::message(Message* _message)
 {
 	if (_message->messageType == GameObject::MessageType::EMPTY)
 	{

@@ -2,5 +2,5 @@
 
 int main()
 {
-	return Game::getInstance()->entry()->exit();
+	return Game::getInstance()->entry()->destroy()->exit();
 }

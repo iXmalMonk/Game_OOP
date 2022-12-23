@@ -2,7 +2,7 @@
 
 Player::Player(Vector2f _position) : Tank(VELOCITY_PLAYER, Direction::UP, GameObjectType::PLAYER, FILENAME_PNG_PLAYER, _position) {}
 
-void Player::receiveMessage(Message* _message)
+void Player::message(Message* _message)
 {
 	if (_message->messageType == GameObject::MessageType::DEALDAMAGE and _message->dealDamage.gameObject == this)
 	{

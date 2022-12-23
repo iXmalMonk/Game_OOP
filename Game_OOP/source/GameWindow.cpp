@@ -1,9 +1,12 @@
 #include "..\include\GameWindow.h"
 
-GameWindow::GameWindow() : clock(nullptr), event(nullptr), renderWindow(nullptr), time(0)
+GameWindow* GameWindow::instance = nullptr;
+
+GameWindow::GameWindow()
 {
 	clock = new Clock;
 	event = new Event;
+	time = 0;
 	renderWindow = new RenderWindow(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE, Style::Titlebar);
 	renderWindow->setFramerateLimit(WINDOW_FPS);
 }
@@ -51,6 +54,23 @@ float GameWindow::getTime()
 bool GameWindow::isOpen()
 {
 	return renderWindow->isOpen();
+}
+
+GameWindow* GameWindow::getInstance()
+{
+	if (!instance)
+		instance = new GameWindow;
+
+	return instance;
+}
+
+void GameWindow::destroy()
+{
+	if (instance)
+	{
+		delete instance;
+		instance = nullptr;
+	}
 }
 
 void GameWindow::updateTime()

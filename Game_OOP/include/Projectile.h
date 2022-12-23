@@ -14,7 +14,7 @@ private:
 
 public:
 	Projectile(Vector2f _position, Direction _direction, GameObject* _gameObjectWhoShooted);
-	void receiveMessage(Message* _message) override;
+	void message(Message* _message) override;
 	void update(float _time) override;
 };
 

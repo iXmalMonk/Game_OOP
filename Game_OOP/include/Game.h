@@ -16,24 +16,22 @@ class Game
 {
 private:
 	static Game* instance;
-	
-	GameWindow* gameWindow;
 
+	GameWindow* gameWindow;
 	list<GameObject*> gameObjects;
 	list<GameObject::Message*> messages;
 
 	Game();
 	~Game();
-	void messagesGameObjects();
-	void sendMessageInGameObject(GameObject::Message* _message, GameObject* _gameObject);
-	void setup();
+	void msgs();
 	void updateGameObjects();
 
 public:
 	Game* entry();
 	int exit();
 	static Game* getInstance();
-	void receiveMessage(GameObject::Message* _message);
+	static Game* destroy();
+	void message(GameObject::Message* _message);
 };
 
 #endif // !_GAME_H

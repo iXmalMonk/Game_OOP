@@ -2,7 +2,7 @@
 
 Enemy::Enemy(Vector2f _position) : Tank(VELOCITY_ENEMY, Direction::DOWN, GameObjectType::ENEMY, FILENAME_PNG_ENEMY, _position) {}
 
-void Enemy::receiveMessage(GameObject::Message* _message)
+void Enemy::message(GameObject::Message* _message)
 {
 	if (_message->messageType == GameObject::MessageType::DEALDAMAGE and _message->dealDamage.gameObject == this)
 	{

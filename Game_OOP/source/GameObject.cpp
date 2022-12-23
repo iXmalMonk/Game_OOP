@@ -1,5 +1,4 @@
 #include "..\include\GameObject.h"
-
 #include "..\include\Game.h"
 
 bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
@@ -14,14 +13,14 @@ void GameObject::destroy()
 {
 	if (!destroyed)
 	{
-		sendMessageInGame(new Message(MessageType::DESTROY, this));
+		Game::getInstance()->message(new Message(MessageType::DESTROY, this));
 		destroyed = true;
 	}
 }
 
 void GameObject::empty()
 {
-	sendMessageInGame(new Message(MessageType::EMPTY, this));
+	Game::getInstance()->message(new Message(MessageType::EMPTY, this));
 }
 
 void GameObject::setDirection(Direction _direction)
@@ -50,8 +49,6 @@ void GameObject::setPosition(Vector2f _position)
 	sprite.setPosition(_position);
 }
 
-Game* GameObject::game = nullptr;
-
 GameObject::GameObject(Direction _direction, GameObjectType _gameObjectType, int _w, int _h, const char* _filename, Vector2f _position)
 {
 	destroyed = false;
@@ -62,8 +59,6 @@ GameObject::GameObject(Direction _direction, GameObjectType _gameObjectType, int
 	texture.loadFromFile(_filename);
 	sprite.setTexture(texture);
 	position = _position;
-
-	game = Game::getInstance();
 
 	setDirection(_direction);
 	setPosition(_position);
@@ -97,11 +92,6 @@ Sprite GameObject::getSprite()
 Vector2f GameObject::getPosition()
 {
 	return position;
-}
-
-void GameObject::sendMessageInGame(Message* _message)
-{
-	game->receiveMessage(_message);
 }
 
 float GameObject::getX()

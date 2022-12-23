@@ -4,14 +4,28 @@ Game* Game::instance = nullptr;
 
 Game::Game()
 {
-	gameWindow = new GameWindow;
+	gameWindow = GameWindow::getInstance();
+
+	gameObjects.push_back(new Player(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
+	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
+
+	for (int i = 0; i < 8; i++)
+		for (int j = 0; j < 8; j++)
+			if (j < 2)
+				gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+			else if (j < 4)
+				gameObjects.push_back(new Water(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+			else if (j < 6)
+				gameObjects.push_back(new ConcreteWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+			else
+				gameObjects.push_back(new Forest(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
 
 	CONSOLE ? console::show() : console::hide();
 }
 
 Game::~Game()
 {
-	delete gameWindow;
+	gameWindow->destroy();
 
 	for (auto gameObject : gameObjects)
 		delete gameObject;
@@ -22,27 +36,23 @@ Game::~Game()
 	messages.clear();
 }
 
-void Game::messagesGameObjects()
+void Game::msgs()
 {
 	for (auto message : messages)
 	{
-		if (message->messageType == GameObject::MessageType::EMPTY or
-			message->messageType == GameObject::MessageType::DEALDAMAGE)
-		{
-			for (auto gameObject : gameObjects)
-				sendMessageInGameObject(message, gameObject);
-			//delete message;
-			//continue;
-		}
-
 		switch (message->messageType)
 		{
+		case GameObject::MessageType::EMPTY:
+		case GameObject::MessageType::DEALDAMAGE:
+			for (auto gameObject : gameObjects)
+				//sendMessageInGameObject(message, gameObject);
+				gameObject->message(message);
+			break;
 		case GameObject::MessageType::SHOOT:
 			gameObjects.push_back(new Projectile(
 				message->gameObject->getPosition(),
 				message->gameObject->getDirection(),
 				message->gameObject));
-			//delete message;
 			if (MESSAGES_DEBUG_IN_GAME)
 				cout << "SHOOT" << endl;
 			break;
@@ -50,7 +60,6 @@ void Game::messagesGameObjects()
 			auto object = find(gameObjects.begin(), gameObjects.end(), message->gameObject);
 			delete* object;
 			gameObjects.erase(object);
-			//delete message;
 			if (MESSAGES_DEBUG_IN_GAME)
 				cout << "DESTROY" << endl;
 			break;
@@ -62,34 +71,6 @@ void Game::messagesGameObjects()
 	messages.clear();
 }
 
-void Game::sendMessageInGameObject(GameObject::Message* _message, GameObject* _gameObject)
-{
-	_gameObject->receiveMessage(_message);
-}
-
-void Game::setup()
-{
-	static bool flag = true;
-	if (flag)
-	{
-		gameObjects.push_back(new Player(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
-		gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
-
-		for (int i = 0; i < 8; i++)
-			for(int j = 0; j < 8; j++)
-				if (j < 2)
-				gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-				else if (j < 4)
-				gameObjects.push_back(new Water(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-				else if (j < 6)
-				gameObjects.push_back(new ConcreteWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-				else
-				gameObjects.push_back(new Forest(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-
-		flag = false;
-	}
-}
-
 void Game::updateGameObjects()
 {
 	for (auto gameObject : gameObjects)
@@ -98,8 +79,6 @@ void Game::updateGameObjects()
 
 Game* Game::entry()
 {
-	setup();
-
 	if (!gameWindow->isOpen())
 		gameWindow->create();
 
@@ -108,7 +87,7 @@ Game* Game::entry()
 		gameWindow->events();
 		gameWindow->updateTime();
 		updateGameObjects();
-		messagesGameObjects();
+		msgs();
 		gameWindow->clear();
 		for (auto gameObject : gameObjects)
 			if (gameObject->getGameObjectType() != GameObject::GameObjectType::FOREST)
@@ -119,18 +98,12 @@ Game* Game::entry()
 		gameWindow->display();
 	}
 
-	return this;
+	return instance;
 }
 
 int Game::exit()
 {
-	if (instance)
-	{
-		delete instance;
-		instance = nullptr;
-	}
-
-	return 0;
+	return !instance ? 0 : 1;
 }
 
 Game* Game::getInstance()
@@ -141,7 +114,18 @@ Game* Game::getInstance()
 	return instance;
 }
 
-void Game::receiveMessage(GameObject::Message* _message)
+Game* Game::destroy()
+{
+	if (instance)
+	{
+		delete instance;
+		instance = nullptr;
+	}
+
+	return instance;
+}
+
+void Game::message(GameObject::Message* _message)
 {
 	messages.push_back(_message);
 }

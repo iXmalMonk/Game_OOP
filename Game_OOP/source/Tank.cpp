@@ -1,4 +1,5 @@
 #include "..\include\Tank.h"
+#include "..\include\Game.h"
 
 Tank::Tank(float _velocity, Direction _direction, GameObjectType _gameObjectType, const char* _filename, Vector2f _position) : DynamicObject(_velocity, _direction, _gameObjectType, TANK_W, TANK_H, _filename, _position)
 {
@@ -38,7 +39,8 @@ void Tank::shoot()
 {
 	if (cooldown <= cooldownTime)
 	{
-		sendMessageInGame(new Message(MessageType::SHOOT, this));
+		Game::getInstance()->message(new Message(MessageType::SHOOT, this));
+
 		cooldownTime = 0;
 	}
 }

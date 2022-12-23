@@ -6,14 +6,16 @@
 class GameWindow
 {
 private:
+	static GameWindow* instance;
+
 	Clock* clock;
 	Event* event;
 	float time;
 	RenderWindow* renderWindow;
 
-public:
 	GameWindow();
 	~GameWindow();
+public:
 	void clear();
 	void create();
 	void display();
@@ -21,6 +23,8 @@ public:
 	void events();
 	float getTime();
 	bool isOpen();
+	static GameWindow* getInstance();
+	static void destroy();
 	void updateTime();
 };
 

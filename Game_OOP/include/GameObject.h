@@ -3,8 +3,6 @@
 
 #include "Main.h"
 
-class Game;
-
 class GameObject
 {
 public:
@@ -57,7 +55,6 @@ private:
 	Sprite sprite;
 
 protected:
-	static Game* game;
 	Vector2f position;
 
 	bool checkCollisionWithGameObject(GameObject* _gameObject);
@@ -74,11 +71,10 @@ public:
 	int getH();
 	Sprite getSprite();
 	Vector2f getPosition();
-	void sendMessageInGame(Message* _message);
 	float getX();
 	float getY();
 
-	virtual void receiveMessage(Message* _message) = 0;
+	virtual void message(Message* _message) = 0;
 	virtual void update(float _time) = 0;
 };
 
