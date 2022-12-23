@@ -9,26 +9,10 @@ public:
 	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
 	enum class GameObjectType { BRICKWALL, CONCRETEWALL, ENEMY, FOREST, PLAYER, PROJECTILE, WATER, NONE };
 	enum class MessageType { CREATE, DEALDAMAGE, DESTROY, EMPTY, SHOOT };
-
 	struct Message
 	{
-		Message(MessageType _messageType, GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage) // DEALDAMAGE
-		{
-			messageType = _messageType;
-			gameObject = _gameObjectWho;
-			dealDamage.gameObject = _gameObjectWhom;
-			dealDamage.damage = _damage;
-		}
-
-		Message(MessageType _messageType, GameObject* _gameObject) // DESTROY or EMPTY
-		{
-			messageType = _messageType;
-			gameObject = _gameObject;
-		}
-
 		GameObject* gameObject;
 		MessageType messageType;
-
 		union
 		{
 			struct
@@ -36,13 +20,14 @@ public:
 				GameObjectType gameObjectType;
 				Vector2f position;
 			} create;
-
 			struct
 			{
 				GameObject* gameObject;
 				int damage;
 			} dealDamage;
 		};
+		Message(MessageType _messageType, GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage); // DEALDAMAGE
+		Message(MessageType _messageType, GameObject* _gameObject); // DESTROY or EMPTY
 	};
 
 private:
@@ -61,7 +46,7 @@ protected:
 	void destroy();
 	void empty();
 	void setDirection(Direction _direction);
-	void setPosition(Vector2f _position);
+	void setPositionInSprite(Vector2f _position);
 
 public:
 	GameObject(Direction _direction, GameObjectType _gameObjectType, int _w, int _h, const char* _filename, Vector2f _position);

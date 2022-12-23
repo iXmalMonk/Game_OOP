@@ -7,7 +7,9 @@ GameWindow::GameWindow()
 	clock = new Clock;
 	event = new Event;
 	time = 0;
-	renderWindow = new RenderWindow(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE, Style::Titlebar);
+	renderWindow = new RenderWindow(VideoMode(WINDOW_W, WINDOW_H),
+		WINDOW_TITLE,
+		Style::Titlebar);
 	renderWindow->setFramerateLimit(WINDOW_FPS);
 }
 
@@ -25,7 +27,8 @@ void GameWindow::clear()
 
 void GameWindow::create()
 {
-	renderWindow->create(VideoMode(WINDOW_W, WINDOW_H), WINDOW_TITLE);
+	renderWindow->create(VideoMode(WINDOW_W, WINDOW_H),
+		WINDOW_TITLE);
 	renderWindow->setFramerateLimit(WINDOW_FPS);
 }
 
@@ -42,7 +45,9 @@ void GameWindow::draw(Sprite _sprite)
 void GameWindow::events()
 {
 	while (renderWindow->pollEvent(*event))
-		if (((*event).type == Event::Closed) or ((*event).type == Event::KeyPressed and (*event).key.code == Keyboard::Escape))
+		if (((*event).type == Event::Closed) or
+			((*event).type == Event::KeyPressed and
+				(*event).key.code == Keyboard::Escape))
 			renderWindow->close();
 }
 
@@ -60,7 +65,6 @@ GameWindow* GameWindow::getInstance()
 {
 	if (!instance)
 		instance = new GameWindow;
-
 	return instance;
 }
 

@@ -4,20 +4,24 @@ Player::Player(Vector2f _position) : Tank(VELOCITY_PLAYER, Direction::UP, GameOb
 
 void Player::message(Message* _message)
 {
-	if (_message->messageType == GameObject::MessageType::DEALDAMAGE and _message->dealDamage.gameObject == this)
+	if (_message->messageType == MessageType::DEALDAMAGE and
+		_message->dealDamage.gameObject == this)
 	{
 		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
 		if (MESSAGES_DEBUG_IN_PLAYER)
 			cout << "Player HP: " << getHealthPoints() << endl;
 		alive();
 	}
-	else if (_message->messageType == GameObject::MessageType::EMPTY and _message->gameObject->getGameObjectType() != GameObjectType::FOREST and _message->gameObject != this)
+	else if (_message->messageType == MessageType::EMPTY and
+		_message->gameObject->getGameObjectType() != GameObjectType::FOREST and
+		_message->gameObject->getGameObjectType() != GameObjectType::PROJECTILE and
+		_message->gameObject != this)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
 			position.x -= dx;
 			position.y -= dy;
-			setPosition(position);
+			setPositionInSprite(position);
 		}
 	}
 }
@@ -26,10 +30,8 @@ void Player::update(float _time)
 {
 	if (readyToShoot(_time) and Keyboard::isKeyPressed(Keyboard::Space))
 		shoot();
-
 	dx = 0;
 	dy = 0;
-
 	if (Keyboard::isKeyPressed(Keyboard::W))
 	{
 		setDirection(Direction::UP);
@@ -50,10 +52,8 @@ void Player::update(float _time)
 		setDirection(Direction::RIGHT);
 		dx = getVelocity() * _time;
 	}
-
 	position.x += dx;
 	position.y += dy;
-
 	if (position.y < 0)
 		position.y = 0;
 	if (position.x < 0)
@@ -62,7 +62,6 @@ void Player::update(float _time)
 		position.y = WINDOW_H - getH();
 	if (position.x + getW() > WINDOW_W)
 		position.x = WINDOW_W - getW();
-
 	empty();
-	setPosition(position);
+	setPositionInSprite(position);
 }

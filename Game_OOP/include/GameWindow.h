@@ -15,6 +15,7 @@ private:
 
 	GameWindow();
 	~GameWindow();
+
 public:
 	void clear();
 	void create();

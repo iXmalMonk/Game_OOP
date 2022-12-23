@@ -7,7 +7,7 @@ class Enemy : public Tank
 {
 public:
 	Enemy(Vector2f _position);
-	void message(GameObject::Message* _message) override;
+	void message(Message* _message) override;
 	void update(float _time) override;
 };
 

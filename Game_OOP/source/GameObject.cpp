@@ -1,6 +1,20 @@
 #include "..\include\GameObject.h"
 #include "..\include\Game.h"
 
+GameObject::Message::Message(MessageType _messageType, GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage)
+{
+	messageType = _messageType;
+	gameObject = _gameObjectWho;
+	dealDamage.gameObject = _gameObjectWhom;
+	dealDamage.damage = _damage;
+}
+
+GameObject::Message::Message(MessageType _messageType, GameObject* _gameObject)
+{
+	messageType = _messageType;
+	gameObject = _gameObject;
+}
+
 bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
 {
 	return (position.y + h) > _gameObject->getY() and
@@ -26,7 +40,6 @@ void GameObject::empty()
 void GameObject::setDirection(Direction _direction)
 {
 	direction = _direction;
-
 	switch (direction)
 	{
 	case Direction::UP:
@@ -44,7 +57,7 @@ void GameObject::setDirection(Direction _direction)
 	}
 }
 
-void GameObject::setPosition(Vector2f _position)
+void GameObject::setPositionInSprite(Vector2f _position)
 {
 	sprite.setPosition(_position);
 }
@@ -59,9 +72,8 @@ GameObject::GameObject(Direction _direction, GameObjectType _gameObjectType, int
 	texture.loadFromFile(_filename);
 	sprite.setTexture(texture);
 	position = _position;
-
 	setDirection(_direction);
-	setPosition(_position);
+	setPositionInSprite(_position);
 }
 
 GameObject::Direction GameObject::getDirection()

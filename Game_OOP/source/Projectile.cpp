@@ -9,27 +9,25 @@ void Projectile::dealDamage(GameObject* _gameObject, int _damage)
 Vector2f Projectile::getPositionForProjectile(Vector2f _position, Direction _direction)
 {
 	Vector2f temporary;
-
 	switch (_direction)
 	{
-	case GameObject::Direction::UP:
+	case Direction::UP:
 		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_UP;
 		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_UP;
 		break;
-	case GameObject::Direction::DOWN:
+	case Direction::DOWN:
 		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_DOWN;
 		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_DOWN;
 		break;
-	case GameObject::Direction::LEFT:
+	case Direction::LEFT:
 		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_LEFT;
 		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_LEFT;
 		break;
-	case GameObject::Direction::RIGHT:
+	case Direction::RIGHT:
 		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_RIGHT;
 		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_RIGHT;
 		break;
 	}
-
 	return temporary;
 }
 
@@ -41,18 +39,21 @@ Projectile::Projectile(Vector2f _position, Direction _direction, GameObject* _ga
 
 void Projectile::message(Message* _message)
 {
-	if (_message->messageType == GameObject::MessageType::EMPTY)
+	if (_message->messageType == MessageType::EMPTY)
 	{
-		if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and gameObjectWhoShooted->getGameObjectType() == GameObjectType::ENEMY)
+		if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and
+			gameObjectWhoShooted->getGameObjectType() == GameObjectType::ENEMY)
 		{
-			if (checkCollisionWithGameObject(_message->gameObject) and _message->gameObject != gameObjectWhoShooted)
+			if (checkCollisionWithGameObject(_message->gameObject) and
+				_message->gameObject != gameObjectWhoShooted)
 			{
 				destroy();
 				if (MESSAGES_DEBUG_IN_PROJECTILE)
 					cout << "Enemy hit the enemy" << endl;
 			}
 		}
-		else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and gameObjectWhoShooted->getGameObjectType() == GameObjectType::PLAYER)
+		else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and
+			gameObjectWhoShooted->getGameObjectType() == GameObjectType::PLAYER)
 		{
 			if (checkCollisionWithGameObject(_message->gameObject))
 			{
@@ -62,7 +63,8 @@ void Projectile::message(Message* _message)
 					cout << "Player hit the enemy" << endl;
 			}
 		}
-		else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER and gameObjectWhoShooted->getGameObjectType() == GameObjectType::ENEMY)
+		else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER and
+			gameObjectWhoShooted->getGameObjectType() == GameObjectType::ENEMY)
 		{
 			if (checkCollisionWithGameObject(_message->gameObject))
 			{
@@ -72,7 +74,8 @@ void Projectile::message(Message* _message)
 					cout << "Enemy hit the player" << endl;
 			}
 		}
-		else if (_message->gameObject->getGameObjectType() == GameObjectType::PROJECTILE and _message->gameObject != this)
+		else if (_message->gameObject->getGameObjectType() == GameObjectType::PROJECTILE
+			and _message->gameObject != this)
 		{
 			if (checkCollisionWithGameObject(_message->gameObject))
 			{
@@ -81,18 +84,19 @@ void Projectile::message(Message* _message)
 					cout << "Projectile hit the projectile" << endl;
 			}
 		}
-		else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL or _message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
+		else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL or
+			_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
 		{
 			if (checkCollisionWithGameObject(_message->gameObject))
 			{
-				if (_message->gameObject->getGameObjectType() == GameObject::GameObjectType::BRICKWALL)
+				if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
 				{
 					dealDamage(_message->gameObject, NULL);
 					destroy();
 					if (MESSAGES_DEBUG_IN_PROJECTILE)
 						cout << "Game object hit the brick wall" << endl;
 				}
-				else if (_message->gameObject->getGameObjectType() == GameObject::GameObjectType::CONCRETEWALL)
+				else if (_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
 				{
 					destroy();
 					if (MESSAGES_DEBUG_IN_PROJECTILE)
@@ -120,10 +124,8 @@ void Projectile::update(float _time)
 		dx = getVelocity() * _time;
 		break;
 	}
-
 	position.x += dx;
 	position.y += dy;
-
 	if (position.x + getW() >= WINDOW_W)
 		destroy();
 	else if (position.y + getH() >= WINDOW_H)
@@ -132,7 +134,6 @@ void Projectile::update(float _time)
 		destroy();
 	else if (position.y < 0)
 		destroy();
-
 	empty();
-	setPosition(position);
+	setPositionInSprite(position);
 }

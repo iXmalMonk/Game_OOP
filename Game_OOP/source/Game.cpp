@@ -5,10 +5,8 @@ Game* Game::instance = nullptr;
 Game::Game()
 {
 	gameWindow = GameWindow::getInstance();
-
 	gameObjects.push_back(new Player(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
 	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
-
 	for (int i = 0; i < 8; i++)
 		for (int j = 0; j < 8; j++)
 			if (j < 2)
@@ -19,18 +17,15 @@ Game::Game()
 				gameObjects.push_back(new ConcreteWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
 			else
 				gameObjects.push_back(new Forest(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
-
 	CONSOLE ? console::show() : console::hide();
 }
 
 Game::~Game()
 {
 	gameWindow->destroy();
-
 	for (auto gameObject : gameObjects)
 		delete gameObject;
 	gameObjects.clear();
-
 	for (auto message : messages)
 		delete message;
 	messages.clear();
@@ -45,7 +40,6 @@ void Game::msgs()
 		case GameObject::MessageType::EMPTY:
 		case GameObject::MessageType::DEALDAMAGE:
 			for (auto gameObject : gameObjects)
-				//sendMessageInGameObject(message, gameObject);
 				gameObject->message(message);
 			break;
 		case GameObject::MessageType::SHOOT:
@@ -57,21 +51,21 @@ void Game::msgs()
 				cout << "SHOOT" << endl;
 			break;
 		case GameObject::MessageType::DESTROY:
-			auto object = find(gameObjects.begin(), gameObjects.end(), message->gameObject);
+			auto object = find(gameObjects.begin(),
+				gameObjects.end(),
+				message->gameObject);
 			delete* object;
 			gameObjects.erase(object);
 			if (MESSAGES_DEBUG_IN_GAME)
 				cout << "DESTROY" << endl;
 			break;
 		}
-
 		delete message;
 	}
-
 	messages.clear();
 }
 
-void Game::updateGameObjects()
+void Game::update()
 {
 	for (auto gameObject : gameObjects)
 		gameObject->update(gameWindow->getTime());
@@ -81,12 +75,11 @@ Game* Game::entry()
 {
 	if (!gameWindow->isOpen())
 		gameWindow->create();
-
 	while (gameWindow->isOpen())
 	{
 		gameWindow->events();
 		gameWindow->updateTime();
-		updateGameObjects();
+		update();
 		msgs();
 		gameWindow->clear();
 		for (auto gameObject : gameObjects)
@@ -97,7 +90,6 @@ Game* Game::entry()
 				gameWindow->draw(gameObject->getSprite());
 		gameWindow->display();
 	}
-
 	return instance;
 }
 
@@ -110,7 +102,6 @@ Game* Game::getInstance()
 {
 	if (!instance)
 		instance = new Game;
-
 	return instance;
 }
 
@@ -121,7 +112,6 @@ Game* Game::destroy()
 		delete instance;
 		instance = nullptr;
 	}
-
 	return instance;
 }
 

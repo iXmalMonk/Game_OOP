@@ -26,7 +26,6 @@ int Tank::getHealthPoints()
 bool Tank::readyToShoot(float _time)
 {
 	cooldown > cooldownTime ? cooldownTime += _time : cooldownTime = cooldown;
-
 	return cooldown <= cooldownTime ? true : false;
 }
 
@@ -40,7 +39,6 @@ void Tank::shoot()
 	if (cooldown <= cooldownTime)
 	{
 		Game::getInstance()->message(new Message(MessageType::SHOOT, this));
-
 		cooldownTime = 0;
 	}
 }

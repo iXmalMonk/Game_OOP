@@ -2,22 +2,26 @@
 
 Enemy::Enemy(Vector2f _position) : Tank(VELOCITY_ENEMY, Direction::DOWN, GameObjectType::ENEMY, FILENAME_PNG_ENEMY, _position) {}
 
-void Enemy::message(GameObject::Message* _message)
+void Enemy::message(Message* _message)
 {
-	if (_message->messageType == GameObject::MessageType::DEALDAMAGE and _message->dealDamage.gameObject == this)
+	if (_message->messageType == MessageType::DEALDAMAGE and
+		_message->dealDamage.gameObject == this)
 	{
 		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
 		if (MESSAGES_DEBUG_IN_ENEMY)
 			cout << "Enemy HP: " << getHealthPoints() << endl;
 		alive();
 	}
-	else if (_message->messageType == GameObject::MessageType::EMPTY and _message->gameObject->getGameObjectType() != GameObjectType::FOREST and _message->gameObject != this)
+	else if (_message->messageType == MessageType::EMPTY and
+		_message->gameObject->getGameObjectType() != GameObjectType::FOREST and
+		_message->gameObject->getGameObjectType() != GameObjectType::PROJECTILE and
+		_message->gameObject != this)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
 			position.x -= dx;
 			position.y -= dy;
-			setPosition(position);
+			setPositionInSprite(position);
 		}
 	}
 }
@@ -26,10 +30,8 @@ void Enemy::update(float _time)
 {
 	if (readyToShoot(_time))
 		shoot();
-
 	dx = 0;
 	dy = 0;
-
 	if (getDirection() == Direction::UP)
 	{
 		if (position.y <= 0)
@@ -74,10 +76,8 @@ void Enemy::update(float _time)
 		else
 			dx = getVelocity() * _time;
 	}
-
 	position.x += dx;
 	position.y += dy;
-
 	empty();
-	setPosition(position);
+	setPositionInSprite(position);
 }

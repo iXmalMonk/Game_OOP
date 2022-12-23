@@ -24,7 +24,7 @@ private:
 	Game();
 	~Game();
 	void msgs();
-	void updateGameObjects();
+	void update();
 
 public:
 	Game* entry();
