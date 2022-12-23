@@ -25,24 +25,21 @@
     <Filter Include="Исходные файлы\DynamicObjects">
       <UniqueIdentifier>{45884337-3f05-44fe-8791-e2a71cec46f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Abstract">
+      <UniqueIdentifier>{24346405-a653-450a-89fd-e7ac304035fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Abstract">
+      <UniqueIdentifier>{401d86b4-519b-43dc-bdc8-cb2ca8f24b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\png">
+      <UniqueIdentifier>{8e909029-b2eb-4fbb-a464-1f37a145c810}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Main.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="include\Game.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObject.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DynamicObject.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Tank.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\StaticObject.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="include\GameWindow.h">
@@ -72,24 +69,24 @@
     <ClInclude Include="include\Player.h">
       <Filter>Файлы заголовков\DynamicObjects</Filter>
     </ClInclude>
+    <ClInclude Include="include\DynamicObject.h">
+      <Filter>Файлы заголовков\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StaticObject.h">
+      <Filter>Файлы заголовков\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tank.h">
+      <Filter>Файлы заголовков\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject.h">
+      <Filter>Файлы заголовков\Abstract</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="source\Game.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="source\GameObject.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="source\DynamicObject.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Tank.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="source\StaticObject.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="source\GameWindow.cpp">
@@ -119,5 +116,40 @@
     <ClCompile Include="source\Water.cpp">
       <Filter>Исходные файлы\StaticObjects</Filter>
     </ClCompile>
+    <ClCompile Include="source\DynamicObject.cpp">
+      <Filter>Исходные файлы\Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="source\StaticObject.cpp">
+      <Filter>Исходные файлы\Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tank.cpp">
+      <Filter>Исходные файлы\Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameObject.cpp">
+      <Filter>Исходные файлы\Abstract</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="png\brickWall.png">
+      <Filter>Файлы ресурсов\png</Filter>
+    </Image>
+    <Image Include="png\concreteWall.png">
+      <Filter>Файлы ресурсов\png</Filter>
+    </Image>
+    <Image Include="png\enemyTank.png">
+      <Filter>Файлы ресурсов\png</Filter>
+    </Image>
+    <Image Include="png\forest.png">
+      <Filter>Файлы ресурсов\png</Filter>
+    </Image>
+    <Image Include="png\playerTank.png">
+      <Filter>Файлы ресурсов\png</Filter>
+    </Image>
+    <Image Include="png\projectile.png">
+      <Filter>Файлы ресурсов\png</Filter>
+    </Image>
+    <Image Include="png\water.png">
+      <Filter>Файлы ресурсов\png</Filter>
+    </Image>
   </ItemGroup>
 </Project>

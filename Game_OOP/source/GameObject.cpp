@@ -62,7 +62,7 @@ void GameObject::setPositionInSprite(Vector2f _position)
 	sprite.setPosition(_position);
 }
 
-GameObject::GameObject(Direction _direction, GameObjectType _gameObjectType, int _w, int _h, const char* _filename, Vector2f _position)
+GameObject::GameObject(const char* _filename, Direction _direction, GameObjectType _gameObjectType, int _w, int _h, Vector2f _position)
 {
 	destroyed = false;
 	direction = _direction;

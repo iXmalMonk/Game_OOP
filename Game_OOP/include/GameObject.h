@@ -49,7 +49,7 @@ protected:
 	void setPositionInSprite(Vector2f _position);
 
 public:
-	GameObject(Direction _direction, GameObjectType _gameObjectType, int _w, int _h, const char* _filename, Vector2f _position);
+	GameObject(const char* _filename, Direction _direction, GameObjectType _gameObjectType, int _w, int _h, Vector2f _position);
 	Direction getDirection();
 	GameObjectType getGameObjectType();
 	int getW();

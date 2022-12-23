@@ -6,7 +6,7 @@
 class StaticObject : public GameObject
 {
 public:
-	StaticObject(GameObjectType _gameObjectType, const char* _filename, Vector2f _position);
+	StaticObject(const char* _filename, GameObjectType _gameObjectType, Vector2f _position);
 	void message(Message* _message) override;
 	void update(float _time) override;
 };

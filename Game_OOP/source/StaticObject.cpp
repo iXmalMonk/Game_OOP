@@ -1,6 +1,6 @@
 #include "..\include\StaticObject.h"
 
-StaticObject::StaticObject(GameObjectType _gameObjectType, const char* _filename, Vector2f _position) : GameObject(Direction::NONE, _gameObjectType, STATICOBJECT_W, STATICOBJECT_H, _filename, _position) {}
+StaticObject::StaticObject(const char* _filename, GameObjectType _gameObjectType, Vector2f _position) : GameObject(_filename, Direction::NONE, _gameObjectType, STATICOBJECT_W, STATICOBJECT_H, _position) {}
 
 void StaticObject::message(Message* _message)
 {

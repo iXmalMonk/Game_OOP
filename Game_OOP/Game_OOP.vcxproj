@@ -52,6 +52,15 @@
     <ClCompile Include="source\Tank.cpp" />
     <ClCompile Include="source\Water.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="png\brickWall.png" />
+    <Image Include="png\concreteWall.png" />
+    <Image Include="png\enemyTank.png" />
+    <Image Include="png\forest.png" />
+    <Image Include="png\playerTank.png" />
+    <Image Include="png\projectile.png" />
+    <Image Include="png\water.png" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

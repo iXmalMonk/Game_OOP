@@ -1,30 +1,6 @@
 #include "..\include\Player.h"
 
-Player::Player(Vector2f _position) : Tank(VELOCITY_PLAYER, Direction::UP, GameObjectType::PLAYER, FILENAME_PNG_PLAYER, _position) {}
-
-void Player::message(Message* _message)
-{
-	if (_message->messageType == MessageType::DEALDAMAGE and
-		_message->dealDamage.gameObject == this)
-	{
-		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
-		if (MESSAGES_DEBUG_IN_PLAYER)
-			cout << "Player HP: " << getHealthPoints() << endl;
-		alive();
-	}
-	else if (_message->messageType == MessageType::EMPTY and
-		_message->gameObject->getGameObjectType() != GameObjectType::FOREST and
-		_message->gameObject->getGameObjectType() != GameObjectType::PROJECTILE and
-		_message->gameObject != this)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPositionInSprite(position);
-		}
-	}
-}
+Player::Player(Vector2f _position) : Tank(FILENAME_PNG_PLAYER,Direction::UP, VELOCITY_PLAYER, GameObjectType::PLAYER, _position) {}
 
 void Player::update(float _time)
 {

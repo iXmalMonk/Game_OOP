@@ -1,30 +1,6 @@
 #include "..\include\Enemy.h"
 
-Enemy::Enemy(Vector2f _position) : Tank(VELOCITY_ENEMY, Direction::DOWN, GameObjectType::ENEMY, FILENAME_PNG_ENEMY, _position) {}
-
-void Enemy::message(Message* _message)
-{
-	if (_message->messageType == MessageType::DEALDAMAGE and
-		_message->dealDamage.gameObject == this)
-	{
-		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
-		if (MESSAGES_DEBUG_IN_ENEMY)
-			cout << "Enemy HP: " << getHealthPoints() << endl;
-		alive();
-	}
-	else if (_message->messageType == MessageType::EMPTY and
-		_message->gameObject->getGameObjectType() != GameObjectType::FOREST and
-		_message->gameObject->getGameObjectType() != GameObjectType::PROJECTILE and
-		_message->gameObject != this)
-	{
-		if (checkCollisionWithGameObject(_message->gameObject))
-		{
-			position.x -= dx;
-			position.y -= dy;
-			setPositionInSprite(position);
-		}
-	}
-}
+Enemy::Enemy(Vector2f _position) : Tank(FILENAME_PNG_ENEMY, Direction::DOWN, VELOCITY_ENEMY, GameObjectType::ENEMY, _position) {}
 
 void Enemy::update(float _time)
 {

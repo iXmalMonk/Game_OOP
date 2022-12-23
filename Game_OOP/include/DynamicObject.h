@@ -13,7 +13,7 @@ protected:
 	float dy;
 
 public:
-	DynamicObject(float _velocity, Direction _direction, GameObjectType _gameObjectType, int _w, int _h, const char* _filename, Vector2f _position);
+	DynamicObject(const char* _filename, Direction _direction, float _velocity, GameObjectType _gameObjectType, int _w, int _h, Vector2f _position);
 	float getVelocity();
 };
 

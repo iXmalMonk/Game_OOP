@@ -44,9 +44,9 @@ void Game::msgs()
 			break;
 		case GameObject::MessageType::SHOOT:
 			gameObjects.push_back(new Projectile(
-				message->gameObject->getPosition(),
 				message->gameObject->getDirection(),
-				message->gameObject));
+				message->gameObject,
+				message->gameObject->getPosition()));
 			if (MESSAGES_DEBUG_IN_GAME)
 				cout << "SHOOT" << endl;
 			break;

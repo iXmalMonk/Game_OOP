@@ -10,10 +10,10 @@ private:
 	int damage;
 
 	void dealDamage(GameObject* _gameObject, int _damage);
-	Vector2f getPositionForProjectile(Vector2f _position, Direction _direction);
+	Vector2f getPositionForProjectile(Direction _direction, Vector2f _position);
 
 public:
-	Projectile(Vector2f _position, Direction _direction, GameObject* _gameObjectWhoShooted);
+	Projectile(Direction _direction, GameObject* _gameObjectWhoShooted, Vector2f _position);
 	void message(Message* _message) override;
 	void update(float _time) override;
 };

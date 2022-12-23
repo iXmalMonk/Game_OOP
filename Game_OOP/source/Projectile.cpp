@@ -6,7 +6,7 @@ void Projectile::dealDamage(GameObject* _gameObject, int _damage)
 	Game::getInstance()->message(new Message(MessageType::DEALDAMAGE, this, _gameObject, _damage));
 }
 
-Vector2f Projectile::getPositionForProjectile(Vector2f _position, Direction _direction)
+Vector2f Projectile::getPositionForProjectile(Direction _direction, Vector2f _position)
 {
 	Vector2f temporary;
 	switch (_direction)
@@ -31,7 +31,7 @@ Vector2f Projectile::getPositionForProjectile(Vector2f _position, Direction _dir
 	return temporary;
 }
 
-Projectile::Projectile(Vector2f _position, Direction _direction, GameObject* _gameObjectWhoShooted) : DynamicObject(VELOCITY_PROJECTILE, _direction, GameObjectType::PROJECTILE, PROJECTILE_W, PROJECTILE_H, FILENAME_PNG_PROJECTILE, getPositionForProjectile(_position, _direction))
+Projectile::Projectile(Direction _direction, GameObject* _gameObjectWhoShooted, Vector2f _position) : DynamicObject(FILENAME_PNG_PROJECTILE, _direction, VELOCITY_PROJECTILE, GameObjectType::PROJECTILE, PROJECTILE_W, PROJECTILE_H, getPositionForProjectile(_direction, _position))
 {
 	gameObjectWhoShooted = _gameObjectWhoShooted;
 	damage = PROJECTILE_DAMAGE;

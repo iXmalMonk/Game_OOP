@@ -1,6 +1,6 @@
 #include "..\include\DynamicObject.h"
 
-DynamicObject::DynamicObject(float _velocity, Direction _direction, GameObjectType _gameObjectType, int _w, int _h, const char* _filename, Vector2f _position) : GameObject(_direction, _gameObjectType, _w, _h, _filename, _position)
+DynamicObject::DynamicObject(const char* _filename, Direction _direction, float _velocity, GameObjectType _gameObjectType, int _w, int _h, Vector2f _position) : GameObject(_filename, _direction, _gameObjectType, _w, _h, _position)
 {
 	dx = 0;
 	dy = 0;
