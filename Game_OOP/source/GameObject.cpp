@@ -1,18 +1,26 @@
 #include "..\include\GameObject.h"
 #include "..\include\Game.h"
 
-GameObject::Message::Message(MessageType _messageType, GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage)
+GameObject::Message::Message(GameObject* _gameObject, GameObjectType _gameObjectType, Vector2f _position, MessageType _messageType)
 {
+	create.gameObjectType = _gameObjectType;
+	create.position = _position;
+	gameObject = _gameObject;
 	messageType = _messageType;
-	gameObject = _gameObjectWho;
-	dealDamage.gameObject = _gameObjectWhom;
-	dealDamage.damage = _damage;
 }
 
-GameObject::Message::Message(MessageType _messageType, GameObject* _gameObject)
+GameObject::Message::Message(GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage, MessageType _messageType)
 {
+	dealDamage.damage = _damage;
+	dealDamage.gameObject = _gameObjectWhom;
+	gameObject = _gameObjectWho;
 	messageType = _messageType;
+}
+
+GameObject::Message::Message(GameObject* _gameObject, MessageType _messageType)
+{
 	gameObject = _gameObject;
+	messageType = _messageType;
 }
 
 bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
@@ -23,18 +31,23 @@ bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
 		position.x < (_gameObject->getX() + _gameObject->getW());
 }
 
+void GameObject::create(GameObjectType _gameObjectType, Vector2f _position)
+{
+	Game::getInstance()->message(new Message(this, _gameObjectType, _position, MessageType::CREATE));
+}
+
 void GameObject::destroy()
 {
 	if (!destroyed)
 	{
-		Game::getInstance()->message(new Message(MessageType::DESTROY, this));
+		Game::getInstance()->message(new Message(this, MessageType::DESTROY));
 		destroyed = true;
 	}
 }
 
 void GameObject::empty()
 {
-	Game::getInstance()->message(new Message(MessageType::EMPTY, this));
+	Game::getInstance()->message(new Message(this, MessageType::EMPTY));
 }
 
 void GameObject::setDirection(Direction _direction)

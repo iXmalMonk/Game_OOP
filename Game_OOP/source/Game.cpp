@@ -5,18 +5,21 @@ Game* Game::instance = nullptr;
 Game::Game()
 {
 	gameWindow = GameWindow::getInstance();
+	//
 	gameObjects.push_back(new Player(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
 	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
 	for (int i = 0; i < 8; i++)
 		for (int j = 0; j < 8; j++)
 			if (j < 2)
-				gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				gameObjects.push_back(new BrickWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W, WINDOW_H / 4 + i * STATICOBJECT_SMALL_H)));
 			else if (j < 4)
-				gameObjects.push_back(new Water(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				gameObjects.push_back(new Water(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W, WINDOW_H / 4 + i * STATICOBJECT_SMALL_H)));
 			else if (j < 6)
-				gameObjects.push_back(new ConcreteWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				gameObjects.push_back(new ConcreteWall(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W, WINDOW_H / 4 + i * STATICOBJECT_SMALL_H)));
 			else
-				gameObjects.push_back(new Forest(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_W, WINDOW_H / 4 + i * STATICOBJECT_H)));
+				gameObjects.push_back(new Forest(Vector2f(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W, WINDOW_H / 4 + i * STATICOBJECT_SMALL_H)));
+	gameObjects.push_back(new Headquarters(Vector2f(WINDOW_W / 1.5, WINDOW_H / 1.5)));
+	//
 	CONSOLE ? console::show() : console::hide();
 }
 
@@ -37,20 +40,49 @@ void Game::msgs()
 	{
 		switch (message->messageType)
 		{
-		case GameObject::MessageType::EMPTY:
+		case GameObject::MessageType::CREATE:
+		{
+			switch (message->create.gameObjectType)
+			{
+			case GameObject::GameObjectType::BRICKWALL:
+				gameObjects.push_back(new BrickWall(message->create.position));
+				break;
+			case GameObject::GameObjectType::CONCRETEWALL:
+				gameObjects.push_back(new ConcreteWall(message->create.position));
+				break;
+			case GameObject::GameObjectType::ENEMY:
+				gameObjects.push_back(new Enemy(message->create.position));
+				break;
+			case GameObject::GameObjectType::FLAG:
+				gameObjects.push_back(new Flag(message->create.position));
+				break;
+			case GameObject::GameObjectType::FOREST:
+				gameObjects.push_back(new Forest(message->create.position));
+				break;
+			case GameObject::GameObjectType::HEADQUARTERS:
+				gameObjects.push_back(new Headquarters(message->create.position));
+				break;
+			case GameObject::GameObjectType::PLAYER:
+				gameObjects.push_back(new Player(message->create.position));
+				break;
+			case GameObject::GameObjectType::PROJECTILE:
+				gameObjects.push_back(new Projectile(message->gameObject->getDirection(), message->gameObject, message->create.position));
+				break;
+			case GameObject::GameObjectType::WATER:
+				gameObjects.push_back(new Water(message->create.position));
+				break;
+			}
+			break;
+		}
 		case GameObject::MessageType::DEALDAMAGE:
+		case GameObject::MessageType::EMPTY:
+		{
 			for (auto gameObject : gameObjects)
 				gameObject->message(message);
 			break;
-		case GameObject::MessageType::SHOOT:
-			gameObjects.push_back(new Projectile(
-				message->gameObject->getDirection(),
-				message->gameObject,
-				message->gameObject->getPosition()));
-			if (MESSAGES_DEBUG_IN_GAME)
-				cout << "SHOOT" << endl;
-			break;
+		}
 		case GameObject::MessageType::DESTROY:
+		{
 			auto object = find(gameObjects.begin(),
 				gameObjects.end(),
 				message->gameObject);
@@ -59,6 +91,7 @@ void Game::msgs()
 			if (MESSAGES_DEBUG_IN_GAME)
 				cout << "DESTROY" << endl;
 			break;
+		}
 		}
 		delete message;
 	}

@@ -62,7 +62,7 @@ void Tank::shoot()
 {
 	if (cooldown <= cooldownTime)
 	{
-		Game::getInstance()->message(new Message(MessageType::SHOOT, this));
+		create(GameObjectType::PROJECTILE, getPosition());
 		cooldownTime = 0;
 	}
 }

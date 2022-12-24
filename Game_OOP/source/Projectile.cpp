@@ -3,7 +3,7 @@
 
 void Projectile::dealDamage(GameObject* _gameObject, int _damage)
 {
-	Game::getInstance()->message(new Message(MessageType::DEALDAMAGE, this, _gameObject, _damage));
+	Game::getInstance()->message(new Message(this, _gameObject, _damage, MessageType::DEALDAMAGE));
 }
 
 Vector2f Projectile::getPositionForProjectile(Direction _direction, Vector2f _position)
@@ -85,7 +85,8 @@ void Projectile::message(Message* _message)
 			}
 		}
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL or
-			_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
+			_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL or
+			_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS)
 		{
 			if (checkCollisionWithGameObject(_message->gameObject))
 			{
@@ -101,6 +102,13 @@ void Projectile::message(Message* _message)
 					destroy();
 					if (MESSAGES_DEBUG_IN_PROJECTILE)
 						cout << "Game object hit the concrete wall" << endl;
+				}
+				else if (_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS)
+				{
+					dealDamage(_message->gameObject, NULL);
+					destroy();
+					if (MESSAGES_DEBUG_IN_PROJECTILE)
+						cout << "Game object hit the headquarters" << endl;
 				}
 			}
 		}

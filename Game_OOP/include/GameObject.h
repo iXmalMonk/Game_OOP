@@ -7,8 +7,8 @@ class GameObject
 {
 public:
 	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
-	enum class GameObjectType { BRICKWALL, CONCRETEWALL, ENEMY, FOREST, PLAYER, PROJECTILE, WATER, NONE };
-	enum class MessageType { CREATE, DEALDAMAGE, DESTROY, EMPTY, SHOOT };
+	enum class GameObjectType { BRICKWALL, CONCRETEWALL, ENEMY, FLAG, FOREST, HEADQUARTERS, PLAYER, PROJECTILE, WATER, NONE };
+	enum class MessageType { CREATE, DEALDAMAGE, DESTROY, EMPTY };
 	struct Message
 	{
 		GameObject* gameObject;
@@ -26,8 +26,9 @@ public:
 				int damage;
 			} dealDamage;
 		};
-		Message(MessageType _messageType, GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage); // DEALDAMAGE
-		Message(MessageType _messageType, GameObject* _gameObject); // DESTROY or EMPTY
+		Message(GameObject* _gameObject, GameObjectType _gameObjectType, Vector2f _position, MessageType _messageType); // CREATE
+		Message(GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage, MessageType _messageType); // DEALDAMAGE
+		Message(GameObject* _gameObject, MessageType _messageType); // DESTROY or EMPTY
 	};
 
 private:
@@ -43,6 +44,7 @@ protected:
 	Vector2f position;
 
 	bool checkCollisionWithGameObject(GameObject* _gameObject);
+	void create(GameObjectType _gameObjectType, Vector2f _position);
 	void destroy();
 	void empty();
 	void setDirection(Direction _direction);

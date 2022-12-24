@@ -81,6 +81,12 @@
     <ClInclude Include="include\GameObject.h">
       <Filter>Файлы заголовков\Abstract</Filter>
     </ClInclude>
+    <ClInclude Include="include\Headquarters.h">
+      <Filter>Файлы заголовков\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Flag.h">
+      <Filter>Файлы заголовков\StaticObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -128,6 +134,12 @@
     <ClCompile Include="source\GameObject.cpp">
       <Filter>Исходные файлы\Abstract</Filter>
     </ClCompile>
+    <ClCompile Include="source\Headquarters.cpp">
+      <Filter>Исходные файлы\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Flag.cpp">
+      <Filter>Исходные файлы\StaticObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="png\brickWall.png">
@@ -136,19 +148,25 @@
     <Image Include="png\concreteWall.png">
       <Filter>Файлы ресурсов\png</Filter>
     </Image>
-    <Image Include="png\enemyTank.png">
+    <Image Include="png\enemy.png">
       <Filter>Файлы ресурсов\png</Filter>
     </Image>
     <Image Include="png\forest.png">
       <Filter>Файлы ресурсов\png</Filter>
     </Image>
-    <Image Include="png\playerTank.png">
+    <Image Include="png\player.png">
       <Filter>Файлы ресурсов\png</Filter>
     </Image>
     <Image Include="png\projectile.png">
       <Filter>Файлы ресурсов\png</Filter>
     </Image>
     <Image Include="png\water.png">
+      <Filter>Файлы ресурсов\png</Filter>
+    </Image>
+    <Image Include="png\headquarters.png">
+      <Filter>Файлы ресурсов\png</Filter>
+    </Image>
+    <Image Include="png\flag.png">
       <Filter>Файлы ресурсов\png</Filter>
     </Image>
   </ItemGroup>

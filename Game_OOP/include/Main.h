@@ -25,8 +25,10 @@ using namespace std;
 #define TANK_COOLDOWN 5000
 #define TANK_HEALTHPOINTS 100
 
-#define STATICOBJECT_W 32
-#define STATICOBJECT_H 32
+#define STATICOBJECT_BIG_W 64
+#define STATICOBJECT_BIG_H 64
+#define STATICOBJECT_SMALL_W 32
+#define STATICOBJECT_SMALL_H 32
 
 #define PROJECTILE_W 16
 #define PROJECTILE_H 16
@@ -44,25 +46,28 @@ using namespace std;
 
 // true - show messages
 // false - hide messages
-#define MESSAGES_DEBUG_IN_GAME false
-#define MESSAGES_DEBUG_IN_PLAYER true
 #define MESSAGES_DEBUG_IN_ENEMY true
+#define MESSAGES_DEBUG_IN_GAME false
+#define MESSAGES_DEBUG_IN_HEADQUARTERS true
+#define MESSAGES_DEBUG_IN_PLAYER true
 #define MESSAGES_DEBUG_IN_PROJECTILE true
-#define MESSAGES_DEBUG_IN_TANK true
 #define MESSAGES_DEBUG_IN_STATICOBJECT true
+#define MESSAGES_DEBUG_IN_TANK true
 
 #define FRAME_UP 0
 #define FRAME_DOWN 2
 #define FRAME_LEFT 1
 #define FRAME_RIGHT 3
 
-#define FILENAME_PNG_PLAYER "png/playerTank.png"
-#define FILENAME_PNG_ENEMY "png/enemyTank.png"
-#define FILENAME_PNG_PROJECTILE "png/projectile.png"
 #define FILENAME_PNG_BRICKWALL "png/brickWall.png"
-#define FILENAME_PNG_WATER "png/water.png"
 #define FILENAME_PNG_CONCRETEWALL "png/concreteWall.png"
+#define FILENAME_PNG_ENEMY "png/enemy.png"
+#define FILENAME_PNG_FLAG "png/flag.png"
 #define FILENAME_PNG_FOREST "png/forest.png"
+#define FILENAME_PNG_HEADQUARTERS "png/headquarters.png"
+#define FILENAME_PNG_PLAYER "png/player.png"
+#define FILENAME_PNG_PROJECTILE "png/projectile.png"
+#define FILENAME_PNG_WATER "png/water.png"
 
 // true - show console
 // false - hide console
