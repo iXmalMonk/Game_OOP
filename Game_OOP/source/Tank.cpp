@@ -40,8 +40,39 @@ void Tank::message(Message* _message)
 	{
 		if (checkCollisionWithGameObject(_message->gameObject))
 		{
-			position.x -= dx;
-			position.y -= dy;
+			if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL or
+				_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL or
+				_message->gameObject->getGameObjectType() == GameObjectType::FLAG or
+				_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS or
+				_message->gameObject->getGameObjectType() == GameObjectType::WATER)
+			{
+				Collision temporary = collision(_message->gameObject);
+				cout << "Collision side: " << temporary.side << endl;
+				switch (temporary.collisionSide)
+				{
+				case CollisionSide::TOP:
+					position.x = temporary.position.x;
+					position.y = temporary.position.y;
+					break;
+				case CollisionSide::BOTTOM:
+					position.x = temporary.position.x;
+					position.y = temporary.position.y;
+					break;
+				case CollisionSide::LEFT:
+					position.x = temporary.position.x;
+					position.y = temporary.position.y;
+					break;
+				case CollisionSide::RIGHT:
+					position.x = temporary.position.x;
+					position.y = temporary.position.y;
+					break;
+				}
+			}
+		else
+			{
+				position.x -= dx;
+				position.y -= dy;
+			}
 			setPositionInSprite(position);
 		}
 	}

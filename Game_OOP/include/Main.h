@@ -14,9 +14,9 @@ using namespace std;
 #define WINDOW_TITLE "Game"
 #define WINDOW_FPS 60
 
-#define VELOCITY_PLAYER 0.015
-#define VELOCITY_ENEMY 0.01
-#define VELOCITY_PROJECTILE 0.03
+#define VELOCITY_PLAYER 0.015f
+#define VELOCITY_ENEMY 0.01f
+#define VELOCITY_PROJECTILE 0.03f
 
 #define TIME_COEFFICIENT WINDOW_FPS
 
@@ -72,5 +72,7 @@ using namespace std;
 // true - show console
 // false - hide console
 #define CONSOLE true
+
+#define COLLISION_RANGE 15
 
 #endif // !_MAIN_H

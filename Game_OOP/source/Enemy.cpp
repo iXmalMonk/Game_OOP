@@ -35,7 +35,7 @@ void Enemy::update(float _time)
 		if (position.y + getH() >= WINDOW_H)
 		{
 			dx = -getVelocity() * _time;
-			position.y = WINDOW_H - getH();
+			position.y = float(WINDOW_H - getH());
 			setDirection(Direction::LEFT);
 		}
 		else
@@ -46,7 +46,7 @@ void Enemy::update(float _time)
 		if (position.x + getW() >= WINDOW_W)
 		{
 			dy = getVelocity() * _time;
-			position.x = WINDOW_W - getW();
+			position.x = float(WINDOW_W - getW());
 			setDirection(Direction::DOWN);
 		}
 		else

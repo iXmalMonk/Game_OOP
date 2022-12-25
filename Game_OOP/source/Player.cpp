@@ -35,9 +35,9 @@ void Player::update(float _time)
 	if (position.x < 0)
 		position.x = 0;
 	if (position.y + getH() > WINDOW_H)
-		position.y = WINDOW_H - getH();
+		position.y = float(WINDOW_H - getH());
 	if (position.x + getW() > WINDOW_W)
-		position.x = WINDOW_W - getW();
+		position.x = float(WINDOW_W - getW());
 	empty();
 	setPositionInSprite(position);
 }

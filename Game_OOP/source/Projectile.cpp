@@ -12,20 +12,20 @@ Vector2f Projectile::getPositionForProjectile(Direction _direction, Vector2f _po
 	switch (_direction)
 	{
 	case Direction::UP:
-		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_UP;
-		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_UP;
+		temporary.x = float(_position.x + PROJECTILE_COEFFICIENT_X_FOR_UP);
+		temporary.y = float(_position.y + PROJECTILE_COEFFICIENT_Y_FOR_UP);
 		break;
 	case Direction::DOWN:
-		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_DOWN;
-		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_DOWN;
+		temporary.x = float(_position.x + PROJECTILE_COEFFICIENT_X_FOR_DOWN);
+		temporary.y = float(_position.y + PROJECTILE_COEFFICIENT_Y_FOR_DOWN);
 		break;
 	case Direction::LEFT:
-		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_LEFT;
-		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_LEFT;
+		temporary.x = float(_position.x + PROJECTILE_COEFFICIENT_X_FOR_LEFT);
+		temporary.y = float(_position.y + PROJECTILE_COEFFICIENT_Y_FOR_LEFT);
 		break;
 	case Direction::RIGHT:
-		temporary.x = _position.x + PROJECTILE_COEFFICIENT_X_FOR_RIGHT;
-		temporary.y = _position.y + PROJECTILE_COEFFICIENT_Y_FOR_RIGHT;
+		temporary.x = float(_position.x + PROJECTILE_COEFFICIENT_X_FOR_RIGHT);
+		temporary.y = float(_position.y + PROJECTILE_COEFFICIENT_Y_FOR_RIGHT);
 		break;
 	}
 	return temporary;

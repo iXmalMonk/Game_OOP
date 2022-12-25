@@ -79,6 +79,6 @@ void GameWindow::destroy()
 
 void GameWindow::updateTime()
 {
-	time = clock->getElapsedTime().asMicroseconds() / TIME_COEFFICIENT;
+	time = float(clock->getElapsedTime().asMicroseconds() / TIME_COEFFICIENT);
 	clock->restart();
 }
