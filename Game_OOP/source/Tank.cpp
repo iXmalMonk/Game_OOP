@@ -1,5 +1,6 @@
 #include "..\include\Tank.h"
 #include "..\include\Game.h"
+#include "..\include\StaticObject.h"
 
 Tank::Tank(const char* _filename, Direction _direction, float _velocity, GameObjectType _gameObjectType, Vector2f _position) : DynamicObject(_filename, _direction, _velocity, _gameObjectType, TANK_W, TANK_H, _position)
 {
@@ -38,7 +39,7 @@ void Tank::message(Message* _message)
 		_message->gameObject->getGameObjectType() != GameObjectType::PROJECTILE and
 		_message->gameObject != this)
 	{
-		if (checkCollisionWithGameObject(_message->gameObject))
+		if (checkCollisionAABBWithGameObject(_message->gameObject))
 		{
 			if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL or
 				_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL or
@@ -46,29 +47,28 @@ void Tank::message(Message* _message)
 				_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS or
 				_message->gameObject->getGameObjectType() == GameObjectType::WATER)
 			{
-				Collision temporary = collision(_message->gameObject);
-				cout << "Collision side: " << temporary.side << endl;
-				switch (temporary.collisionSide)
+				auto collisionOfDynamicObjectWithStaticObject = StaticObject::checkCollisionOfDynamicObjectWithStaticObject(this, _message->gameObject);
+				switch (collisionOfDynamicObjectWithStaticObject.collisionSideOfDynamicObject)
 				{
-				case CollisionSide::TOP:
-					position.x = temporary.position.x;
-					position.y = temporary.position.y;
+				case StaticObject::CollisionSideOfDynamicObject::TOP:
+					position.x = collisionOfDynamicObjectWithStaticObject.position.x;
+					position.y = collisionOfDynamicObjectWithStaticObject.position.y;
 					break;
-				case CollisionSide::BOTTOM:
-					position.x = temporary.position.x;
-					position.y = temporary.position.y;
+				case StaticObject::CollisionSideOfDynamicObject::BOTTOM:
+					position.x = collisionOfDynamicObjectWithStaticObject.position.x;
+					position.y = collisionOfDynamicObjectWithStaticObject.position.y;
 					break;
-				case CollisionSide::LEFT:
-					position.x = temporary.position.x;
-					position.y = temporary.position.y;
+				case StaticObject::CollisionSideOfDynamicObject::LEFT:
+					position.x = collisionOfDynamicObjectWithStaticObject.position.x;
+					position.y = collisionOfDynamicObjectWithStaticObject.position.y;
 					break;
-				case CollisionSide::RIGHT:
-					position.x = temporary.position.x;
-					position.y = temporary.position.y;
+				case StaticObject::CollisionSideOfDynamicObject::RIGHT:
+					position.x = collisionOfDynamicObjectWithStaticObject.position.x;
+					position.y = collisionOfDynamicObjectWithStaticObject.position.y;
 					break;
 				}
 			}
-		else
+			else
 			{
 				position.x -= dx;
 				position.y -= dy;

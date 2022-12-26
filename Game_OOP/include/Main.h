@@ -73,6 +73,6 @@ using namespace std;
 // false - hide console
 #define CONSOLE true
 
-#define COLLISION_RANGE 15
+#define COLLISION_RANGE_FOR_STATIC_OBJECT 15
 
 #endif // !_MAIN_H

@@ -44,7 +44,7 @@ void Projectile::message(Message* _message)
 		if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and
 			gameObjectWhoShooted->getGameObjectType() == GameObjectType::ENEMY)
 		{
-			if (checkCollisionWithGameObject(_message->gameObject) and
+			if (checkCollisionAABBWithGameObject(_message->gameObject) and
 				_message->gameObject != gameObjectWhoShooted)
 			{
 				destroy();
@@ -55,7 +55,7 @@ void Projectile::message(Message* _message)
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and
 			gameObjectWhoShooted->getGameObjectType() == GameObjectType::PLAYER)
 		{
-			if (checkCollisionWithGameObject(_message->gameObject))
+			if (checkCollisionAABBWithGameObject(_message->gameObject))
 			{
 				destroy();
 				dealDamage(_message->gameObject, damage);
@@ -66,7 +66,7 @@ void Projectile::message(Message* _message)
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER and
 			gameObjectWhoShooted->getGameObjectType() == GameObjectType::ENEMY)
 		{
-			if (checkCollisionWithGameObject(_message->gameObject))
+			if (checkCollisionAABBWithGameObject(_message->gameObject))
 			{
 				destroy();
 				dealDamage(_message->gameObject, damage);
@@ -77,7 +77,7 @@ void Projectile::message(Message* _message)
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::PROJECTILE
 			and _message->gameObject != this)
 		{
-			if (checkCollisionWithGameObject(_message->gameObject))
+			if (checkCollisionAABBWithGameObject(_message->gameObject))
 			{
 				destroy();
 				if (MESSAGES_DEBUG_IN_PROJECTILE)
@@ -88,7 +88,7 @@ void Projectile::message(Message* _message)
 			_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL or
 			_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS)
 		{
-			if (checkCollisionWithGameObject(_message->gameObject))
+			if (checkCollisionAABBWithGameObject(_message->gameObject))
 			{
 				if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
 				{

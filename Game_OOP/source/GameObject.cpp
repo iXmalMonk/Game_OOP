@@ -23,7 +23,7 @@ GameObject::Message::Message(GameObject* _gameObject, MessageType _messageType)
 	messageType = _messageType;
 }
 
-bool GameObject::checkCollisionWithGameObject(GameObject* _gameObject)
+bool GameObject::checkCollisionAABBWithGameObject(GameObject* _gameObject)
 {
 	return (position.y + h) > _gameObject->getY() and
 		position.y < (_gameObject->getY() + _gameObject->getH()) and
