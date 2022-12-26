@@ -19,6 +19,48 @@ void Tank::alive()
 	}
 }
 
+bool Tank::guiltyOfCollidingWithAnotherTank(GameObject* _gameObject)
+{
+	float topA = position.y;
+	float bottomA = position.y + getH();
+	float leftA = position.x;
+	float rightA = position.x + getW();
+
+	float topB = _gameObject->getY();
+	float bottomB = _gameObject->getY() + _gameObject->getH();
+	float leftB = _gameObject->getX();
+	float rightB = _gameObject->getX() + _gameObject->getW();
+
+	switch (getDirection())
+	{
+	case Direction::UP:
+		if (_gameObject->getDirection() == Direction::DOWN)
+			return true;
+		else if (-COLLISION_RANGE_FOR_TANK <= topA - bottomB and topA - bottomB <= COLLISION_RANGE_FOR_TANK)
+			return true;
+		break;
+	case Direction::DOWN:
+		if (_gameObject->getDirection() == Direction::UP)
+			return true;
+		else if (-COLLISION_RANGE_FOR_TANK <= topB - bottomA and topB - bottomA <= COLLISION_RANGE_FOR_TANK)
+			return true;
+		break;
+	case Direction::LEFT:
+		if (_gameObject->getDirection() == Direction::RIGHT)
+			return true;
+		else if (-COLLISION_RANGE_FOR_TANK <= leftA - rightB and leftA - rightB <= COLLISION_RANGE_FOR_TANK)
+			return true;
+		break;
+	case Direction::RIGHT:
+		if (_gameObject->getDirection() == Direction::LEFT)
+			return true;
+		else if (-COLLISION_RANGE_FOR_TANK <= leftB - rightA and leftB - rightA <= COLLISION_RANGE_FOR_TANK)
+			return true;
+		break;
+	}
+	return false;
+}
+
 int Tank::getHealthPoints()
 {
 	return healthPoints;
@@ -37,44 +79,28 @@ void Tank::message(Message* _message)
 	else if (_message->messageType == MessageType::EMPTY and
 		_message->gameObject->getGameObjectType() != GameObjectType::FOREST and
 		_message->gameObject->getGameObjectType() != GameObjectType::PROJECTILE and
-		_message->gameObject != this)
+		_message->gameObject != this and checkCollisionAABBWithGameObject(_message->gameObject))
 	{
-		if (checkCollisionAABBWithGameObject(_message->gameObject))
+		if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL or
+			_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL or
+			_message->gameObject->getGameObjectType() == GameObjectType::FLAG or
+			_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS or
+			_message->gameObject->getGameObjectType() == GameObjectType::WATER)
 		{
-			if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL or
-				_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL or
-				_message->gameObject->getGameObjectType() == GameObjectType::FLAG or
-				_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS or
-				_message->gameObject->getGameObjectType() == GameObjectType::WATER)
-			{
-				auto collisionOfDynamicObjectWithStaticObject = StaticObject::checkCollisionOfDynamicObjectWithStaticObject(this, _message->gameObject);
-				switch (collisionOfDynamicObjectWithStaticObject.collisionSideOfDynamicObject)
-				{
-				case StaticObject::CollisionSideOfDynamicObject::TOP:
-					position.x = collisionOfDynamicObjectWithStaticObject.position.x;
-					position.y = collisionOfDynamicObjectWithStaticObject.position.y;
-					break;
-				case StaticObject::CollisionSideOfDynamicObject::BOTTOM:
-					position.x = collisionOfDynamicObjectWithStaticObject.position.x;
-					position.y = collisionOfDynamicObjectWithStaticObject.position.y;
-					break;
-				case StaticObject::CollisionSideOfDynamicObject::LEFT:
-					position.x = collisionOfDynamicObjectWithStaticObject.position.x;
-					position.y = collisionOfDynamicObjectWithStaticObject.position.y;
-					break;
-				case StaticObject::CollisionSideOfDynamicObject::RIGHT:
-					position.x = collisionOfDynamicObjectWithStaticObject.position.x;
-					position.y = collisionOfDynamicObjectWithStaticObject.position.y;
-					break;
-				}
-			}
-			else
+			auto positionOfADynamicObjectRelativeToAStaticObject = StaticObject::findPositionOfADynamicObjectRelativeToAStaticObjectAfterCollision(this, _message->gameObject);
+			position.x = positionOfADynamicObjectRelativeToAStaticObject.x;
+			position.y = positionOfADynamicObjectRelativeToAStaticObject.y;
+		}
+		else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY or
+			_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
+		{
+			if (guiltyOfCollidingWithAnotherTank(_message->gameObject))
 			{
 				position.x -= dx;
 				position.y -= dy;
 			}
-			setPositionInSprite(position);
 		}
+		setPositionInSprite(position);
 	}
 }
 

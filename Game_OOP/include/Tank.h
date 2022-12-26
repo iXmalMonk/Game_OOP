@@ -13,6 +13,7 @@ private:
 public:
 	Tank(const char* _filename, Direction _direction, float _velocity, GameObjectType _gameObjectType, Vector2f _position);
 	void alive();
+	bool guiltyOfCollidingWithAnotherTank(GameObject* _gameObject);
 	int getHealthPoints();
 	void message(Message* _message) override;
 	bool readyToShoot(float _time);
