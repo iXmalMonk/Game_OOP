@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Flag.h"
 #include "Forest.h"
+#include "GameController.h"
 #include "GameObject.h"
 #include "GameResources.h"
 #include "GameWindow.h"
@@ -20,8 +21,9 @@ class Game
 private:
 	static Game* instance;
 
-	GameWindow* gameWindow;
+	GameController* gameController;
 	GameResources* gameResources;
+	GameWindow* gameWindow;
 	list<GameObject*> gameObjects;
 	list<GameObject::Message*> messages;
 

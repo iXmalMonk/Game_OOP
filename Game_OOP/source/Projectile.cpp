@@ -135,13 +135,13 @@ void Projectile::update(float _time)
 	}
 	position.x += dx;
 	position.y += dy;
-	if (position.x + getW() >= WINDOW_W)
+	if (position.x + getW() >= MAP_RIGHT_X)
 		destroy();
-	else if (position.y + getH() >= WINDOW_H)
+	else if (position.y + getH() >= MAP_DOWN_Y)
 		destroy();
-	else if (position.x < 0)
+	else if (position.x < MAP_LEFT_X)
 		destroy();
-	else if (position.y < 0)
+	else if (position.y < MAP_UP_Y)
 		destroy();
 	empty();
 	setPositionInSprite(position);

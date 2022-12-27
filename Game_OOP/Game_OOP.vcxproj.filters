@@ -96,6 +96,9 @@
     <ClInclude Include="include\GameWindow.h">
       <Filter>Файлы заголовков\Utilts</Filter>
     </ClInclude>
+    <ClInclude Include="include\GameController.h">
+      <Filter>Файлы заголовков\Utilts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -150,6 +153,9 @@
       <Filter>Исходные файлы\Utilts</Filter>
     </ClCompile>
     <ClCompile Include="source\GameResources.cpp">
+      <Filter>Исходные файлы\Utilts</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameController.cpp">
       <Filter>Исходные файлы\Utilts</Filter>
     </ClCompile>
   </ItemGroup>

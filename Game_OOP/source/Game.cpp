@@ -4,15 +4,17 @@ Game* Game::instance = nullptr;
 
 Game::Game()
 {
-	gameWindow = GameWindow::getInstance();
+	gameController = GameController::getInstance();
 	gameResources = GameResources::getInstance();
+	gameWindow = GameWindow::getInstance();
 	CONSOLE ? console::show() : console::hide();
 }
 
 Game::~Game()
 {
-	gameWindow->destroy();
+	gameController->destroy();
 	gameResources->destroy();
+	gameWindow->destroy();
 	for (auto gameObject : gameObjects)
 		delete gameObject;
 	gameObjects.clear();
@@ -81,13 +83,12 @@ void Game::msgs()
 		}
 		case GameObject::MessageType::DESTROY:
 		{
+			gameController->message(message);
 			auto object = find(gameObjects.begin(),
 				gameObjects.end(),
 				message->gameObject);
 			delete* object;
 			gameObjects.erase(object);
-			if (MESSAGES_DEBUG_IN_GAME)
-				cout << "DESTROY" << endl;
 			break;
 		}
 		}
@@ -106,21 +107,9 @@ int Game::game()
 {
 	if (instance)
 	{
-		//
-		gameObjects.push_back(new Player(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
-		gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
-		for (int i = 0; i < 8; i++)
-			for (int j = 0; j < 8; j++)
-				//if (j < 2)
-				gameObjects.push_back(new BrickWall(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
-		//else if (j < 4)
-			//gameObjects.push_back(new Water(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
-		//else if (j < 6)
-			//gameObjects.push_back(new ConcreteWall(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
-		//else
-			//gameObjects.push_back(new Forest(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
-		gameObjects.push_back(new Headquarters(Vector2f(float(WINDOW_W / 1.5), float(WINDOW_H / 1.5))));
-		//
+		gameController->createMap();
+		gameController->createTanks();
+
 		while (gameWindow->isOpen())
 		{
 			gameWindow->events();

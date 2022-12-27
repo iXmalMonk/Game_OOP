@@ -31,14 +31,14 @@ void Player::update(float _time)
 	}
 	position.x += dx;
 	position.y += dy;
-	if (position.y < 0)
-		position.y = 0;
-	if (position.x < 0)
-		position.x = 0;
-	if (position.y + getH() > WINDOW_H)
-		position.y = float(WINDOW_H - getH());
-	if (position.x + getW() > WINDOW_W)
-		position.x = float(WINDOW_W - getW());
+	if (position.y < MAP_UP_Y)
+		position.y = MAP_UP_Y;
+	if (position.x < MAP_LEFT_X)
+		position.x = MAP_LEFT_X;
+	if (position.y + getH() > MAP_DOWN_Y)
+		position.y = float(MAP_DOWN_Y - getH());
+	if (position.x + getW() > MAP_RIGHT_X)
+		position.x = float(MAP_RIGHT_X - getW());
 	empty();
 	setPositionInSprite(position);
 }

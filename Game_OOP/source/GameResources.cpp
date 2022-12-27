@@ -1,5 +1,7 @@
 #include "..\include\GameResources.h"
 
+GameResources* GameResources::instance = nullptr;
+
 GameResources::GameResources()
 {
 	loadTexture(FILENAME_PNG_BRICKWALL, GameObject::GameObjectType::BRICKWALL);
@@ -27,15 +29,6 @@ void GameResources::loadTexture(const char* _filename, GameObject::GameObjectTyp
 	textures[_gameObjectType] = texture;
 }
 
-GameResources* GameResources::instance = nullptr;
-
-GameResources* GameResources::getInstance()
-{
-	if (!instance)
-		instance = new GameResources;
-	return instance;
-}
-
 void GameResources::destroy()
 {
 	if (instance)
@@ -43,6 +36,13 @@ void GameResources::destroy()
 		delete instance;
 		instance = nullptr;
 	}
+}
+
+GameResources* GameResources::getInstance()
+{
+	if (!instance)
+		instance = new GameResources;
+	return instance;
 }
 
 Texture* GameResources::getTexture(GameObject::GameObjectType _gameObjectType)

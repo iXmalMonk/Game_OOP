@@ -9,8 +9,9 @@
 using namespace sf;
 using namespace std;
 
-#define WINDOW_W 1024
-#define WINDOW_H 768
+// minimum MAP_SIZE * MAP_BLOCK
+#define WINDOW_W MAP_SIZE * MAP_BLOCK
+#define WINDOW_H MAP_SIZE * MAP_BLOCK
 #define WINDOW_TITLE "Game"
 #define WINDOW_FPS 60
 
@@ -32,7 +33,7 @@ using namespace std;
 
 #define PROJECTILE_W 16
 #define PROJECTILE_H 16
-#define PROJECTILE_DAMAGE 25
+#define PROJECTILE_DAMAGE TANK_HEALTHPOINTS / 4
 #define PROJECTILE_DIVISION 4
 #define PROJECTILE_MULTIPLICATION 0.375
 #define PROJECTILE_COEFFICIENT_X_FOR_UP TANK_W * PROJECTILE_MULTIPLICATION
@@ -46,13 +47,16 @@ using namespace std;
 
 // true - show messages
 // false - hide messages
-#define MESSAGES_DEBUG_IN_ENEMY true
-#define MESSAGES_DEBUG_IN_GAME false
-#define MESSAGES_DEBUG_IN_HEADQUARTERS true
-#define MESSAGES_DEBUG_IN_PLAYER true
-#define MESSAGES_DEBUG_IN_PROJECTILE true
-#define MESSAGES_DEBUG_IN_STATICOBJECT true
+#define MESSAGES_DEBUG_IN_PROJECTILE false
+#define MESSAGES_DEBUG_IN_STATICOBJECT false
 #define MESSAGES_DEBUG_IN_TANK true
+
+#define MAP_SIZE 15
+#define MAP_BLOCK 64
+#define MAP_UP_Y (WINDOW_H-MAP_SIZE*MAP_BLOCK)/2
+#define MAP_DOWN_Y MAP_UP_Y+MAP_SIZE*MAP_BLOCK
+#define MAP_LEFT_X (WINDOW_W-MAP_SIZE*MAP_BLOCK)/2
+#define MAP_RIGHT_X MAP_LEFT_X+MAP_SIZE*MAP_BLOCK
 
 #define FRAME_UP 0
 #define FRAME_DOWN 2

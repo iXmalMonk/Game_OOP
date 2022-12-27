@@ -12,6 +12,7 @@ private:
 	GameResources();
 	~GameResources();
 	void loadTexture(const char* _filename, GameObject::GameObjectType _gameObjectType);
+
 public:
 	void destroy();
 	static GameResources* getInstance();

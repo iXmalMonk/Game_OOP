@@ -25,6 +25,15 @@ void GameWindow::clear()
 	renderWindow->clear();
 }
 
+void GameWindow::destroy()
+{
+	if (instance)
+	{
+		delete instance;
+		instance = nullptr;
+	}
+}
+
 void GameWindow::display()
 {
 	renderWindow->display();
@@ -44,6 +53,13 @@ void GameWindow::events()
 			renderWindow->close();
 }
 
+GameWindow* GameWindow::getInstance()
+{
+	if (!instance)
+		instance = new GameWindow;
+	return instance;
+}
+
 float GameWindow::getTime()
 {
 	return time;
@@ -52,22 +68,6 @@ float GameWindow::getTime()
 bool GameWindow::isOpen()
 {
 	return renderWindow->isOpen();
-}
-
-GameWindow* GameWindow::getInstance()
-{
-	if (!instance)
-		instance = new GameWindow;
-	return instance;
-}
-
-void GameWindow::destroy()
-{
-	if (instance)
-	{
-		delete instance;
-		instance = nullptr;
-	}
 }
 
 void GameWindow::updateTime()

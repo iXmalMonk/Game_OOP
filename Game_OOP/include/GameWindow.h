@@ -18,13 +18,13 @@ private:
 
 public:
 	void clear();
+	void destroy();
 	void display();
 	void draw(Sprite _sprite);
 	void events();
+	static GameWindow* getInstance();
 	float getTime();
 	bool isOpen();
-	static GameWindow* getInstance();
-	void destroy();
 	void updateTime();
 };
 

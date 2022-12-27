@@ -11,10 +11,10 @@ void Enemy::update(float _time)
 	dy = 0;
 	if (getDirection() == Direction::UP)
 	{
-		if (position.y <= 0)
+		if (position.y <= MAP_UP_Y)
 		{
 			dx = getVelocity() * _time;
-			position.y = 0;
+			position.y = MAP_UP_Y;
 			setDirection(Direction::RIGHT);
 		}
 		else
@@ -22,10 +22,10 @@ void Enemy::update(float _time)
 	}
 	else if (getDirection() == Direction::LEFT)
 	{
-		if (position.x <= 0)
+		if (position.x <= MAP_LEFT_X)
 		{
 			dy = -getVelocity() * _time;
-			position.x = 0;
+			position.x = MAP_LEFT_X;
 			setDirection(Direction::UP);
 		}
 		else
@@ -33,10 +33,10 @@ void Enemy::update(float _time)
 	}
 	else if (getDirection() == Direction::DOWN)
 	{
-		if (position.y + getH() >= WINDOW_H)
+		if (position.y + getH() >= MAP_DOWN_Y)
 		{
 			dx = -getVelocity() * _time;
-			position.y = float(WINDOW_H - getH());
+			position.y = float(MAP_DOWN_Y - getH());
 			setDirection(Direction::LEFT);
 		}
 		else
@@ -44,10 +44,10 @@ void Enemy::update(float _time)
 	}
 	else if (getDirection() == Direction::RIGHT)
 	{
-		if (position.x + getW() >= WINDOW_W)
+		if (position.x + getW() >= MAP_RIGHT_X)
 		{
 			dy = getVelocity() * _time;
-			position.x = float(WINDOW_W - getW());
+			position.x = float(MAP_RIGHT_X - getW());
 			setDirection(Direction::DOWN);
 		}
 		else

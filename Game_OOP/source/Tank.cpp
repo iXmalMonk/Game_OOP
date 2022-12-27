@@ -1,6 +1,7 @@
 #include "..\include\Tank.h"
 #include "..\include\Game.h"
 #include "..\include\StaticObject.h"
+#include "..\include\Console.h"
 
 Tank::Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType, Texture* _texture, Vector2f _position) : DynamicObject(_direction, _velocity, _gameObjectType, TANK_W, TANK_H, _texture, _position)
 {
@@ -15,7 +16,7 @@ void Tank::alive()
 	{
 		destroy();
 		if (MESSAGES_DEBUG_IN_TANK)
-			cout << "Tank destroyed" << endl;
+			console::print("Tank destroyed\n", console::Color::RED, console::Color::BLACK);
 	}
 }
 
@@ -72,8 +73,29 @@ void Tank::message(Message* _message)
 		_message->dealDamage.gameObject == this)
 	{
 		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
-		if (MESSAGES_DEBUG_IN_ENEMY)
-			cout << "Enemy HP: " << getHealthPoints() << endl;
+		if (MESSAGES_DEBUG_IN_TANK)
+		{
+			if (this->getGameObjectType() == GameObjectType::ENEMY)
+			{
+				cout << "Id: ";
+				console::print(to_string(int(this)), console::Color::WHITE, console::Color::BLACK);
+				cout << " - Enemy HP: ";
+			}
+			else
+			{
+				cout << "Id: ";
+				console::print(to_string(int(this)), console::Color::WHITE, console::Color::BLACK);
+				cout << " - Player HP: ";
+			}
+			if (getHealthPoints() >= TANK_HEALTHPOINTS - PROJECTILE_DAMAGE * 1)
+				console::print(to_string(getHealthPoints()) + '\n', console::Color::GREEN, console::Color::BLACK);
+			else if (getHealthPoints() >= TANK_HEALTHPOINTS - PROJECTILE_DAMAGE * 2)
+				console::print(to_string(getHealthPoints()) + '\n', console::Color::YELLOW, console::Color::BLACK);
+			else if (getHealthPoints() >= TANK_HEALTHPOINTS - PROJECTILE_DAMAGE * 3)
+				console::print(to_string(getHealthPoints()) + '\n', console::Color::YELLOW, console::Color::BLACK);
+			else
+				console::print(to_string(getHealthPoints()) + '\n', console::Color::RED, console::Color::BLACK);
+		}
 		alive();
 	}
 	else if (_message->messageType == MessageType::EMPTY and
