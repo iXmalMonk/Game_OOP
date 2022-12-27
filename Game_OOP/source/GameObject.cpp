@@ -1,21 +1,6 @@
 #include "..\include\GameObject.h"
 #include "..\include\Game.h"
 
-GameObject::GameObjectType GameObject::gameObjectTypeBegin()
-{
-	return GameObject::GameObjectType::BRICKWALL;
-}
-
-GameObject::GameObjectType GameObject::gameObjectTypeEnd()
-{
-	return GameObject::GameObjectType(int(GameObject::GameObjectType::WATER) + 1);
-}
-
-GameObject::GameObjectType GameObject::gameObjectTypeNext(GameObject::GameObjectType _gameObjectType)
-{
-	return GameObject::GameObjectType(int(_gameObjectType) + 1);
-}
-
 GameObject::Message::Message(GameObject* _gameObject, GameObjectType _gameObjectType, Vector2f _position, MessageType _messageType)
 {
 	create.gameObjectType = _gameObjectType;

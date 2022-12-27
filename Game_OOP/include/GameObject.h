@@ -8,11 +8,6 @@ class GameObject
 public:
 	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
 	enum class GameObjectType { BRICKWALL, CONCRETEWALL, ENEMY, FLAG, FOREST, HEADQUARTERS, PLAYER, PROJECTILE, WATER };
-
-	static GameObjectType gameObjectTypeBegin();
-	static GameObjectType gameObjectTypeEnd();
-	static GameObjectType gameObjectTypeNext(GameObjectType _gameObjectType);
-
 	enum class MessageType { CREATE, DEALDAMAGE, DESTROY, EMPTY };
 	struct Message
 	{

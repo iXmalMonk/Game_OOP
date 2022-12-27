@@ -15,8 +15,8 @@ GameResources::GameResources()
 
 GameResources::~GameResources()
 {
-	for (auto gameObjectType = GameObject::gameObjectTypeBegin(); gameObjectType != GameObject::gameObjectTypeEnd(); gameObjectType = GameObject::gameObjectTypeNext(gameObjectType))
-		delete textures[gameObjectType];
+	for (auto texture : textures)
+		delete texture.second;
 	textures.clear();
 }
 
