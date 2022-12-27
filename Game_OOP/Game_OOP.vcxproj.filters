@@ -34,18 +34,15 @@
     <Filter Include="Файлы ресурсов\png">
       <UniqueIdentifier>{8e909029-b2eb-4fbb-a464-1f37a145c810}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Utilts">
+      <UniqueIdentifier>{7541a0fc-dbb2-4872-9a6b-0bdc8488b780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Utilts">
+      <UniqueIdentifier>{c2a704ed-c3a9-48ab-a142-b576bbf441d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Main.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Game.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameWindow.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Console.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="include\BrickWall.h">
@@ -87,18 +84,21 @@
     <ClInclude Include="include\Flag.h">
       <Filter>Файлы заголовков\StaticObjects</Filter>
     </ClInclude>
+    <ClInclude Include="include\Console.h">
+      <Filter>Файлы заголовков\Utilts</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game.h">
+      <Filter>Файлы заголовков\Utilts</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameResources.h">
+      <Filter>Файлы заголовков\Utilts</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameWindow.h">
+      <Filter>Файлы заголовков\Utilts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Game.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="source\GameWindow.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Console.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="source\Enemy.cpp">
@@ -139,6 +139,18 @@
     </ClCompile>
     <ClCompile Include="source\Flag.cpp">
       <Filter>Исходные файлы\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Console.cpp">
+      <Filter>Исходные файлы\Utilts</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game.cpp">
+      <Filter>Исходные файлы\Utilts</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameWindow.cpp">
+      <Filter>Исходные файлы\Utilts</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameResources.cpp">
+      <Filter>Исходные файлы\Utilts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

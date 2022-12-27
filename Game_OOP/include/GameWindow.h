@@ -18,14 +18,13 @@ private:
 
 public:
 	void clear();
-	void create();
 	void display();
 	void draw(Sprite _sprite);
 	void events();
 	float getTime();
 	bool isOpen();
 	static GameWindow* getInstance();
-	static void destroy();
+	void destroy();
 	void updateTime();
 };
 

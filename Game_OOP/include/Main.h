@@ -9,8 +9,8 @@
 using namespace sf;
 using namespace std;
 
-#define WINDOW_W 800
-#define WINDOW_H 600
+#define WINDOW_W 1024
+#define WINDOW_H 768
 #define WINDOW_TITLE "Game"
 #define WINDOW_FPS 60
 

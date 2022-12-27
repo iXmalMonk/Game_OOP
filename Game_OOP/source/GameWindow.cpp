@@ -25,13 +25,6 @@ void GameWindow::clear()
 	renderWindow->clear();
 }
 
-void GameWindow::create()
-{
-	renderWindow->create(VideoMode(WINDOW_W, WINDOW_H),
-		WINDOW_TITLE);
-	renderWindow->setFramerateLimit(WINDOW_FPS);
-}
-
 void GameWindow::display()
 {
 	renderWindow->display();

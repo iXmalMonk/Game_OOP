@@ -5,33 +5,31 @@ Game* Game::instance = nullptr;
 Game::Game()
 {
 	gameWindow = GameWindow::getInstance();
-	//
-	gameObjects.push_back(new Player(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
-	gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
-	for (int i = 0; i < 8; i++)
-		for (int j = 0; j < 8; j++)
-			//if (j < 2)
-				gameObjects.push_back(new BrickWall(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
-			//else if (j < 4)
-				//gameObjects.push_back(new Water(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
-			//else if (j < 6)
-				//gameObjects.push_back(new ConcreteWall(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
-			//else
-				//gameObjects.push_back(new Forest(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
-	gameObjects.push_back(new Headquarters(Vector2f(float(WINDOW_W / 1.5), float(WINDOW_H / 1.5))));
-	//
+	gameResources = GameResources::getInstance();
 	CONSOLE ? console::show() : console::hide();
 }
 
 Game::~Game()
 {
 	gameWindow->destroy();
+	gameResources->destroy();
 	for (auto gameObject : gameObjects)
 		delete gameObject;
 	gameObjects.clear();
 	for (auto message : messages)
 		delete message;
 	messages.clear();
+}
+
+int Game::destroy()
+{
+	if (instance)
+	{
+		delete instance;
+		instance = nullptr;
+		return 0;
+	}
+	return 1;
 }
 
 void Game::msgs()
@@ -104,31 +102,42 @@ void Game::update()
 		gameObject->update(gameWindow->getTime());
 }
 
-Game* Game::entry()
+int Game::game()
 {
-	if (!gameWindow->isOpen())
-		gameWindow->create();
-	while (gameWindow->isOpen())
+	if (instance)
 	{
-		gameWindow->events();
-		gameWindow->updateTime();
-		update();
-		msgs();
-		gameWindow->clear();
-		for (auto gameObject : gameObjects)
-			if (gameObject->getGameObjectType() != GameObject::GameObjectType::FOREST)
-				gameWindow->draw(gameObject->getSprite());
-		for (auto gameObject : gameObjects)
-			if (gameObject->getGameObjectType() == GameObject::GameObjectType::FOREST)
-				gameWindow->draw(gameObject->getSprite());
-		gameWindow->display();
+		//
+		gameObjects.push_back(new Player(Vector2f(WINDOW_W / 2, WINDOW_H / 2)));
+		gameObjects.push_back(new Enemy(Vector2f(WINDOW_W - TANK_W, 0)));
+		for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++)
+				//if (j < 2)
+				gameObjects.push_back(new BrickWall(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
+		//else if (j < 4)
+			//gameObjects.push_back(new Water(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
+		//else if (j < 6)
+			//gameObjects.push_back(new ConcreteWall(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
+		//else
+			//gameObjects.push_back(new Forest(Vector2f(float(WINDOW_W / 6 + j * STATICOBJECT_SMALL_W), float(WINDOW_H / 4 + i * STATICOBJECT_SMALL_H))));
+		gameObjects.push_back(new Headquarters(Vector2f(float(WINDOW_W / 1.5), float(WINDOW_H / 1.5))));
+		//
+		while (gameWindow->isOpen())
+		{
+			gameWindow->events();
+			gameWindow->updateTime();
+			update();
+			msgs();
+			gameWindow->clear();
+			for (auto gameObject : gameObjects)
+				if (gameObject->getGameObjectType() != GameObject::GameObjectType::FOREST)
+					gameWindow->draw(gameObject->getSprite());
+			for (auto gameObject : gameObjects)
+				if (gameObject->getGameObjectType() == GameObject::GameObjectType::FOREST)
+					gameWindow->draw(gameObject->getSprite());
+			gameWindow->display();
+		}
 	}
-	return instance;
-}
-
-int Game::exit()
-{
-	return !instance ? 0 : 1;
+	return destroy();
 }
 
 Game* Game::getInstance()
@@ -138,14 +147,9 @@ Game* Game::getInstance()
 	return instance;
 }
 
-Game* Game::destroy()
+Texture* Game::getTexture(GameObject::GameObjectType _gameObjectType)
 {
-	if (instance)
-	{
-		delete instance;
-		instance = nullptr;
-	}
-	return instance;
+	return gameResources->getTexture(_gameObjectType);
 }
 
 void Game::message(GameObject::Message* _message)

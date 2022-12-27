@@ -1,6 +1,21 @@
 #include "..\include\GameObject.h"
 #include "..\include\Game.h"
 
+GameObject::GameObjectType GameObject::gameObjectTypeBegin()
+{
+	return GameObject::GameObjectType::BRICKWALL;
+}
+
+GameObject::GameObjectType GameObject::gameObjectTypeEnd()
+{
+	return GameObject::GameObjectType(int(GameObject::GameObjectType::WATER) + 1);
+}
+
+GameObject::GameObjectType GameObject::gameObjectTypeNext(GameObject::GameObjectType _gameObjectType)
+{
+	return GameObject::GameObjectType(int(_gameObjectType) + 1);
+}
+
 GameObject::Message::Message(GameObject* _gameObject, GameObjectType _gameObjectType, Vector2f _position, MessageType _messageType)
 {
 	create.gameObjectType = _gameObjectType;
@@ -75,15 +90,14 @@ void GameObject::setPositionInSprite(Vector2f _position)
 	sprite.setPosition(_position);
 }
 
-GameObject::GameObject(const char* _filename, Direction _direction, GameObjectType _gameObjectType, int _w, int _h, Vector2f _position)
+GameObject::GameObject(Direction _direction, GameObjectType _gameObjectType, int _w, int _h, Texture* _texture, Vector2f _position)
 {
 	destroyed = false;
 	direction = _direction;
 	gameObjectType = _gameObjectType;
 	w = _w;
 	h = _h;
-	texture.loadFromFile(_filename);
-	sprite.setTexture(texture);
+	sprite.setTexture(*_texture);
 	position = _position;
 	setDirection(_direction);
 	setPositionInSprite(_position);

@@ -28,6 +28,7 @@
     <ClInclude Include="include\Forest.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\GameResources.h" />
     <ClInclude Include="include\GameWindow.h" />
     <ClInclude Include="include\Headquarters.h" />
     <ClInclude Include="include\Main.h" />
@@ -47,6 +48,7 @@
     <ClCompile Include="source\Forest.cpp" />
     <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\GameObject.cpp" />
+    <ClCompile Include="source\GameResources.cpp" />
     <ClCompile Include="source\GameWindow.cpp" />
     <ClCompile Include="source\Headquarters.cpp" />
     <ClCompile Include="source\Main.cpp" />

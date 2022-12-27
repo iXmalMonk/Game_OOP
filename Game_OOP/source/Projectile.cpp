@@ -31,7 +31,7 @@ Vector2f Projectile::getPositionForProjectile(Direction _direction, Vector2f _po
 	return temporary;
 }
 
-Projectile::Projectile(Direction _direction, GameObject* _gameObjectWhoShooted, Vector2f _position) : DynamicObject(FILENAME_PNG_PROJECTILE, _direction, VELOCITY_PROJECTILE, GameObjectType::PROJECTILE, PROJECTILE_W, PROJECTILE_H, getPositionForProjectile(_direction, _position))
+Projectile::Projectile(Direction _direction, GameObject* _gameObjectWhoShooted, Vector2f _position) : DynamicObject(_direction, VELOCITY_PROJECTILE, GameObjectType::PROJECTILE, PROJECTILE_W, PROJECTILE_H, Game::getInstance()->getTexture(GameObjectType::PROJECTILE), getPositionForProjectile(_direction, _position))
 {
 	gameObjectWhoShooted = _gameObjectWhoShooted;
 	damage = PROJECTILE_DAMAGE;
@@ -42,7 +42,8 @@ void Projectile::message(Message* _message)
 	if (_message->messageType == MessageType::EMPTY)
 	{
 		if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and
-			gameObjectWhoShooted->getGameObjectType() == GameObjectType::ENEMY)
+			gameObjectWhoShooted->getGameObjectType() == GameObjectType::ENEMY and
+			_message->gameObject != gameObjectWhoShooted)
 		{
 			if (checkCollisionAABBWithGameObject(_message->gameObject) and
 				_message->gameObject != gameObjectWhoShooted)

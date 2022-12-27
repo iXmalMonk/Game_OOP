@@ -1,6 +1,7 @@
 #include "..\include\Enemy.h"
+#include "..\include\Game.h"
 
-Enemy::Enemy(Vector2f _position) : Tank(FILENAME_PNG_ENEMY, Direction::DOWN, VELOCITY_ENEMY, GameObjectType::ENEMY, _position) {}
+Enemy::Enemy(Vector2f _position) : Tank(Direction::DOWN, VELOCITY_ENEMY, GameObjectType::ENEMY, Game::getInstance()->getTexture(GameObjectType::ENEMY), _position) {}
 
 void Enemy::update(float _time)
 {

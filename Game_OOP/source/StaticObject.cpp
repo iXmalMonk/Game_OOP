@@ -1,6 +1,6 @@
 #include "..\include\StaticObject.h"
 
-StaticObject::StaticObject(const char* _filename, GameObjectType _gameObjectType, int _w, int _h, Vector2f _position) : GameObject(_filename, Direction::NONE, _gameObjectType, _w, _h, _position) {}
+StaticObject::StaticObject(GameObjectType _gameObjectType, int _w, int _h, Texture* _texture, Vector2f _position) : GameObject(Direction::NONE, _gameObjectType, _w, _h, _texture, _position) {}
 
 Vector2f StaticObject::findPositionOfADynamicObjectRelativeToAStaticObjectAfterCollision(GameObject* _dynamicObject, GameObject* _staticObject)
 {

@@ -1,6 +1,7 @@
 #include "..\include\Player.h"
+#include "..\include\Game.h"
 
-Player::Player(Vector2f _position) : Tank(FILENAME_PNG_PLAYER,Direction::UP, VELOCITY_PLAYER, GameObjectType::PLAYER, _position) {}
+Player::Player(Vector2f _position) : Tank(Direction::UP, VELOCITY_PLAYER, GameObjectType::PLAYER, Game::getInstance()->getTexture(GameObjectType::PLAYER), _position) {}
 
 void Player::update(float _time)
 {

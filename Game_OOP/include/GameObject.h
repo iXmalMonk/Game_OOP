@@ -7,7 +7,12 @@ class GameObject
 {
 public:
 	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
-	enum class GameObjectType { BRICKWALL, CONCRETEWALL, ENEMY, FLAG, FOREST, HEADQUARTERS, PLAYER, PROJECTILE, WATER, NONE };
+	enum class GameObjectType { BRICKWALL, CONCRETEWALL, ENEMY, FLAG, FOREST, HEADQUARTERS, PLAYER, PROJECTILE, WATER };
+
+	static GameObjectType gameObjectTypeBegin();
+	static GameObjectType gameObjectTypeEnd();
+	static GameObjectType gameObjectTypeNext(GameObjectType _gameObjectType);
+
 	enum class MessageType { CREATE, DEALDAMAGE, DESTROY, EMPTY };
 	struct Message
 	{
@@ -52,7 +57,7 @@ protected:
 	void setPositionInSprite(Vector2f _position);
 
 public:
-	GameObject(const char* _filename, Direction _direction, GameObjectType _gameObjectType, int _w, int _h, Vector2f _position);
+	GameObject(Direction _direction, GameObjectType _gameObjectType, int _w, int _h, Texture* _texture, Vector2f _position);
 	Direction getDirection();
 	GameObjectType getGameObjectType();
 	int getW();

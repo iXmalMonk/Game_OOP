@@ -11,7 +11,7 @@ private:
 	int healthPoints;
 
 public:
-	Tank(const char* _filename, Direction _direction, float _velocity, GameObjectType _gameObjectType, Vector2f _position);
+	Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType, Texture* _texture, Vector2f _position);
 	void alive();
 	bool guiltyOfCollidingWithAnotherTank(GameObject* _gameObject);
 	int getHealthPoints();

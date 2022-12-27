@@ -8,6 +8,7 @@
 #include "Flag.h"
 #include "Forest.h"
 #include "GameObject.h"
+#include "GameResources.h"
 #include "GameWindow.h"
 #include "Headquarters.h"
 #include "Player.h"
@@ -20,19 +21,20 @@ private:
 	static Game* instance;
 
 	GameWindow* gameWindow;
+	GameResources* gameResources;
 	list<GameObject*> gameObjects;
 	list<GameObject::Message*> messages;
 
 	Game();
 	~Game();
+	int destroy();
 	void msgs();
 	void update();
 
 public:
-	Game* entry();
-	int exit();
+	int game();
 	static Game* getInstance();
-	static Game* destroy();
+	Texture* getTexture(GameObject::GameObjectType _gameObjectType);
 	void message(GameObject::Message* _message);
 };
 

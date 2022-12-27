@@ -2,11 +2,11 @@
 #include "..\include\Game.h"
 #include "..\include\StaticObject.h"
 
-Tank::Tank(const char* _filename, Direction _direction, float _velocity, GameObjectType _gameObjectType, Vector2f _position) : DynamicObject(_filename, _direction, _velocity, _gameObjectType, TANK_W, TANK_H, _position)
+Tank::Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType, Texture* _texture, Vector2f _position) : DynamicObject(_direction, _velocity, _gameObjectType, TANK_W, TANK_H, _texture, _position)
 {
 	healthPoints = TANK_HEALTHPOINTS;
 	cooldown = TANK_COOLDOWN;
-	cooldownTime = cooldown;
+	cooldownTime = 0;
 }
 
 void Tank::alive()
