@@ -1,6 +1,7 @@
 #ifndef _MAIN_H
 #define _MAIN_H
 
+#include <fstream>
 #include <iostream>
 #include <list>
 #include <SFML/Graphics.hpp>
@@ -49,18 +50,20 @@ using namespace std;
 #define MESSAGES_DEBUG_IN_STATICOBJECT false
 #define MESSAGES_DEBUG_IN_TANK true
 
-#define MAP_SIZE 30
 #define MAP_BLOCK 32
+#define MAP_SIZE 30
 #define MAP_UP_Y (WINDOW_H-MAP_SIZE*MAP_BLOCK) / 2
 #define MAP_DOWN_Y MAP_UP_Y+MAP_SIZE*MAP_BLOCK
 #define MAP_LEFT_X (WINDOW_W-MAP_SIZE*MAP_BLOCK) / 2
 #define MAP_RIGHT_X MAP_LEFT_X+MAP_SIZE*MAP_BLOCK
+#define MAPS_AMOUNT 1
 
 #define FRAME_UP 0
 #define FRAME_DOWN 2
 #define FRAME_LEFT 1
 #define FRAME_RIGHT 3
 
+#define FILENAME_MAP_1 "maps/map1.txt"
 #define FILENAME_PNG_BRICKWALL "png/brickWall.png"
 #define FILENAME_PNG_CONCRETEWALL "png/concreteWall.png"
 #define FILENAME_PNG_ENEMY "png/enemy.png"

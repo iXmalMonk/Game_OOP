@@ -41,63 +41,44 @@ GameController* GameController::instance = nullptr;
 
 GameController::GameController()
 {
-	map[0] =  "1             2             3 ";
-	map[1] =  "                              ";
-	map[2] =  "  bbb  bbb  bb  bb  bbb  bbb  ";
-	map[3] =  "  bbb  bbb  bb  bb  bbb  bbb  ";
-	map[4] =  "  bbb  bbb  bb  bb  bbb  bbb  ";
-	map[5] =  "  bbb  bbb  bb  bb  bbb  bbb  ";
-	map[6] =  "  bbb  bbb  bbccbb  bbb  bbb  ";
-	map[7] =  "  bbb  bbb  bbccbb  bbb  bbb  ";
-	map[8] =  "  bbb  bbb  bb  bb  bbb  bbb  ";
-	map[9] =  "  bbb  bbb          bbb  bbb  ";
-	map[10] = "  bbb  bbb          bbb  bbb  ";
-	map[11] = "            bb  bb            ";
-	map[12] = "            bb  bb            ";
-	map[13] = "bb  bbbbbb          bbbbbb  bb";
-	map[14] = "cc  bbbbbb          bbbbbb  cc";
-	map[15] = "            bb  bb            ";
-	map[16] = "            bbbbbb            ";
-	map[17] = "  bbb  bbb  bbbbbb  bbb  bbb  ";
-	map[18] = "  bbb  bbb  bb  bb  bbb  bbb  ";
-	map[19] = "  bbb  bbb  bb  bb  bbb  bbb  ";
-	map[20] = "  bbb  bbb  bb  bb  bbb  bbb  ";
-	map[21] = "  bbb  bbb  bb  bb  bbb  bbb  ";
-	map[22] = "  bbb  bbb    0     bbb  bbb  ";
-	map[23] = "  bbb  bbb          bbb  bbb  ";
-	map[24] = "  bbb  bbb   bbbb   bbb  bbb  ";
-	map[25] = "  bbb  bbb   bh b   bbb  bbb  ";
-	map[26] = "  bbb  bbb   b  b   bbb  bbb  ";
-	map[27] = "  bbb  bbb   bbbb   bbb  bbb  ";
-	map[28] = "                              ";
-	map[29] = "                              ";
+	currentMapNumber = 0;
+	loadMap(FILENAME_MAP_1, 1);
+}
+
+void GameController::loadMap(const char* _filename, int _mapNumber)
+{
+	ifstream file;
+	file.open(_filename);
+	for (int i = 0; i < MAP_SIZE; i++)
+		getline(file, map[_mapNumber - 1][i]);
+	file.close();
 }
 
 void GameController::createMap()
 {
 	for(int i = 0; i < MAP_SIZE; i++)
 		for (int j = 0; j < MAP_SIZE; j++)
-			if (map[i][j] == 'b')
+			if (map[currentMapNumber][i][j] == 'b')
 				Game::getInstance()->message(new GameObject::Message(NULL,
 					GameObject::GameObjectType::BRICKWALL,
 					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
 					GameObject::MessageType::CREATE));
-			else if (map[i][j] == 'c')
+			else if (map[currentMapNumber][i][j] == 'c')
 				Game::getInstance()->message(new GameObject::Message(NULL,
 					GameObject::GameObjectType::CONCRETEWALL,
 					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
 					GameObject::MessageType::CREATE));
-			else if (map[i][j] == 'f')
+			else if (map[currentMapNumber][i][j] == 'f')
 				Game::getInstance()->message(new GameObject::Message(NULL,
 					GameObject::GameObjectType::FOREST,
 					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
 					GameObject::MessageType::CREATE));
-			else if (map[i][j] == 'h')
+			else if (map[currentMapNumber][i][j] == 'h')
 				Game::getInstance()->message(new GameObject::Message(NULL,
 					GameObject::GameObjectType::HEADQUARTERS,
 					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
 					GameObject::MessageType::CREATE));
-			else if (map[i][j] == 'w')
+			else if (map[currentMapNumber][i][j] == 'w')
 				Game::getInstance()->message(new GameObject::Message(NULL,
 					GameObject::GameObjectType::WATER,
 					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
@@ -108,22 +89,22 @@ void GameController::createTanks()
 {
 	for (int i = 0; i < MAP_SIZE; i++)
 		for (int j = 0; j < MAP_SIZE; j++)
-			if (map[i][j] == '0')
+			if (map[currentMapNumber][i][j] == '0')
 				Game::getInstance()->message(new GameObject::Message(NULL,
 					GameObject::GameObjectType::PLAYER,
 					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
 					GameObject::MessageType::CREATE));
-			else if (map[i][j] == '1')
+			else if (map[currentMapNumber][i][j] == '1')
 				Game::getInstance()->message(new GameObject::Message(NULL,
 					GameObject::GameObjectType::ENEMY,
 					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
 					GameObject::MessageType::CREATE));
-			else if (map[i][j] == '2')
+			else if (map[currentMapNumber][i][j] == '2')
 				Game::getInstance()->message(new GameObject::Message(NULL,
 					GameObject::GameObjectType::ENEMY,
 					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
 					GameObject::MessageType::CREATE));
-			else if (map[i][j] == '3')
+			else if (map[currentMapNumber][i][j] == '3')
 				Game::getInstance()->message(new GameObject::Message(NULL,
 					GameObject::GameObjectType::ENEMY,
 					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
@@ -154,7 +135,7 @@ void GameController::message(GameObject::Message* _message)
 		{
 			for (int i = 0; i < MAP_SIZE; i++)
 				for (int j = 0; j < MAP_SIZE; j++)
-					if (map[i][j] == '0')
+					if (map[currentMapNumber][i][j] == '0')
 						Game::getInstance()->message(new GameObject::Message(NULL,
 							GameObject::GameObjectType::PLAYER,
 							Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j),
@@ -173,7 +154,7 @@ void GameController::message(GameObject::Message* _message)
 				position = '3';
 			for (int i = 0; i < MAP_SIZE; i++)
 				for (int j = 0; j < MAP_SIZE; j++)
-					if (map[i][j] == position)
+					if (map[currentMapNumber][i][j] == position)
 						Game::getInstance()->message(new GameObject::Message(NULL,
 							GameObject::GameObjectType::ENEMY,
 							Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j),

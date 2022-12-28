@@ -40,6 +40,9 @@
     <Filter Include="Файлы заголовков\Utilts">
       <UniqueIdentifier>{c2a704ed-c3a9-48ab-a142-b576bbf441d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы ресурсов\maps">
+      <UniqueIdentifier>{e2f3196a-3d78-4d9d-adf8-a7a2ab27319b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Main.h">
@@ -187,5 +190,10 @@
     <Image Include="png\flag.png">
       <Filter>Файлы ресурсов\png</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="maps\map1.txt">
+      <Filter>Файлы ресурсов\maps</Filter>
+    </Text>
   </ItemGroup>
 </Project>

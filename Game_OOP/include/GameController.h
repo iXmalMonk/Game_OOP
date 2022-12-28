@@ -8,10 +8,11 @@ class GameController
 private:
 	static GameController* instance;
 
-	string map[MAP_SIZE];
+	int currentMapNumber;
+	string map[MAPS_AMOUNT][MAP_SIZE];
 
 	GameController();
-
+	void loadMap(const char* _filename, int _mapNumber);
 public:
 	void createMap();
 	void createTanks();

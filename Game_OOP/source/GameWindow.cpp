@@ -9,7 +9,7 @@ GameWindow::GameWindow()
 	time = 0;
 	renderWindow = new RenderWindow(VideoMode(WINDOW_W, WINDOW_H),
 		WINDOW_TITLE,
-		Style::Titlebar);
+		Style::None);
 	renderWindow->setFramerateLimit(WINDOW_FPS);
 }
 

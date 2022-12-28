@@ -71,6 +71,9 @@
     <Image Include="png\projectile.png" />
     <Image Include="png\water.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="maps\map1.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
