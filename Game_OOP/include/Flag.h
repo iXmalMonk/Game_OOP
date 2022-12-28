@@ -3,7 +3,8 @@
 
 #include "StaticObject.h"
 
-class Flag : public StaticObject
+class Flag :
+	public StaticObject
 {
 public:
 	Flag(Vector2f _position);

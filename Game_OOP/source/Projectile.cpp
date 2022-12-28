@@ -3,7 +3,10 @@
 
 void Projectile::dealDamage(GameObject* _gameObject, int _damage)
 {
-	Game::getInstance()->message(new Message(this, _gameObject, _damage, MessageType::DEALDAMAGE));
+	Game::getInstance()->message(new Message(this,
+		_gameObject,
+		_damage,
+		MessageType::DEALDAMAGE));
 }
 
 Vector2f Projectile::getPositionForProjectile(Direction _direction, Vector2f _position)
@@ -59,7 +62,8 @@ void Projectile::message(Message* _message)
 			if (checkCollisionAABBWithGameObject(_message->gameObject))
 			{
 				destroy();
-				dealDamage(_message->gameObject, damage);
+				dealDamage(_message->gameObject,
+					damage);
 				if (MESSAGES_DEBUG_IN_PROJECTILE)
 					cout << "Player hit the enemy" << endl;
 			}
@@ -70,13 +74,14 @@ void Projectile::message(Message* _message)
 			if (checkCollisionAABBWithGameObject(_message->gameObject))
 			{
 				destroy();
-				dealDamage(_message->gameObject, damage);
+				dealDamage(_message->gameObject,
+					damage);
 				if (MESSAGES_DEBUG_IN_PROJECTILE)
 					cout << "Enemy hit the player" << endl;
 			}
 		}
-		else if (_message->gameObject->getGameObjectType() == GameObjectType::PROJECTILE
-			and _message->gameObject != this)
+		else if (_message->gameObject->getGameObjectType() == GameObjectType::PROJECTILE and
+			_message->gameObject != this)
 		{
 			if (checkCollisionAABBWithGameObject(_message->gameObject))
 			{
@@ -93,7 +98,8 @@ void Projectile::message(Message* _message)
 			{
 				if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
 				{
-					dealDamage(_message->gameObject, NULL);
+					dealDamage(_message->gameObject,
+						NULL);
 					destroy();
 					if (MESSAGES_DEBUG_IN_PROJECTILE)
 						cout << "Game object hit the brick wall" << endl;
@@ -106,7 +112,8 @@ void Projectile::message(Message* _message)
 				}
 				else if (_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS)
 				{
-					dealDamage(_message->gameObject, NULL);
+					dealDamage(_message->gameObject,
+						NULL);
 					destroy();
 					if (MESSAGES_DEBUG_IN_PROJECTILE)
 						cout << "Game object hit the headquarters" << endl;

@@ -33,21 +33,26 @@ bool GameObject::checkCollisionAABBWithGameObject(GameObject* _gameObject)
 
 void GameObject::create(GameObjectType _gameObjectType, Vector2f _position)
 {
-	Game::getInstance()->message(new Message(this, _gameObjectType, _position, MessageType::CREATE));
+	Game::getInstance()->message(new Message(this,
+		_gameObjectType,
+		_position,
+		MessageType::CREATE));
 }
 
 void GameObject::destroy()
 {
 	if (!destroyed)
 	{
-		Game::getInstance()->message(new Message(this, MessageType::DESTROY));
+		Game::getInstance()->message(new Message(this,
+			MessageType::DESTROY));
 		destroyed = true;
 	}
 }
 
 void GameObject::empty()
 {
-	Game::getInstance()->message(new Message(this, MessageType::EMPTY));
+	Game::getInstance()->message(new Message(this,
+		MessageType::EMPTY));
 }
 
 void GameObject::setDirection(Direction _direction)
@@ -56,16 +61,28 @@ void GameObject::setDirection(Direction _direction)
 	switch (direction)
 	{
 	case Direction::UP:
-		sprite.setTextureRect(IntRect(w * FRAME_UP, 0, w, h));
+		sprite.setTextureRect(IntRect(w * FRAME_UP,
+			0,
+			w,
+			h));
 		break;
 	case Direction::DOWN:
-		sprite.setTextureRect(IntRect(w * FRAME_DOWN, 0, w, h));
+		sprite.setTextureRect(IntRect(w * FRAME_DOWN,
+			0,
+			w,
+			h));
 		break;
 	case Direction::LEFT:
-		sprite.setTextureRect(IntRect(w * FRAME_LEFT, 0, w, h));
+		sprite.setTextureRect(IntRect(w * FRAME_LEFT,
+			0,
+			w,
+			h));
 		break;
 	case Direction::RIGHT:
-		sprite.setTextureRect(IntRect(w * FRAME_RIGHT, 0, w, h));
+		sprite.setTextureRect(IntRect(w * FRAME_RIGHT,
+			0,
+			w,
+			h));
 		break;
 	}
 }

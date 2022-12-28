@@ -9,7 +9,8 @@ void Headquarters::message(Message* _message)
 		_message->dealDamage.gameObject == this)
 	{
 		destroy();
-		create(GameObjectType::FLAG, getPosition());
+		create(GameObjectType::FLAG,
+			getPosition());
 		if (MESSAGES_DEBUG_IN_STATICOBJECT)
 			cout << "Headquarters destroyed" << endl;
 	}

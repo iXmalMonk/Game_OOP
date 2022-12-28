@@ -7,11 +7,13 @@ class GameResources
 {
 private:
 	static GameResources* instance;
-	map<GameObject::GameObjectType, Texture*> textures;
+	map<GameObject::GameObjectType,
+		Texture*> textures;
 
 	GameResources();
 	~GameResources();
-	void loadTexture(const char* _filename, GameObject::GameObjectType _gameObjectType);
+	void loadTexture(const char* _filename,
+		GameObject::GameObjectType _gameObjectType);
 
 public:
 	void destroy();

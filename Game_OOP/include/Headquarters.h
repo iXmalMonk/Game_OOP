@@ -3,7 +3,8 @@
 
 #include "StaticObject.h"
 
-class Headquarters : public StaticObject
+class Headquarters :
+	public StaticObject
 {
 public:
 	Headquarters(Vector2f _position);

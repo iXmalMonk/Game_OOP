@@ -3,7 +3,8 @@
 
 #include "DynamicObject.h"
 
-class Tank : public DynamicObject
+class Tank :
+	public DynamicObject
 {
 private:
 	float cooldown;
@@ -11,7 +12,11 @@ private:
 	int healthPoints;
 
 public:
-	Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType, Texture* _texture, Vector2f _position);
+	Tank(Direction _direction,
+		float _velocity,
+		GameObjectType _gameObjectType,
+		Texture* _texture,
+		Vector2f _position);
 	void alive();
 	bool guiltyOfCollidingWithAnotherTank(GameObject* _gameObject);
 	int getHealthPoints();

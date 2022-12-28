@@ -3,7 +3,8 @@
 
 #include "StaticObject.h"
 
-class ConcreteWall : public StaticObject
+class ConcreteWall :
+	public StaticObject
 {
 public:
 	ConcreteWall(Vector2f _position);

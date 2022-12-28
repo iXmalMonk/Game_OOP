@@ -3,7 +3,14 @@
 #include "..\include\StaticObject.h"
 #include "..\include\Console.h"
 
-Tank::Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType, Texture* _texture, Vector2f _position) : DynamicObject(_direction, _velocity, _gameObjectType, TANK_W, TANK_H, _texture, _position)
+Tank::Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType, Texture* _texture, Vector2f _position) :
+	DynamicObject(_direction,
+		_velocity,
+		_gameObjectType,
+		TANK_W,
+		TANK_H,
+		_texture,
+		_position)
 {
 	healthPoints = TANK_HEALTHPOINTS;
 	cooldown = TANK_COOLDOWN;
@@ -16,7 +23,9 @@ void Tank::alive()
 	{
 		destroy();
 		if (MESSAGES_DEBUG_IN_TANK)
-			console::print("Tank destroyed\n", console::Color::RED, console::Color::BLACK);
+			console::print("Tank destroyed\n",
+				console::Color::RED,
+				console::Color::BLACK);
 	}
 }
 
@@ -37,25 +46,29 @@ bool Tank::guiltyOfCollidingWithAnotherTank(GameObject* _gameObject)
 	case Direction::UP:
 		if (_gameObject->getDirection() == Direction::DOWN)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= topA - bottomB and topA - bottomB <= COLLISION_RANGE_FOR_TANK)
+		else if (-COLLISION_RANGE_FOR_TANK <= topA - bottomB and
+			topA - bottomB <= COLLISION_RANGE_FOR_TANK)
 			return true;
 		break;
 	case Direction::DOWN:
 		if (_gameObject->getDirection() == Direction::UP)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= topB - bottomA and topB - bottomA <= COLLISION_RANGE_FOR_TANK)
+		else if (-COLLISION_RANGE_FOR_TANK <= topB - bottomA and
+			topB - bottomA <= COLLISION_RANGE_FOR_TANK)
 			return true;
 		break;
 	case Direction::LEFT:
 		if (_gameObject->getDirection() == Direction::RIGHT)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= leftA - rightB and leftA - rightB <= COLLISION_RANGE_FOR_TANK)
+		else if (-COLLISION_RANGE_FOR_TANK <= leftA - rightB and
+			leftA - rightB <= COLLISION_RANGE_FOR_TANK)
 			return true;
 		break;
 	case Direction::RIGHT:
 		if (_gameObject->getDirection() == Direction::LEFT)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= leftB - rightA and leftB - rightA <= COLLISION_RANGE_FOR_TANK)
+		else if (-COLLISION_RANGE_FOR_TANK <= leftB - rightA and
+			leftB - rightA <= COLLISION_RANGE_FOR_TANK)
 			return true;
 		break;
 	}
@@ -78,23 +91,35 @@ void Tank::message(Message* _message)
 			if (this->getGameObjectType() == GameObjectType::ENEMY)
 			{
 				cout << "Id: ";
-				console::print(to_string(int(this)), console::Color::WHITE, console::Color::BLACK);
+				console::print(to_string(int(this)),
+					console::Color::WHITE,
+					console::Color::BLACK);
 				cout << " - Enemy HP: ";
 			}
 			else
 			{
 				cout << "Id: ";
-				console::print(to_string(int(this)), console::Color::WHITE, console::Color::BLACK);
+				console::print(to_string(int(this)),
+					console::Color::WHITE,
+					console::Color::BLACK);
 				cout << " - Player HP: ";
 			}
 			if (getHealthPoints() >= TANK_HEALTHPOINTS - PROJECTILE_DAMAGE * 1)
-				console::print(to_string(getHealthPoints()) + '\n', console::Color::GREEN, console::Color::BLACK);
+				console::print(to_string(getHealthPoints()) + '\n',
+					console::Color::GREEN,
+					console::Color::BLACK);
 			else if (getHealthPoints() >= TANK_HEALTHPOINTS - PROJECTILE_DAMAGE * 2)
-				console::print(to_string(getHealthPoints()) + '\n', console::Color::YELLOW, console::Color::BLACK);
+				console::print(to_string(getHealthPoints()) + '\n',
+					console::Color::YELLOW,
+					console::Color::BLACK);
 			else if (getHealthPoints() >= TANK_HEALTHPOINTS - PROJECTILE_DAMAGE * 3)
-				console::print(to_string(getHealthPoints()) + '\n', console::Color::YELLOW, console::Color::BLACK);
+				console::print(to_string(getHealthPoints()) + '\n',
+					console::Color::YELLOW,
+					console::Color::BLACK);
 			else
-				console::print(to_string(getHealthPoints()) + '\n', console::Color::RED, console::Color::BLACK);
+				console::print(to_string(getHealthPoints()) + '\n',
+					console::Color::RED,
+					console::Color::BLACK);
 		}
 		alive();
 	}
@@ -109,7 +134,8 @@ void Tank::message(Message* _message)
 			_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS or
 			_message->gameObject->getGameObjectType() == GameObjectType::WATER)
 		{
-			auto positionOfADynamicObjectRelativeToAStaticObject = StaticObject::findPositionOfADynamicObjectRelativeToAStaticObjectAfterCollision(this, _message->gameObject);
+			auto positionOfADynamicObjectRelativeToAStaticObject = StaticObject::findPositionOfADynamicObjectRelativeToAStaticObjectAfterCollision(this,
+				_message->gameObject);
 			position.x = positionOfADynamicObjectRelativeToAStaticObject.x;
 			position.y = positionOfADynamicObjectRelativeToAStaticObject.y;
 		}
@@ -141,7 +167,8 @@ void Tank::shoot()
 {
 	if (cooldown <= cooldownTime)
 	{
-		create(GameObjectType::PROJECTILE, getPosition());
+		create(GameObjectType::PROJECTILE,
+			getPosition());
 		cooldownTime = 0;
 	}
 }

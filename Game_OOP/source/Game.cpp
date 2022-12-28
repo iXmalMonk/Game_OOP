@@ -66,7 +66,9 @@ void Game::msgs()
 				gameObjects.push_back(new Player(message->create.position));
 				break;
 			case GameObject::GameObjectType::PROJECTILE:
-				gameObjects.push_back(new Projectile(message->gameObject->getDirection(), message->gameObject, message->create.position));
+				gameObjects.push_back(new Projectile(message->gameObject->getDirection(),
+					message->gameObject,
+					message->create.position));
 				break;
 			case GameObject::GameObjectType::WATER:
 				gameObjects.push_back(new Water(message->create.position));

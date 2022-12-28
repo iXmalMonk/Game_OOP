@@ -3,7 +3,8 @@
 
 #include "StaticObject.h"
 
-class Forest : public StaticObject
+class Forest :
+	public StaticObject
 {
 public:
 	Forest(Vector2f _position);

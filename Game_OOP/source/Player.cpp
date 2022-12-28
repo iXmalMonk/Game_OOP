@@ -1,11 +1,17 @@
 #include "..\include\Player.h"
 #include "..\include\Game.h"
 
-Player::Player(Vector2f _position) : Tank(Direction::UP, VELOCITY_PLAYER, GameObjectType::PLAYER, Game::getInstance()->getTexture(GameObjectType::PLAYER), _position) {}
+Player::Player(Vector2f _position) :
+	Tank(Direction::UP,
+		VELOCITY_PLAYER,
+		GameObjectType::PLAYER,
+		Game::getInstance()->getTexture(GameObjectType::PLAYER),
+		_position) {}
 
 void Player::update(float _time)
 {
-	if (readyToShoot(_time) and Keyboard::isKeyPressed(Keyboard::Space))
+	if (readyToShoot(_time) and
+		Keyboard::isKeyPressed(Keyboard::Space))
 		shoot();
 	dx = 0;
 	dy = 0;

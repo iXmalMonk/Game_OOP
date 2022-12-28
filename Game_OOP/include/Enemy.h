@@ -3,7 +3,8 @@
 
 #include "Tank.h"
 
-class Enemy : public Tank
+class Enemy :
+	public Tank
 {
 public:
 	Enemy(Vector2f _position);

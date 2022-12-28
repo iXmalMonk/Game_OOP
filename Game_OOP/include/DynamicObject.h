@@ -3,7 +3,8 @@
 
 #include "GameObject.h"
 
-class DynamicObject : public GameObject
+class DynamicObject :
+	public GameObject
 {
 private:
 	float velocity;
@@ -13,7 +14,13 @@ protected:
 	float dy;
 
 public:
-	DynamicObject(Direction _direction, float _velocity, GameObjectType _gameObjectType, int _w, int _h, Texture* _texture, Vector2f _position);
+	DynamicObject(Direction _direction,
+		float _velocity,
+		GameObjectType _gameObjectType,
+		int _w,
+		int _h,
+		Texture* _texture,
+		Vector2f _position);
 	float getVelocity();
 };
 

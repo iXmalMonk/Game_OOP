@@ -3,7 +3,8 @@
 
 #include "Tank.h"
 
-class Player : public Tank
+class Player :
+	public Tank
 {
 public:
 	Player(Vector2f _position);

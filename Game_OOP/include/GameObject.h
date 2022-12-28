@@ -6,9 +6,24 @@
 class GameObject
 {
 public:
-	enum class Direction { UP, DOWN, LEFT, RIGHT, NONE };
-	enum class GameObjectType { BRICKWALL, CONCRETEWALL, ENEMY, FLAG, FOREST, HEADQUARTERS, PLAYER, PROJECTILE, WATER };
-	enum class MessageType { CREATE, DEALDAMAGE, DESTROY, EMPTY };
+	enum class Direction { UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		NONE };
+	enum class GameObjectType { BRICKWALL,
+		CONCRETEWALL,
+		ENEMY,
+		FLAG,
+		FOREST,
+		HEADQUARTERS,
+		PLAYER,
+		PROJECTILE,
+		WATER };
+	enum class MessageType { CREATE,
+		DEALDAMAGE,
+		DESTROY,
+		EMPTY };
 	struct Message
 	{
 		GameObject* gameObject;
@@ -27,9 +42,16 @@ public:
 			} dealDamage;
 		};
 
-		Message(GameObject* _gameObject, GameObjectType _gameObjectType, Vector2f _position, MessageType _messageType); // CREATE
-		Message(GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage, MessageType _messageType); // DEALDAMAGE
-		Message(GameObject* _gameObject, MessageType _messageType); // DESTROY or EMPTY
+		Message(GameObject* _gameObject,
+			GameObjectType _gameObjectType,
+			Vector2f _position,
+			MessageType _messageType); // CREATE
+		Message(GameObject* _gameObjectWho,
+			GameObject* _gameObjectWhom,
+			int _damage,
+			MessageType _messageType); // DEALDAMAGE
+		Message(GameObject* _gameObject,
+			MessageType _messageType); // DESTROY or EMPTY
 	};
 
 private:
@@ -52,7 +74,12 @@ protected:
 	void setPositionInSprite(Vector2f _position);
 
 public:
-	GameObject(Direction _direction, GameObjectType _gameObjectType, int _w, int _h, Texture* _texture, Vector2f _position);
+	GameObject(Direction _direction,
+		GameObjectType _gameObjectType,
+		int _w,
+		int _h,
+		Texture* _texture,
+		Vector2f _position);
 	Direction getDirection();
 	GameObjectType getGameObjectType();
 	int getW();

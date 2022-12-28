@@ -3,7 +3,8 @@
 
 #include "StaticObject.h"
 
-class Water : public StaticObject
+class Water :
+	public StaticObject
 {
 public:
 	Water(Vector2f _position);
