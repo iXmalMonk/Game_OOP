@@ -1,7 +1,12 @@
 #include "..\include\Headquarters.h"
 #include "..\include\Game.h"
 
-Headquarters::Headquarters(Vector2f _position) : StaticObject(GameObjectType::HEADQUARTERS, STATICOBJECT_BIG_W, STATICOBJECT_BIG_H, Game::getInstance()->getTexture(GameObjectType::HEADQUARTERS), _position) {}
+Headquarters::Headquarters(Vector2f _position) :
+	StaticObject(GameObjectType::HEADQUARTERS,
+		STATICOBJECT_BIG_W,
+		STATICOBJECT_BIG_H,
+		Game::getInstance()->getTexture(GameObjectType::HEADQUARTERS),
+		_position) {}
 
 void Headquarters::message(Message* _message)
 {
