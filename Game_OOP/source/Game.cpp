@@ -114,8 +114,8 @@ int Game::game()
 
 		while (gameWindow->isOpen())
 		{
-			gameWindow->events();
 			gameWindow->updateTime();
+			gameWindow->events();
 			update();
 			msgs();
 			gameWindow->clear();

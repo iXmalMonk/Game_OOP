@@ -3,33 +3,74 @@
 
 GameController* GameController::instance = nullptr;
 
-// 0 - PLAYER
-// 1 - ENEMY
-// 2 - ENEMY
-// 3 - ENEMY
-// b - BRICKWALL
-// c - CONCRETEWALL
-// f - FOREST
-// h - HEADQUARTERS
-// w - WATER
+/*
+	+-----------------------+
+	|	0 - PLAYER			|
+	|	1 - ENEMY			|
+	|	2 - ENEMY			|
+	|	3 - ENEMY			|
+	|	b - BRICKWALL		|
+	|	c - CONCRETEWALL	|
+	|	f - FOREST			|
+	|	h - HEADQUARTERS	|
+	|	w - WATER			|
+	+-----------------------+
+
+	+-----------------------+
+	| How to place 0, 1,	|
+	|			   2, 3,	|
+	|			   h		|
+	|						|
+	|	+--+	+--+		|
+	|	|0 |	|1 |		|
+	|	|  |	|  |		|
+	|	+--+	+--+		|
+	|						|
+	|	+--+	+--+		|
+	|	|2 |	|3 |		|
+	|	|  |	|  |		|
+	|	+--+	+--+		|
+	|						|
+	|	+--+				|
+	|	|h |				|
+	|	|  |				|
+	|	+--+				|
+	|						|
+	+-----------------------+
+*/
 
 GameController::GameController()
 {
-	map[0] =  "1      2      3";
-	map[1] =  " bbcbbbbbbbcbb ";
-	map[2] =  "       b       ";
-	map[3] =  "fff    b    fff";
-	map[4] =  "fwf    b    fwf";
-	map[5] =  "fff    b    fff";
-	map[6] =  "               ";
-	map[7] =  "bbbbbbbbbbbbbbb";
-	map[8] =  "      bbb      ";
-	map[9] =  "   bbbbbbbbb   ";
-	map[10] = "bb    bbb    bb";
-	map[11] = " c     0     c ";
-	map[12] = " c    bbb    c ";
-	map[13] = " c    bhb    c ";
-	map[14] = "fffff bbb fffff";
+	map[0] =  "1             2             3 ";
+	map[1] =  "                              ";
+	map[2] =  "  bbb  bbb  bb  bb  bbb  bbb  ";
+	map[3] =  "  bbb  bbb  bb  bb  bbb  bbb  ";
+	map[4] =  "  bbb  bbb  bb  bb  bbb  bbb  ";
+	map[5] =  "  bbb  bbb  bb  bb  bbb  bbb  ";
+	map[6] =  "  bbb  bbb  bbccbb  bbb  bbb  ";
+	map[7] =  "  bbb  bbb  bbccbb  bbb  bbb  ";
+	map[8] =  "  bbb  bbb  bb  bb  bbb  bbb  ";
+	map[9] =  "  bbb  bbb          bbb  bbb  ";
+	map[10] = "  bbb  bbb          bbb  bbb  ";
+	map[11] = "            bb  bb            ";
+	map[12] = "            bb  bb            ";
+	map[13] = "bb  bbbbbb          bbbbbb  bb";
+	map[14] = "cc  bbbbbb          bbbbbb  cc";
+	map[15] = "            bb  bb            ";
+	map[16] = "            bbbbbb            ";
+	map[17] = "  bbb  bbb  bbbbbb  bbb  bbb  ";
+	map[18] = "  bbb  bbb  bb  bb  bbb  bbb  ";
+	map[19] = "  bbb  bbb  bb  bb  bbb  bbb  ";
+	map[20] = "  bbb  bbb  bb  bb  bbb  bbb  ";
+	map[21] = "  bbb  bbb  bb  bb  bbb  bbb  ";
+	map[22] = "  bbb  bbb    0     bbb  bbb  ";
+	map[23] = "  bbb  bbb          bbb  bbb  ";
+	map[24] = "  bbb  bbb   bbbb   bbb  bbb  ";
+	map[25] = "  bbb  bbb   bh b   bbb  bbb  ";
+	map[26] = "  bbb  bbb   b  b   bbb  bbb  ";
+	map[27] = "  bbb  bbb   bbbb   bbb  bbb  ";
+	map[28] = "                              ";
+	map[29] = "                              ";
 }
 
 void GameController::createMap()
@@ -37,38 +78,30 @@ void GameController::createMap()
 	for(int i = 0; i < MAP_SIZE; i++)
 		for (int j = 0; j < MAP_SIZE; j++)
 			if (map[i][j] == 'b')
-				for(int k = 0; k < 2; k++)
-					for(int l = 0; l < 2; l++)
-						Game::getInstance()->message(new GameObject::Message(NULL,
-							GameObject::GameObjectType::BRICKWALL,
-							Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j + MAP_BLOCK / 2 * l), float(MAP_UP_Y + MAP_BLOCK * i + MAP_BLOCK / 2 * k)),
-							GameObject::MessageType::CREATE));
+				Game::getInstance()->message(new GameObject::Message(NULL,
+					GameObject::GameObjectType::BRICKWALL,
+					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
+					GameObject::MessageType::CREATE));
 			else if (map[i][j] == 'c')
-				for (int k = 0; k < 2; k++)
-					for (int l = 0; l < 2; l++)
-						Game::getInstance()->message(new GameObject::Message(NULL,
-							GameObject::GameObjectType::CONCRETEWALL,
-							Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j + MAP_BLOCK / 2 * l), float(MAP_UP_Y + MAP_BLOCK * i + MAP_BLOCK / 2 * k)),
-							GameObject::MessageType::CREATE));
+				Game::getInstance()->message(new GameObject::Message(NULL,
+					GameObject::GameObjectType::CONCRETEWALL,
+					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
+					GameObject::MessageType::CREATE));
 			else if (map[i][j] == 'f')
-				for (int k = 0; k < 2; k++)
-					for (int l = 0; l < 2; l++)
-						Game::getInstance()->message(new GameObject::Message(NULL,
-							GameObject::GameObjectType::FOREST,
-							Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j + MAP_BLOCK / 2 * l), float(MAP_UP_Y + MAP_BLOCK * i + MAP_BLOCK / 2 * k)),
-							GameObject::MessageType::CREATE));
+				Game::getInstance()->message(new GameObject::Message(NULL,
+					GameObject::GameObjectType::FOREST,
+					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
+					GameObject::MessageType::CREATE));
 			else if (map[i][j] == 'h')
 				Game::getInstance()->message(new GameObject::Message(NULL,
 					GameObject::GameObjectType::HEADQUARTERS,
 					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
 					GameObject::MessageType::CREATE));
 			else if (map[i][j] == 'w')
-				for (int k = 0; k < 2; k++)
-					for (int l = 0; l < 2; l++)
-						Game::getInstance()->message(new GameObject::Message(NULL,
-							GameObject::GameObjectType::WATER,
-							Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j + MAP_BLOCK / 2 * l), float(MAP_UP_Y + MAP_BLOCK * i + MAP_BLOCK / 2 * k)),
-							GameObject::MessageType::CREATE));
+				Game::getInstance()->message(new GameObject::Message(NULL,
+					GameObject::GameObjectType::WATER,
+					Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
+					GameObject::MessageType::CREATE));
 }
 
 void GameController::createTanks()

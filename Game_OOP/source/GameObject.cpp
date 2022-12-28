@@ -1,7 +1,8 @@
 #include "..\include\GameObject.h"
 #include "..\include\Game.h"
 
-GameObject::Message::Message(GameObject* _gameObject, GameObjectType _gameObjectType, Vector2f _position, MessageType _messageType)
+GameObject::Message::Message(GameObject* _gameObject, GameObjectType _gameObjectType, Vector2f _position, MessageType _messageType) :
+	dealDamage{}
 {
 	create.gameObjectType = _gameObjectType;
 	create.position = _position;
@@ -9,7 +10,8 @@ GameObject::Message::Message(GameObject* _gameObject, GameObjectType _gameObject
 	messageType = _messageType;
 }
 
-GameObject::Message::Message(GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage, MessageType _messageType)
+GameObject::Message::Message(GameObject* _gameObjectWho, GameObject* _gameObjectWhom, int _damage, MessageType _messageType) :
+	create{}
 {
 	dealDamage.damage = _damage;
 	dealDamage.gameObject = _gameObjectWhom;
@@ -17,7 +19,8 @@ GameObject::Message::Message(GameObject* _gameObjectWho, GameObject* _gameObject
 	messageType = _messageType;
 }
 
-GameObject::Message::Message(GameObject* _gameObject, MessageType _messageType)
+GameObject::Message::Message(GameObject* _gameObject, MessageType _messageType) :
+	create{}
 {
 	gameObject = _gameObject;
 	messageType = _messageType;

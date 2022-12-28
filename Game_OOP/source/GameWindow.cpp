@@ -72,6 +72,5 @@ bool GameWindow::isOpen()
 
 void GameWindow::updateTime()
 {
-	time = float(clock->getElapsedTime().asMicroseconds() / TIME_COEFFICIENT);
-	clock->restart();
+	time = clock->restart().asSeconds();
 }

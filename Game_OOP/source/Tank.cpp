@@ -91,7 +91,7 @@ void Tank::message(Message* _message)
 			if (this->getGameObjectType() == GameObjectType::ENEMY)
 			{
 				cout << "Id: ";
-				console::print(to_string(int(this)),
+				console::print(to_string(long long(this)),
 					console::Color::WHITE,
 					console::Color::BLACK);
 				cout << " - Enemy HP: ";
@@ -99,7 +99,7 @@ void Tank::message(Message* _message)
 			else
 			{
 				cout << "Id: ";
-				console::print(to_string(int(this)),
+				console::print(to_string(long long(this)),
 					console::Color::WHITE,
 					console::Color::BLACK);
 				cout << " - Player HP: ";
