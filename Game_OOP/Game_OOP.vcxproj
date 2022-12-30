@@ -19,60 +19,65 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\BrickWall.h" />
-    <ClInclude Include="include\ConcreteWall.h" />
-    <ClInclude Include="include\Console.h" />
-    <ClInclude Include="include\DynamicObject.h" />
-    <ClInclude Include="include\Enemy.h" />
-    <ClInclude Include="include\Flag.h" />
-    <ClInclude Include="include\Forest.h" />
-    <ClInclude Include="include\Game.h" />
-    <ClInclude Include="include\GameController.h" />
-    <ClInclude Include="include\GameObject.h" />
-    <ClInclude Include="include\GameResources.h" />
-    <ClInclude Include="include\GameWindow.h" />
-    <ClInclude Include="include\Headquarters.h" />
+    <ClInclude Include="include\abstract\DynamicObject.h" />
+    <ClInclude Include="include\abstract\GameObject.h" />
+    <ClInclude Include="include\abstract\StaticObject.h" />
+    <ClInclude Include="include\abstract\Tank.h" />
+    <ClInclude Include="include\dynamicObjects\Enemy.h" />
+    <ClInclude Include="include\dynamicObjects\Player.h" />
+    <ClInclude Include="include\dynamicObjects\Projectile.h" />
     <ClInclude Include="include\Main.h" />
-    <ClInclude Include="include\Player.h" />
-    <ClInclude Include="include\Projectile.h" />
-    <ClInclude Include="include\StaticObject.h" />
-    <ClInclude Include="include\Tank.h" />
-    <ClInclude Include="include\Water.h" />
+    <ClInclude Include="include\staticObjects\BrickWall.h" />
+    <ClInclude Include="include\staticObjects\ConcreteWall.h" />
+    <ClInclude Include="include\staticObjects\Flag.h" />
+    <ClInclude Include="include\staticObjects\Forest.h" />
+    <ClInclude Include="include\staticObjects\Headquarters.h" />
+    <ClInclude Include="include\staticObjects\Water.h" />
+    <ClInclude Include="include\utilts\Console.h" />
+    <ClInclude Include="include\utilts\Game.h" />
+    <ClInclude Include="include\utilts\GameController.h" />
+    <ClInclude Include="include\utilts\GameMenu.h" />
+    <ClInclude Include="include\utilts\GameResources.h" />
+    <ClInclude Include="include\utilts\GameWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\BrickWall.cpp" />
-    <ClCompile Include="source\ConcreteWall.cpp" />
-    <ClCompile Include="source\Console.cpp" />
-    <ClCompile Include="source\DynamicObject.cpp" />
-    <ClCompile Include="source\Enemy.cpp" />
-    <ClCompile Include="source\Flag.cpp" />
-    <ClCompile Include="source\Forest.cpp" />
-    <ClCompile Include="source\Game.cpp" />
-    <ClCompile Include="source\GameController.cpp" />
-    <ClCompile Include="source\GameObject.cpp" />
-    <ClCompile Include="source\GameResources.cpp" />
-    <ClCompile Include="source\GameWindow.cpp" />
-    <ClCompile Include="source\Headquarters.cpp" />
+    <ClCompile Include="source\abstract\DynamicObject.cpp" />
+    <ClCompile Include="source\abstract\GameObject.cpp" />
+    <ClCompile Include="source\abstract\StaticObject.cpp" />
+    <ClCompile Include="source\abstract\Tank.cpp" />
+    <ClCompile Include="source\dynamicObjects\Enemy.cpp" />
+    <ClCompile Include="source\dynamicObjects\Player.cpp" />
+    <ClCompile Include="source\dynamicObjects\Projectile.cpp" />
     <ClCompile Include="source\Main.cpp" />
-    <ClCompile Include="source\Player.cpp" />
-    <ClCompile Include="source\Projectile.cpp" />
-    <ClCompile Include="source\StaticObject.cpp" />
-    <ClCompile Include="source\Tank.cpp" />
-    <ClCompile Include="source\Water.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="png\brickWall.png" />
-    <Image Include="png\concreteWall.png" />
-    <Image Include="png\enemy.png" />
-    <Image Include="png\flag.png" />
-    <Image Include="png\forest.png" />
-    <Image Include="png\headquarters.png" />
-    <Image Include="png\player.png" />
-    <Image Include="png\projectile.png" />
-    <Image Include="png\water.png" />
+    <ClCompile Include="source\staticObjects\BrickWall.cpp" />
+    <ClCompile Include="source\staticObjects\ConcreteWall.cpp" />
+    <ClCompile Include="source\staticObjects\Flag.cpp" />
+    <ClCompile Include="source\staticObjects\Forest.cpp" />
+    <ClCompile Include="source\staticObjects\Headquarters.cpp" />
+    <ClCompile Include="source\staticObjects\Water.cpp" />
+    <ClCompile Include="source\utilts\Console.cpp" />
+    <ClCompile Include="source\utilts\Game.cpp" />
+    <ClCompile Include="source\utilts\GameController.cpp" />
+    <ClCompile Include="source\utilts\GameMenu.cpp" />
+    <ClCompile Include="source\utilts\GameResources.cpp" />
+    <ClCompile Include="source\utilts\GameWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="maps\map1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="fonts\samson.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\brickWall.png" />
+    <Image Include="textures\concreteWall.png" />
+    <Image Include="textures\enemy.png" />
+    <Image Include="textures\flag.png" />
+    <Image Include="textures\forest.png" />
+    <Image Include="textures\headquarters.png" />
+    <Image Include="textures\player.png" />
+    <Image Include="textures\projectile.png" />
+    <Image Include="textures\water.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -98,15 +103,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

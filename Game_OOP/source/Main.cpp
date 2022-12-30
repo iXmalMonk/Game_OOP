@@ -1,2 +1,2 @@
-#include "..\include\Game.h"
+#include "..\include\utilts\Game.h"
 int main() { return Game::getInstance()->game(); }

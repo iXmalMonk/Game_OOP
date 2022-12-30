@@ -10,15 +10,16 @@
 using namespace sf;
 using namespace std;
 
-// minimum MAP_SIZE * MAP_BLOCK | 30 * 32 = 960
-#define WINDOW_W MAP_SIZE * MAP_BLOCK
-#define WINDOW_H MAP_SIZE * MAP_BLOCK
+#define WINDOW_W 1920
+#define WINDOW_H 1080
 #define WINDOW_TITLE "Game"
 #define WINDOW_FPS 60
 
 #define VELOCITY_PLAYER 250.0f
 #define VELOCITY_ENEMY 250.0f
 #define VELOCITY_PROJECTILE 450.0f
+
+#define TEXT_SIZE 192
 
 #define TANK_W 64
 #define TANK_H 64
@@ -52,10 +53,10 @@ using namespace std;
 
 #define MAP_BLOCK 32
 #define MAP_SIZE 30
-#define MAP_UP_Y (WINDOW_H-MAP_SIZE*MAP_BLOCK) / 2
-#define MAP_DOWN_Y MAP_UP_Y+MAP_SIZE*MAP_BLOCK
-#define MAP_LEFT_X (WINDOW_W-MAP_SIZE*MAP_BLOCK) / 2
-#define MAP_RIGHT_X MAP_LEFT_X+MAP_SIZE*MAP_BLOCK
+#define MAP_UP_Y (WINDOW_H - MAP_BLOCK * MAP_SIZE) / 2
+#define MAP_DOWN_Y MAP_UP_Y + MAP_BLOCK * MAP_SIZE
+#define MAP_LEFT_X (WINDOW_W - MAP_BLOCK * MAP_SIZE) / 2
+#define MAP_RIGHT_X MAP_LEFT_X + MAP_BLOCK * MAP_SIZE
 #define MAPS_AMOUNT 1
 
 #define FRAME_UP 0
@@ -63,16 +64,17 @@ using namespace std;
 #define FRAME_LEFT 1
 #define FRAME_RIGHT 3
 
+#define FILENAME_FONT_SAMSON "fonts/samson.ttf"
 #define FILENAME_MAP_1 "maps/map1.txt"
-#define FILENAME_PNG_BRICKWALL "png/brickWall.png"
-#define FILENAME_PNG_CONCRETEWALL "png/concreteWall.png"
-#define FILENAME_PNG_ENEMY "png/enemy.png"
-#define FILENAME_PNG_FLAG "png/flag.png"
-#define FILENAME_PNG_FOREST "png/forest.png"
-#define FILENAME_PNG_HEADQUARTERS "png/headquarters.png"
-#define FILENAME_PNG_PLAYER "png/player.png"
-#define FILENAME_PNG_PROJECTILE "png/projectile.png"
-#define FILENAME_PNG_WATER "png/water.png"
+#define FILENAME_TEXTURE_BRICKWALL "textures/brickWall.png"
+#define FILENAME_TEXTURE_CONCRETEWALL "textures/concreteWall.png"
+#define FILENAME_TEXTURE_ENEMY "textures/enemy.png"
+#define FILENAME_TEXTURE_FLAG "textures/flag.png"
+#define FILENAME_TEXTURE_FOREST "textures/forest.png"
+#define FILENAME_TEXTURE_HEADQUARTERS "textures/headquarters.png"
+#define FILENAME_TEXTURE_PLAYER "textures/player.png"
+#define FILENAME_TEXTURE_PROJECTILE "textures/projectile.png"
+#define FILENAME_TEXTURE_WATER "textures/water.png"
 
 // true - show console
 // false - hide console
