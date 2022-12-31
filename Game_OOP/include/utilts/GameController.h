@@ -8,12 +8,17 @@ class GameController
 private:
 	static GameController* instance;
 
+	int currentNumberOfLivesAEnemy;
+	int currentNumberOfLivesAPlayer;
 	int currentMapNumber;
 	string map[MAPS_AMOUNT][MAP_SIZE];
+	int maxNumberOfLivesAEnemy;
+	int maxNumberOfLivesAPlayer;
 
 	GameController();
 	void loadMap(const char* _filename,
 		int _mapNumber);
+
 public:
 	void createMap();
 	void createTanks();

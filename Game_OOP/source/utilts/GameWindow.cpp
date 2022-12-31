@@ -75,9 +75,9 @@ GameWindow* GameWindow::getInstance()
 	return instance;
 }
 
-RenderWindow* GameWindow::getRenderWindow()
+Vector2i GameWindow::getMousePositionRelativeAWindow()
 {
-	return renderWindow;
+	return Mouse::getPosition(*renderWindow);
 }
 
 float GameWindow::getTime()

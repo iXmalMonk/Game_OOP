@@ -1,11 +1,20 @@
 #include "..\..\include\utilts\GameController.h"
 #include "..\..\include\utilts\Game.h"
+#include "..\..\include\utilts\GameResources.h"
 
 GameController* GameController::instance = nullptr;
 
 GameController::GameController()
 {
 	currentMapNumber = 0;
+	maxNumberOfLivesAEnemy = MAX_NUMBER_OF_LIVES_A_ENEMY;
+	maxNumberOfLivesAPlayer = MAX_NUMBER_OF_LIVES_A_PLAYER;
+	currentNumberOfLivesAEnemy = maxNumberOfLivesAEnemy;
+	currentNumberOfLivesAPlayer = maxNumberOfLivesAPlayer;
+	GameResources::getInstance()->setCounterForText(currentNumberOfLivesAPlayer,
+		GameResources::TextTypeForCounters::PLAYER);
+	GameResources::getInstance()->setCounterForText(currentNumberOfLivesAEnemy,
+		GameResources::TextTypeForCounters::ENEMY);
 	loadMap(FILENAME_MAP_1, 1);
 }
 
@@ -97,31 +106,51 @@ void GameController::message(GameObject::Message* _message)
 	{
 		if (_message->gameObject->getGameObjectType() == GameObject::GameObjectType::PLAYER)
 		{
-			for (int i = 0; i < MAP_SIZE; i++)
-				for (int j = 0; j < MAP_SIZE; j++)
-					if (map[currentMapNumber][i][j] == '0')
-						Game::getInstance()->message(new GameObject::Message(NULL,
-							GameObject::GameObjectType::PLAYER,
-							Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
-							GameObject::MessageType::CREATE));
+			if (currentNumberOfLivesAPlayer > 0)
+				for (int i = 0; i < MAP_SIZE; i++)
+					for (int j = 0; j < MAP_SIZE; j++)
+						if (map[currentMapNumber][i][j] == '0')
+							Game::getInstance()->message(new GameObject::Message(NULL,
+								GameObject::GameObjectType::PLAYER,
+								Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
+								GameObject::MessageType::CREATE));
+			if (currentNumberOfLivesAPlayer > 0)
+			{
+				currentNumberOfLivesAPlayer--;
+				GameResources::getInstance()->setCounterForText(currentNumberOfLivesAPlayer,
+					GameResources::TextTypeForCounters::PLAYER);
+			}
 		}
 		else if (_message->gameObject->getGameObjectType() == GameObject::GameObjectType::ENEMY)
 		{
-			int random = rand() % 3;
-			char position;
-			if (random == 0)
-				position = '1';
-			else if (random == 1)
-				position = '2';
-			else
-				position = '3';
-			for (int i = 0; i < MAP_SIZE; i++)
-				for (int j = 0; j < MAP_SIZE; j++)
-					if (map[currentMapNumber][i][j] == position)
-						Game::getInstance()->message(new GameObject::Message(NULL,
-							GameObject::GameObjectType::ENEMY,
-							Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
-							GameObject::MessageType::CREATE));
+			if (currentNumberOfLivesAEnemy > 0)
+			{
+				int random = rand() % 3;
+				char position;
+				if (random == 0)
+					position = '1';
+				else if (random == 1)
+					position = '2';
+				else
+					position = '3';
+				for (int i = 0; i < MAP_SIZE; i++)
+					for (int j = 0; j < MAP_SIZE; j++)
+						if (map[currentMapNumber][i][j] == position)
+							Game::getInstance()->message(new GameObject::Message(NULL,
+								GameObject::GameObjectType::ENEMY,
+								Vector2f(float(MAP_LEFT_X + MAP_BLOCK * j), float(MAP_UP_Y + MAP_BLOCK * i)),
+								GameObject::MessageType::CREATE));
+				if (currentNumberOfLivesAEnemy > 0)
+				{
+					currentNumberOfLivesAEnemy--;
+					GameResources::getInstance()->setCounterForText(currentNumberOfLivesAEnemy,
+						GameResources::TextTypeForCounters::ENEMY);
+				}
+			}
+		}
+		else if (_message->gameObject->getGameObjectType() == GameObject::GameObjectType::HEADQUARTERS)
+		{
+
 		}
 	}
 }

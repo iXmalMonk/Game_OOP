@@ -7,9 +7,15 @@ class Tank :
 	public DynamicObject
 {
 private:
-	float cooldown;
-	float cooldownTime;
+	float cooldownMaxTimeForShooting;
+	float cooldownTimeForShooting;
 	int healthPoints;
+
+	void alive();
+	bool guiltyOfCollidingWithAnotherTank(GameObject* _gameObject);
+	int getHealthPoints();
+	virtual void move(float _time) = 0;
+	void setHealthPoints(int _healthPoints);
 
 public:
 	Tank(Direction _direction,
@@ -17,12 +23,8 @@ public:
 		GameObjectType _gameObjectType,
 		Texture* _texture,
 		Vector2f _position);
-	void alive();
-	bool guiltyOfCollidingWithAnotherTank(GameObject* _gameObject);
-	int getHealthPoints();
 	void message(Message* _message) override;
 	bool readyToShoot(float _time);
-	void setHealthPoints(int _healthPoints);
 	void shoot();
 };
 

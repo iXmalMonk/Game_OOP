@@ -1,18 +1,8 @@
 #include "..\..\include\dynamicObjects\Player.h"
 #include "..\..\include\utilts\GameResources.h"
 
-Player::Player(Vector2f _position) :
-	Tank(Direction::UP,
-		VELOCITY_PLAYER,
-		GameObjectType::PLAYER,
-		GameResources::getInstance()->getTexture(GameObjectType::PLAYER),
-		_position) {}
-
-void Player::update(float _time)
+void Player::move(float _time)
 {
-	if (readyToShoot(_time) and
-		Keyboard::isKeyPressed(Keyboard::Space))
-		shoot();
 	dx = 0;
 	dy = 0;
 	if (Keyboard::isKeyPressed(Keyboard::W))
@@ -45,6 +35,21 @@ void Player::update(float _time)
 		position.y = float(MAP_DOWN_Y - getH());
 	if (position.x + getW() > MAP_RIGHT_X)
 		position.x = float(MAP_RIGHT_X - getW());
+}
+
+Player::Player(Vector2f _position) :
+	Tank(Direction::UP,
+		VELOCITY_PLAYER,
+		GameObjectType::PLAYER,
+		GameResources::getInstance()->getTexture(GameObjectType::PLAYER),
+		_position) {}
+
+void Player::update(float _time)
+{
+	if (readyToShoot(_time) and
+		Keyboard::isKeyPressed(Keyboard::Space))
+		shoot();
+	move(_time);
 	empty();
 	setPositionInSprite(position);
 }

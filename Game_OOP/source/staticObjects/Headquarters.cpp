@@ -16,7 +16,5 @@ void Headquarters::message(Message* _message)
 		destroy();
 		create(GameObjectType::FLAG,
 			getPosition());
-		if (MESSAGES_DEBUG_IN_STATICOBJECT)
-			cout << "Headquarters destroyed" << endl;
 	}
 }

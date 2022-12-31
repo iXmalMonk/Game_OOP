@@ -1,17 +1,8 @@
 #include "..\..\include\dynamicObjects\Enemy.h"
 #include "..\..\include\utilts\GameResources.h"
 
-Enemy::Enemy(Vector2f _position) :
-	Tank(Direction::DOWN,
-		VELOCITY_ENEMY,
-		GameObjectType::ENEMY,
-		GameResources::getInstance()->getTexture(GameObjectType::ENEMY),
-		_position) {}
-
-void Enemy::update(float _time)
+void Enemy::move(float _time)
 {
-	if (readyToShoot(_time))
-		shoot();
 	dx = 0;
 	dy = 0;
 	if (getDirection() == Direction::UP)
@@ -58,8 +49,54 @@ void Enemy::update(float _time)
 		else
 			dx = getVelocity() * _time;
 	}
+
 	position.x += dx;
 	position.y += dy;
-	empty();
 	setPositionInSprite(position);
+}
+
+void Enemy::randomDirection(float _time)
+{
+	cooldownTimeForRandomDirection += _time;
+	if (cooldownTimeForRandomDirection >= cooldownMaxTimeForRandomDirection)
+	{
+		cooldownTimeForRandomDirection = 0;
+		auto random = rand() % 4;
+		switch (random)
+		{
+		case 0:
+			setDirection(Direction::UP);
+			break;
+		case 1:
+			setDirection(Direction::DOWN);
+			break;
+		case 2:
+			setDirection(Direction::LEFT);
+			break;
+		case 3:
+			setDirection(Direction::RIGHT);
+			break;
+		}
+	}
+}
+
+Enemy::Enemy(Vector2f _position) :
+	Tank(Direction::DOWN,
+		VELOCITY_ENEMY,
+		GameObjectType::ENEMY,
+		GameResources::getInstance()->getTexture(GameObjectType::ENEMY),
+		_position)
+{
+	cooldownMaxTimeForRandomDirection = 1;
+	cooldownTimeForRandomDirection = 0;
+}
+
+void Enemy::update(float _time)
+{
+	if (readyToShoot(_time) and 
+		rand() % 10 == 0)
+		shoot();
+	randomDirection(_time);
+	move(_time);
+	empty();
 }

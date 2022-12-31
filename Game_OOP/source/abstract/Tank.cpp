@@ -2,30 +2,10 @@
 #include "..\..\include\utilts\Console.h"
 #include "..\..\include\abstract\StaticObject.h"
 
-Tank::Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType, Texture* _texture, Vector2f _position) :
-	DynamicObject(_direction,
-		_velocity,
-		_gameObjectType,
-		TANK_W,
-		TANK_H,
-		_texture,
-		_position)
-{
-	healthPoints = TANK_HEALTHPOINTS;
-	cooldown = TANK_COOLDOWN;
-	cooldownTime = 0;
-}
-
 void Tank::alive()
 {
 	if (healthPoints <= 0)
-	{
 		destroy();
-		if (MESSAGES_DEBUG_IN_TANK)
-			console::print("Tank destroyed\n",
-				console::Color::RED,
-				console::Color::BLACK);
-	}
 }
 
 bool Tank::guiltyOfCollidingWithAnotherTank(GameObject* _gameObject)
@@ -77,47 +57,31 @@ int Tank::getHealthPoints()
 	return healthPoints;
 }
 
+void Tank::setHealthPoints(int _healthPoints)
+{
+	healthPoints = _healthPoints;
+}
+
+Tank::Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType, Texture* _texture, Vector2f _position) :
+	DynamicObject(_direction,
+		_velocity,
+		_gameObjectType,
+		TANK_W,
+		TANK_H,
+		_texture,
+		_position)
+{
+	healthPoints = TANK_HEALTHPOINTS;
+	cooldownMaxTimeForShooting = TANK_COOLDOWN_MAX_TIME_FOR_SHOOTING;
+	cooldownTimeForShooting = 0;
+}
+
 void Tank::message(Message* _message)
 {
 	if (_message->messageType == MessageType::DEALDAMAGE and
 		_message->dealDamage.gameObject == this)
 	{
 		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
-		if (MESSAGES_DEBUG_IN_TANK)
-		{
-			if (this->getGameObjectType() == GameObjectType::ENEMY)
-			{
-				cout << "Id: ";
-				console::print(to_string(long long(this)),
-					console::Color::WHITE,
-					console::Color::BLACK);
-				cout << " - Enemy HP: ";
-			}
-			else
-			{
-				cout << "Id: ";
-				console::print(to_string(long long(this)),
-					console::Color::WHITE,
-					console::Color::BLACK);
-				cout << " - Player HP: ";
-			}
-			if (getHealthPoints() >= TANK_HEALTHPOINTS - PROJECTILE_DAMAGE * 1)
-				console::print(to_string(getHealthPoints()) + '\n',
-					console::Color::GREEN,
-					console::Color::BLACK);
-			else if (getHealthPoints() >= TANK_HEALTHPOINTS - PROJECTILE_DAMAGE * 2)
-				console::print(to_string(getHealthPoints()) + '\n',
-					console::Color::YELLOW,
-					console::Color::BLACK);
-			else if (getHealthPoints() >= TANK_HEALTHPOINTS - PROJECTILE_DAMAGE * 3)
-				console::print(to_string(getHealthPoints()) + '\n',
-					console::Color::YELLOW,
-					console::Color::BLACK);
-			else
-				console::print(to_string(getHealthPoints()) + '\n',
-					console::Color::RED,
-					console::Color::BLACK);
-		}
 		alive();
 	}
 	else if (_message->messageType == MessageType::EMPTY and
@@ -151,21 +115,16 @@ void Tank::message(Message* _message)
 
 bool Tank::readyToShoot(float _time)
 {
-	cooldown > cooldownTime ? cooldownTime += _time : cooldownTime = cooldown;
-	return cooldown <= cooldownTime ? true : false;
-}
-
-void Tank::setHealthPoints(int _healthPoints)
-{
-	healthPoints = _healthPoints;
+	cooldownMaxTimeForShooting > cooldownTimeForShooting ? cooldownTimeForShooting += _time : cooldownTimeForShooting = cooldownMaxTimeForShooting;
+	return cooldownMaxTimeForShooting <= cooldownTimeForShooting ? true : false;
 }
 
 void Tank::shoot()
 {
-	if (cooldown <= cooldownTime)
+	if (cooldownMaxTimeForShooting <= cooldownTimeForShooting)
 	{
 		create(GameObjectType::PROJECTILE,
 			getPosition());
-		cooldownTime = 0;
+		cooldownTimeForShooting = 0;
 	}
 }

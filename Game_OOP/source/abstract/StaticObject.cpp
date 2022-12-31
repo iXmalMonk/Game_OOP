@@ -81,11 +81,7 @@ void StaticObject::message(Message* _message)
 {
 	if (_message->messageType == MessageType::DEALDAMAGE and
 		_message->dealDamage.gameObject == this)
-	{
 		destroy();
-		if (MESSAGES_DEBUG_IN_STATICOBJECT)
-			cout << "Static object destroyed" << endl;
-	}
 }
 
 void StaticObject::update(float _time)

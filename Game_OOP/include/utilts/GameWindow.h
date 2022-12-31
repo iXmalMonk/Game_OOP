@@ -26,7 +26,7 @@ public:
 	void draw(const Text& _text);
 	void events();
 	static GameWindow* getInstance();
-	RenderWindow* getRenderWindow();
+	Vector2i getMousePositionRelativeAWindow();
 	float getTime();
 	bool isOpen();
 	void updateTime();

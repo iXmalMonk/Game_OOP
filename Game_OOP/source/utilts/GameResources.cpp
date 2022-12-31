@@ -6,20 +6,41 @@ GameResources::GameResources()
 {
 	font.loadFromFile(FILENAME_FONT_SAMSON);
 	loadText(font,
+		200,
+		Side::RIGHT,
+		"ENEMY:",
+		TextType::ENEMY,
+		TEXT_SMALL_SIZE);
+	loadText(font,
 		600,
+		Side::LEFT,
 		"EXIT",
 		TextType::EXIT,
-		TEXT_SIZE);
+		TEXT_BIG_SIZE);
 	loadText(font,
 		400,
+		Side::LEFT,
 		"MENU",
 		TextType::MENU,
-		TEXT_SIZE);
+		TEXT_BIG_SIZE);
 	loadText(font,
 		200,
+		Side::LEFT,
 		"PLAY",
 		TextType::PLAY,
-		TEXT_SIZE);
+		TEXT_BIG_SIZE);
+	loadText(font,
+		600,
+		Side::RIGHT,
+		"PLAYER:",
+		TextType::PLAYER,
+		TEXT_SMALL_SIZE);
+	loadEmptyText(font,
+		TextTypeForCounters::ENEMY,
+		TEXT_SMALL_SIZE);
+	loadEmptyText(font,
+		TextTypeForCounters::PLAYER,
+		TEXT_SMALL_SIZE);
 	loadTexture(FILENAME_TEXTURE_BRICKWALL,
 		GameObject::GameObjectType::BRICKWALL);
 	loadTexture(FILENAME_TEXTURE_CONCRETEWALL,
@@ -50,14 +71,43 @@ GameResources::~GameResources()
 	textures.clear();
 }
 
-void GameResources::loadText(Font& _font, int _y, String _text, TextType _textType, unsigned int _size)
+void GameResources::loadEmptyText(Font& _font, TextTypeForCounters _textTypeForCounters, unsigned int _size)
+{
+	auto text = new Text;
+	text->setFont(_font);
+	text->setCharacterSize(_size);
+	text->setFillColor(Color::White);
+	switch (_textTypeForCounters)
+	{
+	case TextTypeForCounters::ENEMY:
+		text->setPosition(texts[TextType::ENEMY]->getPosition().x + texts[TextType::ENEMY]->getLocalBounds().width + TEXT_SPACING_BEETWEEN_TEXT_AND_TEXT_FOR_COUNTER,
+			texts[TextType::ENEMY]->getPosition().y);
+		break;
+	case TextTypeForCounters::PLAYER:
+		text->setPosition(texts[TextType::PLAYER]->getPosition().x + texts[TextType::PLAYER]->getLocalBounds().width + TEXT_SPACING_BEETWEEN_TEXT_AND_TEXT_FOR_COUNTER,
+			texts[TextType::PLAYER]->getPosition().y);
+		break;
+	}
+	textsForCounters[_textTypeForCounters] = text;
+}
+
+void GameResources::loadText(Font& _font, int _y, Side _side, String _text, TextType _textType, unsigned int _size)
 {
 	auto text = new Text(_text,
 		_font,
 		_size);
 	text->setFillColor(Color::White);
-	text->setPosition(Vector2f((MAP_BLOCK * MAP_SIZE / 2 - text->getLocalBounds().width) / 2,
-		float(_y)));
+	switch (_side)
+	{
+	case Side::LEFT:
+		text->setPosition(Vector2f((MAP_BLOCK * MAP_SIZE / 2 - text->getLocalBounds().width) / 2,
+			float(_y)));
+		break;
+	case Side::RIGHT:
+		text->setPosition(Vector2f(MAP_BLOCK * MAP_SIZE + MAP_BLOCK * MAP_SIZE / 2 + (MAP_BLOCK * MAP_SIZE / 2 - text->getLocalBounds().width) / 2,
+			float(_y)));
+		break;
+	}
 	texts[_textType] = text;
 }
 
@@ -89,7 +139,19 @@ Text* GameResources::getText(TextType _textType)
 	return texts[_textType];
 }
 
+Text* GameResources::getTextForCounters(TextTypeForCounters _textTypeForCounters)
+{
+	return textsForCounters[_textTypeForCounters];
+}
+
 Texture* GameResources::getTexture(GameObject::GameObjectType _gameObjectType)
 {
 	return textures[_gameObjectType];
+}
+
+void GameResources::setCounterForText(int _number, TextTypeForCounters _textTypeForCounters)
+{
+	stringstream stringStream;
+	stringStream << _number;
+	textsForCounters[_textTypeForCounters]->setString(stringStream.str().c_str());
 }

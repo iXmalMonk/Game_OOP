@@ -34,7 +34,7 @@ bool GameMenu::checkLeftClick()
 
 bool GameMenu::checkCollisionMouseWithText(const Text& _text)
 {
-	auto mousePosition = Mouse::getPosition(*GameWindow::getInstance()->getRenderWindow());
+	auto mousePosition = GameWindow::getInstance()->getMousePositionRelativeAWindow();
 	auto textPosition = _text.getPosition();
 	return (textPosition.x + _text.getLocalBounds().width) >= mousePosition.x and
 		mousePosition.x >= textPosition.x and
@@ -67,7 +67,11 @@ void GameMenu::destroy()
 
 void GameMenu::drawGame()
 {
+	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::ENEMY));
+	GameWindow::getInstance()->draw(*GameResources::getInstance()->getTextForCounters(GameResources::TextTypeForCounters::ENEMY));
 	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::MENU));
+	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::PLAYER));
+	GameWindow::getInstance()->draw(*GameResources::getInstance()->getTextForCounters(GameResources::TextTypeForCounters::PLAYER));
 	GameWindow::getInstance()->draw(*rectangleShape);
 }
 

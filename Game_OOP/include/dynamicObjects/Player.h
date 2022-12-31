@@ -6,6 +6,9 @@
 class Player :
 	public Tank
 {
+private:
+	void move(float _time) override;
+
 public:
 	Player(Vector2f _position);
 	void update(float _time) override;

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <list>
 #include <SFML/Graphics.hpp>
+#include <sstream>
 #include <Windows.h>
 
 using namespace sf;
@@ -19,11 +20,13 @@ using namespace std;
 #define VELOCITY_ENEMY 250.0f
 #define VELOCITY_PROJECTILE 450.0f
 
-#define TEXT_SIZE 192
+#define TEXT_BIG_SIZE 192
+#define TEXT_SMALL_SIZE 64
+#define TEXT_SPACING_BEETWEEN_TEXT_AND_TEXT_FOR_COUNTER 5
 
 #define TANK_W 64
 #define TANK_H 64
-#define TANK_COOLDOWN 0.35f
+#define TANK_COOLDOWN_MAX_TIME_FOR_SHOOTING 0.35f
 #define TANK_HEALTHPOINTS 100
 
 #define STATICOBJECT_BIG_W 64
@@ -33,7 +36,7 @@ using namespace std;
 
 #define PROJECTILE_W 16
 #define PROJECTILE_H 16
-#define PROJECTILE_DAMAGE TANK_HEALTHPOINTS / 4
+#define PROJECTILE_DAMAGE TANK_HEALTHPOINTS
 #define PROJECTILE_DIVISION 4
 #define PROJECTILE_MULTIPLICATION 0.375
 #define PROJECTILE_COEFFICIENT_X_FOR_UP TANK_W * PROJECTILE_MULTIPLICATION
@@ -45,11 +48,8 @@ using namespace std;
 #define PROJECTILE_COEFFICIENT_X_FOR_RIGHT TANK_W
 #define PROJECTILE_COEFFICIENT_Y_FOR_RIGHT TANK_H * PROJECTILE_MULTIPLICATION
 
-// true - show messages
-// false - hide messages
-#define MESSAGES_DEBUG_IN_PROJECTILE false
-#define MESSAGES_DEBUG_IN_STATICOBJECT false
-#define MESSAGES_DEBUG_IN_TANK true
+#define MAX_NUMBER_OF_LIVES_A_ENEMY 3
+#define MAX_NUMBER_OF_LIVES_A_PLAYER 3
 
 #define MAP_BLOCK 32
 #define MAP_SIZE 30
@@ -78,7 +78,7 @@ using namespace std;
 
 // true - show console
 // false - hide console
-#define CONSOLE true
+#define CONSOLE false
 
 #define COLLISION_RANGE_FOR_STATICOBJECT 15
 #define COLLISION_RANGE_FOR_TANK 10

@@ -57,11 +57,7 @@ void Projectile::message(Message* _message)
 		{
 			if (checkCollisionAABBWithGameObject(_message->gameObject) and
 				_message->gameObject != gameObjectWhoShooted)
-			{
 				destroy();
-				if (MESSAGES_DEBUG_IN_PROJECTILE)
-					cout << "Enemy hit the enemy" << endl;
-			}
 		}
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and
 			gameObjectWhoShooted->getGameObjectType() == GameObjectType::PLAYER)
@@ -71,8 +67,6 @@ void Projectile::message(Message* _message)
 				destroy();
 				dealDamage(_message->gameObject,
 					damage);
-				if (MESSAGES_DEBUG_IN_PROJECTILE)
-					cout << "Player hit the enemy" << endl;
 			}
 		}
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER and
@@ -83,19 +77,13 @@ void Projectile::message(Message* _message)
 				destroy();
 				dealDamage(_message->gameObject,
 					damage);
-				if (MESSAGES_DEBUG_IN_PROJECTILE)
-					cout << "Enemy hit the player" << endl;
 			}
 		}
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::PROJECTILE and
 			_message->gameObject != this)
 		{
 			if (checkCollisionAABBWithGameObject(_message->gameObject))
-			{
 				destroy();
-				if (MESSAGES_DEBUG_IN_PROJECTILE)
-					cout << "Projectile hit the projectile" << endl;
-			}
 		}
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL or
 			_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL or
@@ -108,22 +96,14 @@ void Projectile::message(Message* _message)
 					dealDamage(_message->gameObject,
 						NULL);
 					destroy();
-					if (MESSAGES_DEBUG_IN_PROJECTILE)
-						cout << "Game object hit the brick wall" << endl;
 				}
 				else if (_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
-				{
 					destroy();
-					if (MESSAGES_DEBUG_IN_PROJECTILE)
-						cout << "Game object hit the concrete wall" << endl;
-				}
 				else if (_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS)
 				{
 					dealDamage(_message->gameObject,
 						NULL);
 					destroy();
-					if (MESSAGES_DEBUG_IN_PROJECTILE)
-						cout << "Game object hit the headquarters" << endl;
 				}
 			}
 		}
