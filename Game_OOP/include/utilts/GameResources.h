@@ -27,12 +27,12 @@ private:
 	static GameResources* instance;
 
 	Font font;
+	map<GameObject::GameObjectType,
+		Texture*> textures;
 	map<TextType,
 		Text*> texts;
 	map<TextTypeForCounters,
 		Text*> textsForCounters;
-	map<GameObject::GameObjectType,
-		Texture*> textures;
 
 	GameResources();
 	~GameResources();
@@ -49,11 +49,11 @@ private:
 		GameObject::GameObjectType _gameObjectType);
 
 public:
-	void destroy();
 	static GameResources* getInstance();
 	Text* getText(TextType _textType);
 	Text* getTextForCounters(TextTypeForCounters _textTypeForCounters);
 	Texture* getTexture(GameObject::GameObjectType _gameObjectType);
+	void destroy();
 	void setCounterForText(int _number, TextTypeForCounters _textTypeForCounters);
 };
 

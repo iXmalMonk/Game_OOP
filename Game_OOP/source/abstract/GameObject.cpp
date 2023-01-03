@@ -1,7 +1,7 @@
 #include "..\..\include\abstract\GameObject.h"
 #include "..\..\include\utilts\Game.h"
 
-GameObject::Message::Message(GameObject* _gameObject, GameObjectType _gameObjectType, Vector2f _position, MessageType _messageType) :
+GameObject::Message::Message(GameObject* _gameObject, GameObjectType _gameObjectType, MessageType _messageType, Vector2f _position) :
 	dealDamage{}
 {
 	create.gameObjectType = _gameObjectType;
@@ -26,7 +26,7 @@ GameObject::Message::Message(GameObject* _gameObject, MessageType _messageType) 
 	messageType = _messageType;
 }
 
-bool GameObject::checkCollisionAABBWithGameObject(GameObject* _gameObject)
+bool GameObject::isCollisionAABBWithGameObject(GameObject* _gameObject)
 {
 	return (position.y + h) > _gameObject->getY() and
 		position.y < (_gameObject->getY() + _gameObject->getH()) and
@@ -34,15 +34,21 @@ bool GameObject::checkCollisionAABBWithGameObject(GameObject* _gameObject)
 		position.x < (_gameObject->getX() + _gameObject->getW());
 }
 
-void GameObject::create(GameObjectType _gameObjectType, Vector2f _position)
+bool GameObject::isDealDamage(Message* _message)
+{
+	return _message->messageType == MessageType::DEALDAMAGE and
+		_message->dealDamage.gameObject == this ? true : false;
+}
+
+void GameObject::createMessage(GameObjectType _gameObjectType, Vector2f _position)
 {
 	Game::getInstance()->message(new Message(this,
 		_gameObjectType,
-		_position,
-		MessageType::CREATE));
+		MessageType::CREATE,
+		_position));
 }
 
-void GameObject::destroy()
+void GameObject::destroyMessage()
 {
 	if (!destroyed)
 	{
@@ -52,7 +58,7 @@ void GameObject::destroy()
 	}
 }
 
-void GameObject::empty()
+void GameObject::emptyMessage()
 {
 	Game::getInstance()->message(new Message(this,
 		MessageType::EMPTY));
@@ -101,6 +107,16 @@ GameObject::Direction GameObject::getDirection()
 	return direction;
 }
 
+float GameObject::getX()
+{
+	return position.x;
+}
+
+float GameObject::getY()
+{
+	return position.y;
+}
+
 GameObject::GameObjectType GameObject::getGameObjectType()
 {
 	return gameObjectType;
@@ -124,14 +140,4 @@ Sprite GameObject::getSprite()
 Vector2f GameObject::getPosition()
 {
 	return position;
-}
-
-float GameObject::getX()
-{
-	return position.x;
-}
-
-float GameObject::getY()
-{
-	return position.y;
 }

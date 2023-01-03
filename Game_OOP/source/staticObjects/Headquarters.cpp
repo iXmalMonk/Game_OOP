@@ -10,11 +10,10 @@ Headquarters::Headquarters(Vector2f _position) :
 
 void Headquarters::message(Message* _message)
 {
-	if (_message->messageType == MessageType::DEALDAMAGE and
-		_message->dealDamage.gameObject == this)
+	if (isDealDamage(_message))
 	{
-		destroy();
-		create(GameObjectType::FLAG,
+		createMessage(GameObjectType::FLAG,
 			getPosition());
+		destroyMessage();
 	}
 }

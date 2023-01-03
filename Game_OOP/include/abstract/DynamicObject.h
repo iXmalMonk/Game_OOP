@@ -7,11 +7,12 @@ class DynamicObject :
 	public GameObject
 {
 private:
-	float velocity;
+	virtual void move(float _time) = 0;
 
 protected:
 	float dx;
 	float dy;
+	float velocity;
 
 public:
 	DynamicObject(Direction _direction,
@@ -21,7 +22,6 @@ public:
 		int _h,
 		Texture* _texture,
 		Vector2f _position);
-	float getVelocity();
 };
 
 #endif // !_DYNAMICOBJECT_H

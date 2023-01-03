@@ -8,33 +8,34 @@ void Player::move(float _time)
 	if (Keyboard::isKeyPressed(Keyboard::W))
 	{
 		setDirection(Direction::UP);
-		dy = -getVelocity() * _time;
+		dy = -velocity * _time;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::A))
 	{
 		setDirection(Direction::LEFT);
-		dx = -getVelocity() * _time;
+		dx = -velocity * _time;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::S))
 	{
 		setDirection(Direction::DOWN);
-		dy = getVelocity() * _time;
+		dy = velocity * _time;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::D))
 	{
 		setDirection(Direction::RIGHT);
-		dx = getVelocity() * _time;
+		dx = velocity * _time;
 	}
 	position.x += dx;
 	position.y += dy;
-	if (position.y < MAP_UP_Y)
-		position.y = MAP_UP_Y;
-	if (position.x < MAP_LEFT_X)
-		position.x = MAP_LEFT_X;
-	if (position.y + getH() > MAP_DOWN_Y)
-		position.y = float(MAP_DOWN_Y - getH());
-	if (position.x + getW() > MAP_RIGHT_X)
-		position.x = float(MAP_RIGHT_X - getW());
+	if (position.y < MAP_UP)
+		position.y = MAP_UP;
+	if (position.x < MAP_LEFT)
+		position.x = MAP_LEFT;
+	if (position.y + getH() > MAP_DOWN)
+		position.y = float(MAP_DOWN - getH());
+	if (position.x + getW() > MAP_RIGHT)
+		position.x = float(MAP_RIGHT - getW());
+	setPositionInSprite(position);
 }
 
 Player::Player(Vector2f _position) :
@@ -46,10 +47,9 @@ Player::Player(Vector2f _position) :
 
 void Player::update(float _time)
 {
-	if (readyToShoot(_time) and
+	if (isReadyToShoot(_time) and
 		Keyboard::isKeyPressed(Keyboard::Space))
 		shoot();
 	move(_time);
-	empty();
-	setPositionInSprite(position);
+	emptyMessage();
 }

@@ -17,6 +17,10 @@ private:
 	~GameWindow();
 
 public:
+	bool isOpen();
+	float getTime();
+	static GameWindow* getInstance();
+	Vector2i getMousePositionRelativeAWindow();
 	void clear();
 	void close();
 	void destroy();
@@ -25,10 +29,6 @@ public:
 	void draw(const Sprite& _sprite);
 	void draw(const Text& _text);
 	void events();
-	static GameWindow* getInstance();
-	Vector2i getMousePositionRelativeAWindow();
-	float getTime();
-	bool isOpen();
 	void updateTime();
 };
 

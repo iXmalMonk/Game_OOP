@@ -12,8 +12,3 @@ DynamicObject::DynamicObject(Direction _direction, float _velocity, GameObjectTy
 	dy = 0;
 	velocity = _velocity;
 }
-
-float DynamicObject::getVelocity()
-{
-	return velocity;
-}

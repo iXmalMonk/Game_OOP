@@ -80,6 +80,7 @@ void Game::msgs()
 			case GameObject::GameObjectType::PROJECTILE:
 				gameObjects.push_back(new Projectile(message->gameObject->getDirection(),
 					message->gameObject,
+					message->gameObject->getGameObjectType(),
 					message->create.position));
 				break;
 			case GameObject::GameObjectType::WATER:

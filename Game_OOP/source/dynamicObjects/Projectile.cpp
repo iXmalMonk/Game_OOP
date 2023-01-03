@@ -2,40 +2,71 @@
 #include "..\..\include\utilts\Game.h"
 #include "..\..\include\utilts\GameResources.h"
 
-void Projectile::dealDamage(GameObject* _gameObject, int _damage)
-{
-	Game::getInstance()->message(new Message(this,
-		_gameObject,
-		_damage,
-		MessageType::DEALDAMAGE));
-}
-
 Vector2f Projectile::getPositionForProjectile(Direction _direction, Vector2f _position)
 {
 	Vector2f temporary;
 	switch (_direction)
 	{
 	case Direction::UP:
-		temporary.x = float(_position.x + PROJECTILE_COEFFICIENT_X_FOR_UP);
-		temporary.y = float(_position.y + PROJECTILE_COEFFICIENT_Y_FOR_UP);
+		temporary.x = float(_position.x + TANK_W * PROJECTILE_MULTIPLICATION);
+		temporary.y = float(_position.y - TANK_H / PROJECTILE_DIVISION);
 		break;
 	case Direction::DOWN:
-		temporary.x = float(_position.x + PROJECTILE_COEFFICIENT_X_FOR_DOWN);
-		temporary.y = float(_position.y + PROJECTILE_COEFFICIENT_Y_FOR_DOWN);
+		temporary.x = float(_position.x + TANK_W * PROJECTILE_MULTIPLICATION);
+		temporary.y = float(_position.y + TANK_H);
 		break;
 	case Direction::LEFT:
-		temporary.x = float(_position.x + PROJECTILE_COEFFICIENT_X_FOR_LEFT);
-		temporary.y = float(_position.y + PROJECTILE_COEFFICIENT_Y_FOR_LEFT);
+		temporary.x = float(_position.x - TANK_W / PROJECTILE_DIVISION);
+		temporary.y = float(_position.y + TANK_H * PROJECTILE_MULTIPLICATION);
 		break;
 	case Direction::RIGHT:
-		temporary.x = float(_position.x + PROJECTILE_COEFFICIENT_X_FOR_RIGHT);
-		temporary.y = float(_position.y + PROJECTILE_COEFFICIENT_Y_FOR_RIGHT);
+		temporary.x = float(_position.x + TANK_W);
+		temporary.y = float(_position.y + TANK_H * PROJECTILE_MULTIPLICATION);
 		break;
 	}
 	return temporary;
 }
 
-Projectile::Projectile(Direction _direction, GameObject* _gameObjectWhoShooted, Vector2f _position) :
+void Projectile::dealDamageMessage(GameObject* _gameObject, int _damage)
+{
+	Game::getInstance()->message(new Message(this,
+		_gameObject,
+		_damage,
+		MessageType::DEALDAMAGE));
+	destroyMessage();
+}
+
+void Projectile::move(float _time)
+{
+	switch (getDirection())
+	{
+	case Direction::UP:
+		dy = -velocity * _time;
+		break;
+	case Direction::LEFT:
+		dx = -velocity * _time;
+		break;
+	case Direction::DOWN:
+		dy = velocity * _time;
+		break;
+	case Direction::RIGHT:
+		dx = velocity * _time;
+		break;
+	}
+	position.x += dx;
+	position.y += dy;
+	if (position.x + getW() >= MAP_RIGHT)
+		destroyMessage();
+	else if (position.y + getH() >= MAP_DOWN)
+		destroyMessage();
+	else if (position.x < MAP_LEFT)
+		destroyMessage();
+	else if (position.y < MAP_UP)
+		destroyMessage();
+	setPositionInSprite(position);
+}
+
+Projectile::Projectile(Direction _direction, GameObject* _gameObjectWhoShooted, GameObjectType _gameObjectTypeWhoShooted, Vector2f _position) :
 	DynamicObject(_direction,
 		VELOCITY_PROJECTILE,
 		GameObjectType::PROJECTILE,
@@ -44,99 +75,39 @@ Projectile::Projectile(Direction _direction, GameObject* _gameObjectWhoShooted, 
 		getPositionForProjectile(_direction, _position))
 {
 	gameObjectWhoShooted = _gameObjectWhoShooted;
+	gameObjectTypeWhoShooted = _gameObjectTypeWhoShooted;
 	damage = PROJECTILE_DAMAGE;
 }
 
 void Projectile::message(Message* _message)
 {
-	if (_message->messageType == MessageType::EMPTY)
+	if (_message->messageType == MessageType::EMPTY and
+		isCollisionAABBWithGameObject(_message->gameObject))
 	{
 		if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and
-			gameObjectWhoShooted->getGameObjectType() == GameObjectType::ENEMY and
+			gameObjectTypeWhoShooted == GameObjectType::ENEMY and
 			_message->gameObject != gameObjectWhoShooted)
-		{
-			if (checkCollisionAABBWithGameObject(_message->gameObject) and
-				_message->gameObject != gameObjectWhoShooted)
-				destroy();
-		}
-		else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and
-			gameObjectWhoShooted->getGameObjectType() == GameObjectType::PLAYER)
-		{
-			if (checkCollisionAABBWithGameObject(_message->gameObject))
-			{
-				destroy();
-				dealDamage(_message->gameObject,
-					damage);
-			}
-		}
-		else if (_message->gameObject->getGameObjectType() == GameObjectType::PLAYER and
-			gameObjectWhoShooted->getGameObjectType() == GameObjectType::ENEMY)
-		{
-			if (checkCollisionAABBWithGameObject(_message->gameObject))
-			{
-				destroy();
-				dealDamage(_message->gameObject,
-					damage);
-			}
-		}
+			destroyMessage();
+		else if ((_message->gameObject->getGameObjectType() == GameObjectType::ENEMY and
+			gameObjectTypeWhoShooted == GameObjectType::PLAYER) or
+			(_message->gameObject->getGameObjectType() == GameObjectType::PLAYER and
+			gameObjectTypeWhoShooted == GameObjectType::ENEMY))
+			dealDamageMessage(_message->gameObject,
+				damage);
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::PROJECTILE and
 			_message->gameObject != this)
-		{
-			if (checkCollisionAABBWithGameObject(_message->gameObject))
-				destroy();
-		}
+			destroyMessage();
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL or
-			_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL or
 			_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS)
-		{
-			if (checkCollisionAABBWithGameObject(_message->gameObject))
-			{
-				if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL)
-				{
-					dealDamage(_message->gameObject,
-						NULL);
-					destroy();
-				}
-				else if (_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
-					destroy();
-				else if (_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS)
-				{
-					dealDamage(_message->gameObject,
-						NULL);
-					destroy();
-				}
-			}
-		}
+			dealDamageMessage(_message->gameObject,
+				NULL);
+		else if (_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL)
+			destroyMessage();
 	}
 }
 
 void Projectile::update(float _time)
 {
-	switch (getDirection())
-	{
-	case Direction::UP:
-		dy = -getVelocity() * _time;
-		break;
-	case Direction::LEFT:
-		dx = -getVelocity() * _time;
-		break;
-	case Direction::DOWN:
-		dy = getVelocity() * _time;
-		break;
-	case Direction::RIGHT:
-		dx = getVelocity() * _time;
-		break;
-	}
-	position.x += dx;
-	position.y += dy;
-	if (position.x + getW() >= MAP_RIGHT_X)
-		destroy();
-	else if (position.y + getH() >= MAP_DOWN_Y)
-		destroy();
-	else if (position.x < MAP_LEFT_X)
-		destroy();
-	else if (position.y < MAP_UP_Y)
-		destroy();
-	empty();
-	setPositionInSprite(position);
+	move(_time);
+	emptyMessage();
 }

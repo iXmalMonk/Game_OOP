@@ -2,64 +2,53 @@
 #include "..\..\include\utilts\Console.h"
 #include "..\..\include\abstract\StaticObject.h"
 
-void Tank::alive()
-{
-	if (healthPoints <= 0)
-		destroy();
-}
-
 bool Tank::guiltyOfCollidingWithAnotherTank(GameObject* _gameObject)
 {
-	float topA = position.y;
-	float bottomA = position.y + getH();
-	float leftA = position.x;
-	float rightA = position.x + getW();
-	float topB = _gameObject->getY();
-	float bottomB = _gameObject->getY() + _gameObject->getH();
-	float leftB = _gameObject->getX();
-	float rightB = _gameObject->getX() + _gameObject->getW();
+	float topThis = position.y;
+	float bottomThis = position.y + getH();
+	float leftThis = position.x;
+	float rightThis = position.x + getW();
+	float topGO = _gameObject->getY();
+	float bottomGO = _gameObject->getY() + _gameObject->getH();
+	float leftGO = _gameObject->getX();
+	float rightGO = _gameObject->getX() + _gameObject->getW();
 	switch (getDirection())
 	{
 	case Direction::UP:
 		if (_gameObject->getDirection() == Direction::DOWN)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= topA - bottomB and
-			topA - bottomB <= COLLISION_RANGE_FOR_TANK)
+		else if (-COLLISION_RANGE_FOR_TANK <= topThis - bottomGO and
+			topThis - bottomGO <= COLLISION_RANGE_FOR_TANK)
 			return true;
 		break;
 	case Direction::DOWN:
 		if (_gameObject->getDirection() == Direction::UP)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= topB - bottomA and
-			topB - bottomA <= COLLISION_RANGE_FOR_TANK)
+		else if (-COLLISION_RANGE_FOR_TANK <= topGO - bottomThis and
+			topGO - bottomThis <= COLLISION_RANGE_FOR_TANK)
 			return true;
 		break;
 	case Direction::LEFT:
 		if (_gameObject->getDirection() == Direction::RIGHT)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= leftA - rightB and
-			leftA - rightB <= COLLISION_RANGE_FOR_TANK)
+		else if (-COLLISION_RANGE_FOR_TANK <= leftThis - rightGO and
+			leftThis - rightGO <= COLLISION_RANGE_FOR_TANK)
 			return true;
 		break;
 	case Direction::RIGHT:
 		if (_gameObject->getDirection() == Direction::LEFT)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= leftB - rightA and
-			leftB - rightA <= COLLISION_RANGE_FOR_TANK)
+		else if (-COLLISION_RANGE_FOR_TANK <= leftGO - rightThis and
+			leftGO - rightThis <= COLLISION_RANGE_FOR_TANK)
 			return true;
 		break;
 	}
 	return false;
 }
 
-int Tank::getHealthPoints()
+bool Tank::isDead()
 {
-	return healthPoints;
-}
-
-void Tank::setHealthPoints(int _healthPoints)
-{
-	healthPoints = _healthPoints;
+	return healthPoints <= 0 ? true : false;
 }
 
 Tank::Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType, Texture* _texture, Vector2f _position) :
@@ -71,23 +60,30 @@ Tank::Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType
 		_texture,
 		_position)
 {
-	healthPoints = TANK_HEALTHPOINTS;
 	cooldownMaxTimeForShooting = TANK_COOLDOWN_MAX_TIME_FOR_SHOOTING;
 	cooldownTimeForShooting = 0;
+	healthPoints = TANK_HEALTHPOINTS;
+}
+
+bool Tank::isReadyToShoot(float _time)
+{
+	cooldownTimeForShooting < cooldownMaxTimeForShooting ? cooldownTimeForShooting += _time : cooldownTimeForShooting = cooldownMaxTimeForShooting;
+	return cooldownTimeForShooting >= cooldownMaxTimeForShooting ? true : false;
 }
 
 void Tank::message(Message* _message)
 {
-	if (_message->messageType == MessageType::DEALDAMAGE and
-		_message->dealDamage.gameObject == this)
+	if (isDealDamage(_message))
 	{
-		setHealthPoints(getHealthPoints() - _message->dealDamage.damage);
-		alive();
+		healthPoints -= _message->dealDamage.damage;
+		if (isDead())
+			destroyMessage();
 	}
 	else if (_message->messageType == MessageType::EMPTY and
 		_message->gameObject->getGameObjectType() != GameObjectType::FOREST and
 		_message->gameObject->getGameObjectType() != GameObjectType::PROJECTILE and
-		_message->gameObject != this and checkCollisionAABBWithGameObject(_message->gameObject))
+		_message->gameObject != this and
+		isCollisionAABBWithGameObject(_message->gameObject))
 	{
 		if (_message->gameObject->getGameObjectType() == GameObjectType::BRICKWALL or
 			_message->gameObject->getGameObjectType() == GameObjectType::CONCRETEWALL or
@@ -95,35 +91,27 @@ void Tank::message(Message* _message)
 			_message->gameObject->getGameObjectType() == GameObjectType::HEADQUARTERS or
 			_message->gameObject->getGameObjectType() == GameObjectType::WATER)
 		{
-			auto positionOfADynamicObjectRelativeToAStaticObject = StaticObject::findPositionOfADynamicObjectRelativeToAStaticObjectAfterCollision(this,
+			auto positionOfADynamicObjectRelativeToAStaticObject = StaticObject::getPositionOfADynamicObjectRelativeToAStaticObjectAfterCollision(this,
 				_message->gameObject);
 			position.x = positionOfADynamicObjectRelativeToAStaticObject.x;
 			position.y = positionOfADynamicObjectRelativeToAStaticObject.y;
 		}
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY or
-			_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
+			_message->gameObject->getGameObjectType() == GameObjectType::PLAYER and
+			guiltyOfCollidingWithAnotherTank(_message->gameObject))
 		{
-			if (guiltyOfCollidingWithAnotherTank(_message->gameObject))
-			{
-				position.x -= dx;
-				position.y -= dy;
-			}
+			position.x -= dx;
+			position.y -= dy;
 		}
 		setPositionInSprite(position);
 	}
 }
 
-bool Tank::readyToShoot(float _time)
-{
-	cooldownMaxTimeForShooting > cooldownTimeForShooting ? cooldownTimeForShooting += _time : cooldownTimeForShooting = cooldownMaxTimeForShooting;
-	return cooldownMaxTimeForShooting <= cooldownTimeForShooting ? true : false;
-}
-
 void Tank::shoot()
 {
-	if (cooldownMaxTimeForShooting <= cooldownTimeForShooting)
+	if (cooldownTimeForShooting >= cooldownMaxTimeForShooting)
 	{
-		create(GameObjectType::PROJECTILE,
+		createMessage(GameObjectType::PROJECTILE,
 			getPosition());
 		cooldownTimeForShooting = 0;
 	}

@@ -13,17 +13,17 @@ private:
 	RectangleShape* rectangleShape;
 
 	GameMenu();
-	bool checkLeftClick();
-	bool checkCollisionMouseWithText(const Text& _text);
+	bool isCollisionMouseWithText(const Text& _text);
 	bool isMouseOnText(Text& _text);
+	bool onLeftClick();
 
 public:
+	bool isGame();
+	bool isMenu();
+	static GameMenu* getInstance();
 	void destroy();
 	void drawGame();
 	void drawMenu();
-	static GameMenu* getInstance();
-	bool isGame();
-	bool isMenu();
 	void updateGame();
 	void updateMenu();
 };

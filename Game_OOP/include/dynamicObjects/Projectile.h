@@ -8,16 +8,19 @@ class Projectile :
 {
 private:
 	GameObject* gameObjectWhoShooted;
+	GameObjectType gameObjectTypeWhoShooted;
 	int damage;
 
-	void dealDamage(GameObject* _gameObject,
-		int _damage);
 	Vector2f getPositionForProjectile(Direction _direction,
 		Vector2f _position);
+	void dealDamageMessage(GameObject* _gameObject,
+		int _damage);
+	void move(float _time) override;
 
 public:
 	Projectile(Direction _direction,
 		GameObject* _gameObjectWhoShooted,
+		GameObjectType _gameObjectTypeWhoShooted,
 		Vector2f _position);
 	void message(Message* _message) override;
 	void update(float _time) override;

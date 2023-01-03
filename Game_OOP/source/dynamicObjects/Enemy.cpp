@@ -5,51 +5,51 @@ void Enemy::move(float _time)
 {
 	dx = 0;
 	dy = 0;
+	randomDirection(_time);
 	if (getDirection() == Direction::UP)
 	{
-		if (position.y <= MAP_UP_Y)
+		if (position.y <= MAP_UP)
 		{
-			dx = getVelocity() * _time;
-			position.y = MAP_UP_Y;
+			dx = velocity * _time;
+			position.y = MAP_UP;
 			setDirection(Direction::RIGHT);
 		}
 		else
-			dy = -getVelocity() * _time;
+			dy = -velocity * _time;
 	}
 	else if (getDirection() == Direction::LEFT)
 	{
-		if (position.x <= MAP_LEFT_X)
+		if (position.x <= MAP_LEFT)
 		{
-			dy = -getVelocity() * _time;
-			position.x = MAP_LEFT_X;
+			dy = -velocity * _time;
+			position.x = MAP_LEFT;
 			setDirection(Direction::UP);
 		}
 		else
-			dx = -getVelocity() * _time;
+			dx = -velocity * _time;
 	}
 	else if (getDirection() == Direction::DOWN)
 	{
-		if (position.y + getH() >= MAP_DOWN_Y)
+		if (position.y + getH() >= MAP_DOWN)
 		{
-			dx = -getVelocity() * _time;
-			position.y = float(MAP_DOWN_Y - getH());
+			dx = -velocity * _time;
+			position.y = float(MAP_DOWN - getH());
 			setDirection(Direction::LEFT);
 		}
 		else
-			dy = getVelocity() * _time;
+			dy = velocity * _time;
 	}
 	else if (getDirection() == Direction::RIGHT)
 	{
-		if (position.x + getW() >= MAP_RIGHT_X)
+		if (position.x + getW() >= MAP_RIGHT)
 		{
-			dy = getVelocity() * _time;
-			position.x = float(MAP_RIGHT_X - getW());
+			dy = velocity * _time;
+			position.x = float(MAP_RIGHT - getW());
 			setDirection(Direction::DOWN);
 		}
 		else
-			dx = getVelocity() * _time;
+			dx = velocity * _time;
 	}
-
 	position.x += dx;
 	position.y += dy;
 	setPositionInSprite(position);
@@ -87,16 +87,15 @@ Enemy::Enemy(Vector2f _position) :
 		GameResources::getInstance()->getTexture(GameObjectType::ENEMY),
 		_position)
 {
-	cooldownMaxTimeForRandomDirection = 1;
+	cooldownMaxTimeForRandomDirection = ENEMY_COOLDOWN_MAX_TIME_FOR_RANDOM_DIRECTION;
 	cooldownTimeForRandomDirection = 0;
 }
 
 void Enemy::update(float _time)
 {
-	if (readyToShoot(_time) and 
-		rand() % 10 == 0)
+	if (isReadyToShoot(_time) and 
+		rand() % ENEMY_SHOT_CHANCE == 0)
 		shoot();
-	randomDirection(_time);
 	move(_time);
-	empty();
+	emptyMessage();
 }

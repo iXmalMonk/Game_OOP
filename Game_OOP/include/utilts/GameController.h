@@ -11,19 +11,19 @@ private:
 	int currentNumberOfLivesAEnemy;
 	int currentNumberOfLivesAPlayer;
 	int currentMapNumber;
-	string map[MAPS_AMOUNT][MAP_SIZE];
 	int maxNumberOfLivesAEnemy;
 	int maxNumberOfLivesAPlayer;
+	string map[MAPS_AMOUNT][MAP_SIZE];
 
 	GameController();
 	void loadMap(const char* _filename,
 		int _mapNumber);
 
 public:
+	static GameController* getInstance();
 	void createMap();
 	void createTanks();
 	void destroy();
-	static GameController* getInstance();
 	void message(GameObject::Message* _message);
 };
 

@@ -5,6 +5,24 @@ GameResources* GameResources::instance = nullptr;
 GameResources::GameResources()
 {
 	font.loadFromFile(FILENAME_FONT_SAMSON);
+	loadTexture(FILENAME_TEXTURE_BRICKWALL,
+		GameObject::GameObjectType::BRICKWALL);
+	loadTexture(FILENAME_TEXTURE_CONCRETEWALL,
+		GameObject::GameObjectType::CONCRETEWALL);
+	loadTexture(FILENAME_TEXTURE_ENEMY,
+		GameObject::GameObjectType::ENEMY);
+	loadTexture(FILENAME_TEXTURE_FLAG,
+		GameObject::GameObjectType::FLAG);
+	loadTexture(FILENAME_TEXTURE_FOREST,
+		GameObject::GameObjectType::FOREST);
+	loadTexture(FILENAME_TEXTURE_HEADQUARTERS,
+		GameObject::GameObjectType::HEADQUARTERS);
+	loadTexture(FILENAME_TEXTURE_PLAYER,
+		GameObject::GameObjectType::PLAYER);
+	loadTexture(FILENAME_TEXTURE_PROJECTILE,
+		GameObject::GameObjectType::PROJECTILE);
+	loadTexture(FILENAME_TEXTURE_WATER,
+		GameObject::GameObjectType::WATER);
 	loadText(font,
 		200,
 		Side::RIGHT,
@@ -41,34 +59,19 @@ GameResources::GameResources()
 	loadEmptyText(font,
 		TextTypeForCounters::PLAYER,
 		TEXT_SMALL_SIZE);
-	loadTexture(FILENAME_TEXTURE_BRICKWALL,
-		GameObject::GameObjectType::BRICKWALL);
-	loadTexture(FILENAME_TEXTURE_CONCRETEWALL,
-		GameObject::GameObjectType::CONCRETEWALL);
-	loadTexture(FILENAME_TEXTURE_ENEMY,
-		GameObject::GameObjectType::ENEMY);
-	loadTexture(FILENAME_TEXTURE_FLAG,
-		GameObject::GameObjectType::FLAG);
-	loadTexture(FILENAME_TEXTURE_FOREST,
-		GameObject::GameObjectType::FOREST);
-	loadTexture(FILENAME_TEXTURE_HEADQUARTERS,
-		GameObject::GameObjectType::HEADQUARTERS);
-	loadTexture(FILENAME_TEXTURE_PLAYER,
-		GameObject::GameObjectType::PLAYER);
-	loadTexture(FILENAME_TEXTURE_PROJECTILE,
-		GameObject::GameObjectType::PROJECTILE);
-	loadTexture(FILENAME_TEXTURE_WATER,
-		GameObject::GameObjectType::WATER);
 }
 
 GameResources::~GameResources()
 {
-	for (auto text : texts)
-		delete text.second;
-	texts.clear();
 	for (auto texture : textures)
 		delete texture.second;
 	textures.clear();
+	for (auto text : texts)
+		delete text.second;
+	texts.clear();
+	for (auto textForCounter : textsForCounters)
+		delete textForCounter.second;
+	textsForCounters.clear();
 }
 
 void GameResources::loadEmptyText(Font& _font, TextTypeForCounters _textTypeForCounters, unsigned int _size)
@@ -118,15 +121,6 @@ void GameResources::loadTexture(const char* _filename, GameObject::GameObjectTyp
 	textures[_gameObjectType] = texture;
 }
 
-void GameResources::destroy()
-{
-	if (instance)
-	{
-		delete instance;
-		instance = nullptr;
-	}
-}
-
 GameResources* GameResources::getInstance()
 {
 	if (!instance)
@@ -147,6 +141,15 @@ Text* GameResources::getTextForCounters(TextTypeForCounters _textTypeForCounters
 Texture* GameResources::getTexture(GameObject::GameObjectType _gameObjectType)
 {
 	return textures[_gameObjectType];
+}
+
+void GameResources::destroy()
+{
+	if (instance)
+	{
+		delete instance;
+		instance = nullptr;
+	}
 }
 
 void GameResources::setCounterForText(int _number, TextTypeForCounters _textTypeForCounters)

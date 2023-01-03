@@ -11,11 +11,8 @@ private:
 	float cooldownTimeForShooting;
 	int healthPoints;
 
-	void alive();
 	bool guiltyOfCollidingWithAnotherTank(GameObject* _gameObject);
-	int getHealthPoints();
-	virtual void move(float _time) = 0;
-	void setHealthPoints(int _healthPoints);
+	bool isDead();
 
 public:
 	Tank(Direction _direction,
@@ -23,8 +20,8 @@ public:
 		GameObjectType _gameObjectType,
 		Texture* _texture,
 		Vector2f _position);
+	bool isReadyToShoot(float _time);
 	void message(Message* _message) override;
-	bool readyToShoot(float _time);
 	void shoot();
 };
 

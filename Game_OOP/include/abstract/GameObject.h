@@ -44,8 +44,8 @@ public:
 
 		Message(GameObject* _gameObject,
 			GameObjectType _gameObjectType,
-			Vector2f _position,
-			MessageType _messageType); // CREATE
+			MessageType _messageType,
+			Vector2f _position); // CREATE
 		Message(GameObject* _gameObjectWho,
 			GameObject* _gameObjectWhom,
 			int _damage,
@@ -65,11 +65,12 @@ private:
 protected:
 	Vector2f position;
 
-	bool checkCollisionAABBWithGameObject(GameObject* _gameObject);
-	void create(GameObjectType _gameObjectType,
+	bool isCollisionAABBWithGameObject(GameObject* _gameObject);
+	bool isDealDamage(Message* _message);
+	void createMessage(GameObjectType _gameObjectType,
 		Vector2f _position);
-	void destroy();
-	void empty();
+	void destroyMessage();
+	void emptyMessage();
 	void setDirection(Direction _direction);
 	void setPositionInSprite(Vector2f _position);
 
@@ -81,13 +82,13 @@ public:
 		Texture* _texture,
 		Vector2f _position);
 	Direction getDirection();
+	float getX();
+	float getY();
 	GameObjectType getGameObjectType();
 	int getW();
 	int getH();
 	Sprite getSprite();
 	Vector2f getPosition();
-	float getX();
-	float getY();
 
 	virtual void message(Message* _message) = 0;
 	virtual void update(float _time) = 0;
