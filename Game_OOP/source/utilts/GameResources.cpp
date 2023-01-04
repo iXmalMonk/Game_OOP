@@ -24,6 +24,12 @@ GameResources::GameResources()
 	loadTexture(FILENAME_TEXTURE_WATER,
 		GameObject::GameObjectType::WATER);
 	loadText(font,
+		400,
+		Side::LEFT,
+		"CONTINUE",
+		TextType::CONTINUE,
+		TEXT_SMALL_SIZE);
+	loadText(font,
 		200,
 		Side::RIGHT,
 		"ENEMY:",
@@ -44,9 +50,9 @@ GameResources::GameResources()
 	loadText(font,
 		200,
 		Side::LEFT,
-		"PLAY",
-		TextType::PLAY,
-		TEXT_BIG_SIZE);
+		"NEW GAME",
+		TextType::NEW_GAME,
+		TEXT_SMALL_SIZE);
 	loadText(font,
 		600,
 		Side::RIGHT,
@@ -79,7 +85,7 @@ void GameResources::loadEmptyText(Font& _font, TextTypeForCounters _textTypeForC
 	auto text = new Text;
 	text->setFont(_font);
 	text->setCharacterSize(_size);
-	text->setFillColor(Color::White);
+	text->setFillColor(COLOR_WHITE);
 	switch (_textTypeForCounters)
 	{
 	case TextTypeForCounters::ENEMY:
@@ -99,7 +105,7 @@ void GameResources::loadText(Font& _font, int _y, Side _side, String _text, Text
 	auto text = new Text(_text,
 		_font,
 		_size);
-	text->setFillColor(Color::White);
+	text->setFillColor(COLOR_WHITE);
 	switch (_side)
 	{
 	case Side::LEFT:

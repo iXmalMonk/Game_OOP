@@ -26,6 +26,14 @@ GameObject::Message::Message(GameObject* _gameObject, MessageType _messageType) 
 	messageType = _messageType;
 }
 
+GameObject::Message::Message(GameObject* _gameObject, GameObjectType _gameObjectType, MessageType _messageType) :
+	create{}
+{
+	gameObject = _gameObject;
+	destroyTheWholeType.gameObjectType = _gameObjectType;
+	messageType = _messageType;
+}
+
 bool GameObject::isCollisionAABBWithGameObject(GameObject* _gameObject)
 {
 	return (position.y + h) > _gameObject->getY() and

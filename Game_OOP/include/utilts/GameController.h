@@ -8,23 +8,31 @@ class GameController
 private:
 	static GameController* instance;
 
+	bool c0ntinue;
+	bool newGame;
+	bool newLevel;
 	int currentNumberOfLivesAEnemy;
 	int currentNumberOfLivesAPlayer;
+	int currentNumberOfLivingEnemies;
+	bool playerIsAlive;
 	int currentMapNumber;
 	int maxNumberOfLivesAEnemy;
 	int maxNumberOfLivesAPlayer;
 	string map[MAPS_AMOUNT][MAP_SIZE];
 
 	GameController();
+	void createMap();
+	void createTanks();
 	void loadMap(const char* _filename,
 		int _mapNumber);
 
 public:
+	bool isContinue();
 	static GameController* getInstance();
-	void createMap();
-	void createTanks();
 	void destroy();
 	void message(GameObject::Message* _message);
+	void setContinue();
+	void update();
 };
 
 /*

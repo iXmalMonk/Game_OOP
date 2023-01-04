@@ -23,6 +23,8 @@ public:
 	enum class MessageType { CREATE,
 		DEALDAMAGE,
 		DESTROY,
+		DESTROY_ALL,
+		DESTROY_THE_WHOLE_TYPE,
 		EMPTY };
 	struct Message
 	{
@@ -40,6 +42,10 @@ public:
 				GameObject* gameObject;
 				int damage;
 			} dealDamage;
+			struct
+			{
+				GameObjectType gameObjectType;
+			} destroyTheWholeType;
 		};
 
 		Message(GameObject* _gameObject,
@@ -52,6 +58,9 @@ public:
 			MessageType _messageType); // DEALDAMAGE
 		Message(GameObject* _gameObject,
 			MessageType _messageType); // DESTROY or EMPTY
+		Message(GameObject* _gameObject,
+			GameObjectType _gameObjectType,
+			MessageType _messageType); // DESTROY THE WHOLE TYPE
 	};
 
 private:

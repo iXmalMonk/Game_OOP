@@ -1,4 +1,6 @@
 #include "..\..\include\utilts\GameMenu.h"
+#include "..\..\include\utilts\Game.h"
+#include "..\..\include\utilts\GameController.h"
 #include "..\..\include\utilts\GameResources.h"
 #include "..\..\include\utilts\GameWindow.h"
 
@@ -10,7 +12,7 @@ GameMenu::GameMenu()
 	menuLoop = true;
 	rectangleShape = new RectangleShape(Vector2f(MAP_BLOCK * MAP_SIZE, MAP_BLOCK * MAP_SIZE));
 	rectangleShape->setPosition(Vector2f(MAP_LEFT, MAP_UP));
-	rectangleShape->setFillColor(Color::Black);
+	rectangleShape->setFillColor(COLOR_BLACK);
 }
 
 bool GameMenu::isCollisionMouseWithText(const Text& _text)
@@ -27,12 +29,12 @@ bool GameMenu::isMouseOnText(Text& _text)
 {
 	if (isCollisionMouseWithText(_text))
 	{
-		_text.setFillColor(Color::Red);
+		_text.setFillColor(COLOR_RED);
 		return true;
 	}
 	else
 	{
-		_text.setFillColor(Color::White);
+		_text.setFillColor(COLOR_WHITE);
 		return false;
 	}
 }
@@ -94,8 +96,15 @@ void GameMenu::drawGame()
 
 void GameMenu::drawMenu()
 {
+	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::CONTINUE));
 	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::EXIT));
-	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::PLAY));
+	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::NEW_GAME));
+}
+
+void GameMenu::setMenu()
+{
+	gameLoop = false;
+	menuLoop = true;
 }
 
 void GameMenu::updateGame()
@@ -103,21 +112,44 @@ void GameMenu::updateGame()
 	isMouseOnText(*GameResources::getInstance()->getText(GameResources::TextType::MENU));
 	if (onLeftClick() and
 		isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::MENU)))
-	{
-		gameLoop = false;
-		menuLoop = true;
-	}
+		setMenu();
 }
 
 void GameMenu::updateMenu()
 {
+	static bool flagContinue = true;
+	if (GameController::getInstance()->isContinue())
+	{
+		if (!flagContinue)
+		{
+			GameResources::getInstance()->getText(GameResources::TextType::CONTINUE)->setFillColor(COLOR_WHITE);
+			flagContinue = true;
+		}
+		isMouseOnText(*GameResources::getInstance()->getText(GameResources::TextType::CONTINUE));
+	}
+	else if (flagContinue)
+	{
+		GameResources::getInstance()->getText(GameResources::TextType::CONTINUE)->setFillColor(COLOR_WHITE_TRANSPARENT);
+		flagContinue = false;
+	}
 	isMouseOnText(*GameResources::getInstance()->getText(GameResources::TextType::EXIT));
-	isMouseOnText(*GameResources::getInstance()->getText(GameResources::TextType::PLAY));
+	isMouseOnText(*GameResources::getInstance()->getText(GameResources::TextType::NEW_GAME));
 	if (onLeftClick())
 	{
 		if (isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::EXIT)))
 			GameWindow::getInstance()->close();
-		else if (isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::PLAY)))
+		else if (isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::NEW_GAME)))
+		{
+			menuLoop = false;
+			gameLoop = true;
+			if (GameController::getInstance()->isContinue())
+				Game::getInstance()->message(new GameObject::Message(NULL,
+					GameObject::MessageType::DESTROY_ALL));
+			else
+				GameController::getInstance()->setContinue();
+		}
+		else if (isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::CONTINUE)) and
+			GameController::getInstance()->isContinue())
 		{
 			menuLoop = false;
 			gameLoop = true;

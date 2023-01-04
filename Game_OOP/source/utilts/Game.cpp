@@ -106,6 +106,28 @@ void Game::msgs()
 			gameObjects.erase(object);
 			break;
 		}
+		case GameObject::MessageType::DESTROY_ALL:
+		{
+			gameController->message(message);
+			for (auto gameObject : gameObjects)
+				delete gameObject;
+			gameObjects.clear();
+			break;
+		}
+		case GameObject::MessageType::DESTROY_THE_WHOLE_TYPE:
+		{
+			list<GameObject*> destroyedGameObjects;
+			for (auto gameObject : gameObjects)
+				if (gameObject->getGameObjectType() == message->destroyTheWholeType.gameObjectType)
+				{
+					delete gameObject;
+					destroyedGameObjects.push_back(gameObject);
+				}
+			for (auto destroyedGameObject : destroyedGameObjects)
+				gameObjects.remove(destroyedGameObject);
+			destroyedGameObjects.clear();
+			break;
+		}
 		}
 		delete message;
 	}
@@ -122,8 +144,6 @@ int Game::game()
 {
 	if (instance)
 	{
-		gameController->createMap();
-		gameController->createTanks();
 		while (gameWindow->isOpen())
 		{
 			gameWindow->clear();
@@ -136,6 +156,7 @@ int Game::game()
 			}
 			else if (gameMenu->isGame())
 			{
+				gameController->update();
 				gameMenu->updateGame();
 				gameMenu->drawGame();
 				updateGameObjects();

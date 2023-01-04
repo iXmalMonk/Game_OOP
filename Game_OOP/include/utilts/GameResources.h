@@ -7,10 +7,11 @@ class GameResources
 {
 public:
 	enum class TextType {
+		CONTINUE,
 		ENEMY,
 		EXIT,
 		MENU,
-		PLAY,
+		NEW_GAME,
 		PLAYER
 	};
 	enum class TextTypeForCounters {

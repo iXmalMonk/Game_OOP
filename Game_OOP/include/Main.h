@@ -40,8 +40,8 @@ using namespace std;
 #define PROJECTILE_DIVISION 4
 #define PROJECTILE_MULTIPLICATION 0.375
 
-#define MAX_NUMBER_OF_LIVES_A_ENEMY 20
-#define MAX_NUMBER_OF_LIVES_A_PLAYER 3
+#define MAX_NUMBER_OF_LIVES_A_ENEMY 1
+#define MAX_NUMBER_OF_LIVES_A_PLAYER 1
 
 #define MAP_BLOCK 32
 #define MAP_SIZE 30
@@ -49,11 +49,7 @@ using namespace std;
 #define MAP_DOWN MAP_UP + MAP_BLOCK * MAP_SIZE
 #define MAP_LEFT (WINDOW_W - MAP_BLOCK * MAP_SIZE) / 2
 #define MAP_RIGHT MAP_LEFT + MAP_BLOCK * MAP_SIZE
-#define MAPS_AMOUNT 1
-
-#define GAMEWINDOW_COLOR_FOR_BACKGROUND_R 50
-#define GAMEWINDOW_COLOR_FOR_BACKGROUND_G 50
-#define GAMEWINDOW_COLOR_FOR_BACKGROUND_B 50
+#define MAPS_AMOUNT 2
 
 #define FRAME_UP 0
 #define FRAME_DOWN 2
@@ -62,6 +58,7 @@ using namespace std;
 
 #define FILENAME_FONT_SAMSON "fonts/samson.ttf"
 #define FILENAME_MAP_1 "maps/map1.txt"
+#define FILENAME_MAP_2 "maps/map2.txt"
 #define FILENAME_TEXTURE_BRICKWALL "textures/brickWall.png"
 #define FILENAME_TEXTURE_CONCRETEWALL "textures/concreteWall.png"
 #define FILENAME_TEXTURE_ENEMY "textures/enemy.png"
@@ -78,6 +75,12 @@ using namespace std;
 // true - show console
 // false - hide console
 #define CONSOLE false
+
+#define COLOR_BLACK Color(0, 0, 0, 255)
+#define COLOR_GRAY Color(50, 50, 50, 255)
+#define COLOR_RED Color(255, 0, 0, 255)
+#define COLOR_WHITE Color(255, 255, 255, 255)
+#define COLOR_WHITE_TRANSPARENT Color(255, 255, 255, 55)
 
 #define COLLISION_RANGE_FOR_STATICOBJECT 15
 #define COLLISION_RANGE_FOR_TANK 10

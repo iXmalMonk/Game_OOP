@@ -46,10 +46,7 @@ Vector2i GameWindow::getMousePositionRelativeAWindow()
 
 void GameWindow::clear()
 {
-	renderWindow->clear(Color(GAMEWINDOW_COLOR_FOR_BACKGROUND_R,
-		GAMEWINDOW_COLOR_FOR_BACKGROUND_G,
-		GAMEWINDOW_COLOR_FOR_BACKGROUND_B,
-		255));
+	renderWindow->clear(COLOR_GRAY);
 }
 
 void GameWindow::close()

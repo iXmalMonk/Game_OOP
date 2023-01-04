@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="maps\map1.txt" />
+    <Text Include="maps\map2.txt" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="fonts\samson.ttf" />

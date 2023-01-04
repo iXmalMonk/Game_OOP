@@ -24,6 +24,7 @@ public:
 	void destroy();
 	void drawGame();
 	void drawMenu();
+	void setMenu();
 	void updateGame();
 	void updateMenu();
 };
