@@ -10,18 +10,23 @@ public:
 		CONTINUE,
 		ENEMY,
 		EXIT,
+		LEVEL,
+		LOSE,
 		MENU,
 		NEW_GAME,
-		PLAYER
+		PLAYER,
+		WIN
 	};
 	enum class TextTypeForCounters {
 		ENEMY,
-		PLAYER,
+		LEVEL,
+		PLAYER
 	};
 
 private:
 	enum class Side {
 		LEFT,
+		MIDDLE,
 		RIGHT
 	};
 
@@ -37,10 +42,12 @@ private:
 
 	GameResources();
 	~GameResources();
-	void loadEmptyText(Font& _font,
+	void loadEmptyText(Color _color,
+		Font& _font,
 		TextTypeForCounters _textTypeForCounters,
 		unsigned int _size);
-	void loadText(Font& _font,
+	void loadText(Color _color,
+		Font& _font,
 		int _y,
 		Side _side,
 		String _text,

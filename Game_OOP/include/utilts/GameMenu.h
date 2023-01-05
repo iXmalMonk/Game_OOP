@@ -10,6 +10,11 @@ private:
 
 	bool gameLoop;
 	bool menuLoop;
+	bool levelFlagForDrawing;
+	float drawingTimeForDefeatOrVictory;
+	float drawingTimeForLevel;
+	float maxDrawingTimeForDefeatOrVictory;
+	float maxDrawingTimeForLevel;
 	RectangleShape* rectangleShape;
 
 	GameMenu();
@@ -20,12 +25,14 @@ private:
 public:
 	bool isGame();
 	bool isMenu();
+	bool isLevel();
 	static GameMenu* getInstance();
 	void destroy();
-	void drawGame();
+	void drawGameFirstLayer();
+	void drawGameLastLayer();
+	void drawGameLevel();
 	void drawMenu();
-	void setMenu();
-	void updateGame();
+	void updateGame(float _time);
 	void updateMenu();
 };
 

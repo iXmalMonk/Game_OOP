@@ -82,7 +82,7 @@ void Enemy::randomDirection(float _time)
 
 Enemy::Enemy(Vector2f _position) :
 	Tank(Direction::DOWN,
-		VELOCITY_ENEMY,
+		ENEMY_VELOCITY,
 		GameObjectType::ENEMY,
 		GameResources::getInstance()->getTexture(GameObjectType::ENEMY),
 		_position)

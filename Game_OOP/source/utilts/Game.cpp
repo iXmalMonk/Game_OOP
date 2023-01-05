@@ -156,12 +156,21 @@ int Game::game()
 			}
 			else if (gameMenu->isGame())
 			{
-				gameController->update();
-				gameMenu->updateGame();
-				gameMenu->drawGame();
-				updateGameObjects();
-				msgs();
-				drawGameObjects();
+				gameMenu->updateGame(gameWindow->getTime());
+				if (gameMenu->isLevel())
+					gameMenu->drawGameLevel();
+				else
+				{
+					updateGameObjects();
+					msgs();
+					gameController->update();
+					if (!gameController->isNewLevel())
+					{
+						gameMenu->drawGameFirstLayer();
+						drawGameObjects();
+						gameMenu->drawGameLastLayer();
+					}
+				}
 			}
 			gameWindow->display();
 		}

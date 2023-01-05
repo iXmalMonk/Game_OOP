@@ -78,16 +78,16 @@ void GameObject::setDirection(Direction _direction)
 	switch (direction)
 	{
 	case Direction::UP:
-		sprite.setTextureRect(IntRect(w * FRAME_UP, 0, w, h));
+		sprite.setTextureRect(IntRect(w * SPRITE_FRAME_UP, 0, w, h));
 		break;
 	case Direction::DOWN:
-		sprite.setTextureRect(IntRect(w * FRAME_DOWN, 0, w, h));
+		sprite.setTextureRect(IntRect(w * SPRITE_FRAME_DOWN, 0, w, h));
 		break;
 	case Direction::LEFT:
-		sprite.setTextureRect(IntRect(w * FRAME_LEFT, 0, w, h));
+		sprite.setTextureRect(IntRect(w * SPRITE_FRAME_LEFT, 0, w, h));
 		break;
 	case Direction::RIGHT:
-		sprite.setTextureRect(IntRect(w * FRAME_RIGHT, 0, w, h));
+		sprite.setTextureRect(IntRect(w * SPRITE_FRAME_RIGHT, 0, w, h));
 		break;
 	}
 }

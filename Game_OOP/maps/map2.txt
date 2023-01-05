@@ -4,15 +4,6 @@
                               
                               
                               
-              cc              
-              cc              
-                              
-                              
-                              
-                              
-                              
-                              
-cc                          cc
                               
                               
                               
@@ -20,11 +11,20 @@ cc                          cc
                               
                               
                               
-              0               
-                              
-                              
-              h               
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
                               
                               
                               
                               
+                              
+                              
+                              
+          cccccccccc          
+          c   0    c          
+                              
+             cccc             
+             ch c             
+ff           c  c           ff
+ff           cccc           ff
+ffff         bbbb         ffff
+ffff         bbbb         ffff

@@ -40,7 +40,7 @@ void Player::move(float _time)
 
 Player::Player(Vector2f _position) :
 	Tank(Direction::UP,
-		VELOCITY_PLAYER,
+		PLAYER_VELOCITY,
 		GameObjectType::PLAYER,
 		GameResources::getInstance()->getTexture(GameObjectType::PLAYER),
 		_position) {}

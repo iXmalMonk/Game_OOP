@@ -8,20 +8,20 @@ Vector2f Projectile::getPositionForProjectile(Direction _direction, Vector2f _po
 	switch (_direction)
 	{
 	case Direction::UP:
-		temporary.x = float(_position.x + TANK_W * PROJECTILE_MULTIPLICATION);
-		temporary.y = float(_position.y - TANK_H / PROJECTILE_DIVISION);
+		temporary.x = float(_position.x + TANK_W / 2 - PROJECTILE_W / 2);
+		temporary.y = float(_position.y - PROJECTILE_H);
 		break;
 	case Direction::DOWN:
-		temporary.x = float(_position.x + TANK_W * PROJECTILE_MULTIPLICATION);
+		temporary.x = float(_position.x + TANK_W / 2 - PROJECTILE_W / 2);
 		temporary.y = float(_position.y + TANK_H);
 		break;
 	case Direction::LEFT:
-		temporary.x = float(_position.x - TANK_W / PROJECTILE_DIVISION);
-		temporary.y = float(_position.y + TANK_H * PROJECTILE_MULTIPLICATION);
+		temporary.x = float(_position.x - PROJECTILE_W);
+		temporary.y = float(_position.y + TANK_H / 2 - PROJECTILE_H / 2);
 		break;
 	case Direction::RIGHT:
 		temporary.x = float(_position.x + TANK_W);
-		temporary.y = float(_position.y + TANK_H * PROJECTILE_MULTIPLICATION);
+		temporary.y = float(_position.y + TANK_H / 2 - PROJECTILE_H / 2);
 		break;
 	}
 	return temporary;
@@ -68,7 +68,7 @@ void Projectile::move(float _time)
 
 Projectile::Projectile(Direction _direction, GameObject* _gameObjectWhoShooted, GameObjectType _gameObjectTypeWhoShooted, Vector2f _position) :
 	DynamicObject(_direction,
-		VELOCITY_PROJECTILE,
+		PROJECTILE_VELOCITY,
 		GameObjectType::PROJECTILE,
 		PROJECTILE_W, PROJECTILE_H,
 		GameResources::getInstance()->getTexture(GameObjectType::PROJECTILE),

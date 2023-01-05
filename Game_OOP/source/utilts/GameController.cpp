@@ -6,20 +6,18 @@ GameController* GameController::instance = nullptr;
 
 GameController::GameController()
 {
-	c0ntinue = false;
-	newGame = true;
-	newLevel = false;
-	maxNumberOfLivesAEnemy = MAX_NUMBER_OF_LIVES_A_ENEMY;
-	maxNumberOfLivesAPlayer = MAX_NUMBER_OF_LIVES_A_PLAYER;
-	currentNumberOfLivingEnemies = 0;
+	continueFlag = false;
+	generateLevelFlag = false;
+	loseFlag = false;
+	newLevelFlag = false;
 	playerIsAlive = false;
+	winFlag = false;
+	currentNumberOfLivesAEnemy = GAMECONTROLLER_MAX_NUMBER_OF_LIVES_A_ENEMY;
+	currentNumberOfLivesAPlayer = GAMECONTROLLER_MAX_NUMBER_OF_LIVES_A_PLAYER;
+	currentNumberOfLivingEnemies = 0;
 	currentMapNumber = 0;
-	currentNumberOfLivesAEnemy = maxNumberOfLivesAEnemy;
-	currentNumberOfLivesAPlayer = maxNumberOfLivesAPlayer;
-	GameResources::getInstance()->setCounterForText(currentNumberOfLivesAPlayer,
-		GameResources::TextTypeForCounters::PLAYER);
-	GameResources::getInstance()->setCounterForText(currentNumberOfLivesAEnemy,
-		GameResources::TextTypeForCounters::ENEMY);
+	maxNumberOfLivesAEnemy = GAMECONTROLLER_MAX_NUMBER_OF_LIVES_A_ENEMY;
+	maxNumberOfLivesAPlayer = GAMECONTROLLER_MAX_NUMBER_OF_LIVES_A_PLAYER;
 	loadMap(FILENAME_MAP_1,
 		1);
 	loadMap(FILENAME_MAP_2,
@@ -115,7 +113,22 @@ void GameController::loadMap(const char* _filename, int _mapNumber)
 
 bool GameController::isContinue()
 {
-	return c0ntinue;
+	return continueFlag;
+}
+
+bool GameController::isLose()
+{
+	return loseFlag;
+}
+
+bool GameController::isNewLevel()
+{
+	return newLevelFlag;
+}
+
+bool GameController::isWin()
+{
+	return winFlag;
 }
 
 GameController* GameController::getInstance()
@@ -184,63 +197,72 @@ void GameController::message(GameObject::Message* _message)
 					GameResources::TextTypeForCounters::ENEMY);
 			}
 		}
-		else if (_message->gameObject->getGameObjectType() == GameObject::GameObjectType::HEADQUARTERS)
+		else if (_message->gameObject->getGameObjectType() == GameObject::GameObjectType::HEADQUARTERS and
+			!winFlag)
 		{
-
+			continueFlag = false;
+			loseFlag = true;
 		}
 	}
 	else if (_message->messageType == GameObject::MessageType::DESTROY_ALL)
 	{
-		if (!newLevel)
+		if (!newLevelFlag)
 		{
-			newGame = true;
+			loseFlag = false;
+			generateLevelFlag = true;
 			currentNumberOfLivesAEnemy = maxNumberOfLivesAEnemy;
 			currentNumberOfLivesAPlayer = maxNumberOfLivesAPlayer;
 			currentNumberOfLivingEnemies = 0;
 			currentMapNumber = 0;
 			playerIsAlive = false;
+			winFlag = false;
 			GameResources::getInstance()->setCounterForText(currentNumberOfLivesAPlayer,
 				GameResources::TextTypeForCounters::PLAYER);
 			GameResources::getInstance()->setCounterForText(currentNumberOfLivesAEnemy,
 				GameResources::TextTypeForCounters::ENEMY);
+			GameResources::getInstance()->setCounterForText(currentMapNumber + 1,
+				GameResources::TextTypeForCounters::LEVEL);
 		}
-		else
-			newLevel = false;
 	}
-}
-
-void GameController::setContinue()
-{
-	c0ntinue = true;
 }
 
 void GameController::update()
 {
-	if (newGame)
+	if (generateLevelFlag)
 	{
-		newGame = false;
-		createMap();
-		createTanks();
-	}
-	else if (currentNumberOfLivingEnemies == 0)
-	{
-		currentNumberOfLivesAEnemy = maxNumberOfLivesAEnemy;
-		if (currentMapNumber < MAPS_AMOUNT - 1)
-			currentMapNumber++;
-		newLevel = true;
-		GameResources::getInstance()->setCounterForText(currentNumberOfLivesAEnemy,
-			GameResources::TextTypeForCounters::ENEMY);
-		Game::getInstance()->message(new GameObject::Message(NULL,
-			GameObject::MessageType::DESTROY_ALL));
+		generateLevelFlag = false;
+		continueFlag = true;
+		newLevelFlag = true;
 		createMap();
 		createTanks();
 	}
 	else if (!playerIsAlive)
 	{
-		c0ntinue = false;
-		currentMapNumber = 0;
+		continueFlag = false;
+		loseFlag = true;
+	}
+	else if (currentNumberOfLivingEnemies == 0 and
+		currentMapNumber < MAP_AMOUNT - 1 and
+		!loseFlag)
+	{
+		currentMapNumber++;
+		currentNumberOfLivesAEnemy = maxNumberOfLivesAEnemy;
+		newLevelFlag = true;
+		GameResources::getInstance()->setCounterForText(currentNumberOfLivesAEnemy,
+			GameResources::TextTypeForCounters::ENEMY);
+		GameResources::getInstance()->setCounterForText(currentMapNumber + 1,
+			GameResources::TextTypeForCounters::LEVEL);
 		Game::getInstance()->message(new GameObject::Message(NULL,
 			GameObject::MessageType::DESTROY_ALL));
-		GameMenu::getInstance()->setMenu();
+		createMap();
+		createTanks();
 	}
+	else if (currentNumberOfLivingEnemies == 0 and
+		currentMapNumber == MAP_AMOUNT - 1)
+	{
+		continueFlag = false;
+		winFlag = true;
+	}
+	else if (newLevelFlag)
+		newLevelFlag = false;
 }

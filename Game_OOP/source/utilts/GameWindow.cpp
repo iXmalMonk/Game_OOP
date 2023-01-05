@@ -8,11 +8,11 @@ GameWindow::GameWindow()
 	clock = new Clock;
 	event = new Event;
 	time = 0;
-	renderWindow = new RenderWindow(VideoMode(WINDOW_W,
-		WINDOW_H),
-		WINDOW_TITLE,
+	renderWindow = new RenderWindow(VideoMode(GAMEWINDOW_W,
+		GAMEWINDOW_H),
+		GAMEWINDOW_TITLE,
 		Style::None);
-	renderWindow->setFramerateLimit(WINDOW_FPS);
+	renderWindow->setFramerateLimit(GAMEWINDOW_FPS);
 }
 
 GameWindow::~GameWindow()

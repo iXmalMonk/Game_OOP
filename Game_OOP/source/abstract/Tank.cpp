@@ -17,29 +17,29 @@ bool Tank::guiltyOfCollidingWithAnotherTank(GameObject* _gameObject)
 	case Direction::UP:
 		if (_gameObject->getDirection() == Direction::DOWN)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= topThis - bottomGO and
-			topThis - bottomGO <= COLLISION_RANGE_FOR_TANK)
+		else if (-TANK_COLLISION_RANGE <= topThis - bottomGO and
+			topThis - bottomGO <= TANK_COLLISION_RANGE)
 			return true;
 		break;
 	case Direction::DOWN:
 		if (_gameObject->getDirection() == Direction::UP)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= topGO - bottomThis and
-			topGO - bottomThis <= COLLISION_RANGE_FOR_TANK)
+		else if (-TANK_COLLISION_RANGE <= topGO - bottomThis and
+			topGO - bottomThis <= TANK_COLLISION_RANGE)
 			return true;
 		break;
 	case Direction::LEFT:
 		if (_gameObject->getDirection() == Direction::RIGHT)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= leftThis - rightGO and
-			leftThis - rightGO <= COLLISION_RANGE_FOR_TANK)
+		else if (-TANK_COLLISION_RANGE <= leftThis - rightGO and
+			leftThis - rightGO <= TANK_COLLISION_RANGE)
 			return true;
 		break;
 	case Direction::RIGHT:
 		if (_gameObject->getDirection() == Direction::LEFT)
 			return true;
-		else if (-COLLISION_RANGE_FOR_TANK <= leftGO - rightThis and
-			leftGO - rightThis <= COLLISION_RANGE_FOR_TANK)
+		else if (-TANK_COLLISION_RANGE <= leftGO - rightThis and
+			leftGO - rightThis <= TANK_COLLISION_RANGE)
 			return true;
 		break;
 	}
@@ -97,11 +97,11 @@ void Tank::message(Message* _message)
 			position.y = positionOfADynamicObjectRelativeToAStaticObject.y;
 		}
 		else if (_message->gameObject->getGameObjectType() == GameObjectType::ENEMY or
-			_message->gameObject->getGameObjectType() == GameObjectType::PLAYER and
-			guiltyOfCollidingWithAnotherTank(_message->gameObject))
+			_message->gameObject->getGameObjectType() == GameObjectType::PLAYER)
 		{
-			position.x -= dx;
-			position.y -= dy;
+			if (guiltyOfCollidingWithAnotherTank(_message->gameObject))
+				position.x -= dx;
+				position.y -= dy;
 		}
 		setPositionInSprite(position);
 	}

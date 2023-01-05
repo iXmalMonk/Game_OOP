@@ -8,17 +8,19 @@ class GameController
 private:
 	static GameController* instance;
 
-	bool c0ntinue;
-	bool newGame;
-	bool newLevel;
+	bool continueFlag;
+	bool generateLevelFlag;
+	bool loseFlag;
+	bool newLevelFlag;
+	bool playerIsAlive;
+	bool winFlag;
 	int currentNumberOfLivesAEnemy;
 	int currentNumberOfLivesAPlayer;
 	int currentNumberOfLivingEnemies;
-	bool playerIsAlive;
 	int currentMapNumber;
 	int maxNumberOfLivesAEnemy;
 	int maxNumberOfLivesAPlayer;
-	string map[MAPS_AMOUNT][MAP_SIZE];
+	string map[MAP_AMOUNT][MAP_SIZE];
 
 	GameController();
 	void createMap();
@@ -28,10 +30,12 @@ private:
 
 public:
 	bool isContinue();
+	bool isLose();
+	bool isNewLevel();
+	bool isWin();
 	static GameController* getInstance();
 	void destroy();
 	void message(GameObject::Message* _message);
-	void setContinue();
 	void update();
 };
 

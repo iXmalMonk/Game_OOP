@@ -23,11 +23,11 @@ Vector2f StaticObject::getPositionOfADynamicObjectRelativeToAStaticObjectAfterCo
 	{
 	case Direction::UP:
 		if (0 <= rightD - leftS and
-			rightD - leftS <= COLLISION_RANGE_FOR_STATICOBJECT)
+			rightD - leftS <= STATICOBJECT_COLLISION_RANGE)
 			position = { leftS - _dynamicObject->getW(),
 				bottomS };
 		else if (0 <= rightS - leftD and
-			rightS - leftD <= COLLISION_RANGE_FOR_STATICOBJECT)
+			rightS - leftD <= STATICOBJECT_COLLISION_RANGE)
 			position = { rightS,
 				bottomS };
 		else
@@ -36,11 +36,11 @@ Vector2f StaticObject::getPositionOfADynamicObjectRelativeToAStaticObjectAfterCo
 		break;
 	case Direction::DOWN:
 		if (0 <= rightD - leftS and
-			rightD - leftS <= COLLISION_RANGE_FOR_STATICOBJECT)
+			rightD - leftS <= STATICOBJECT_COLLISION_RANGE)
 			position = { leftS - _dynamicObject->getW(),
 				topS - _dynamicObject->getH() };
 		else if (0 <= rightS - leftD and
-			rightS - leftD <= COLLISION_RANGE_FOR_STATICOBJECT)
+			rightS - leftD <= STATICOBJECT_COLLISION_RANGE)
 			position = { rightS,
 				topS - _dynamicObject->getH() };
 		else
@@ -49,11 +49,11 @@ Vector2f StaticObject::getPositionOfADynamicObjectRelativeToAStaticObjectAfterCo
 		break;
 	case Direction::LEFT:
 		if (0 <= bottomD - topS and
-			bottomD - topS <= COLLISION_RANGE_FOR_STATICOBJECT)
+			bottomD - topS <= STATICOBJECT_COLLISION_RANGE)
 			position = { rightS,
 				topS - _dynamicObject->getH() };
 		else if (0 <= bottomS - topD and
-			bottomS - topD <= COLLISION_RANGE_FOR_STATICOBJECT)
+			bottomS - topD <= STATICOBJECT_COLLISION_RANGE)
 			position = { rightS, 
 				bottomS };
 		else
@@ -62,11 +62,11 @@ Vector2f StaticObject::getPositionOfADynamicObjectRelativeToAStaticObjectAfterCo
 		break;
 	case Direction::RIGHT:
 		if (0 <= bottomD - topS and
-			bottomD - topS <= COLLISION_RANGE_FOR_STATICOBJECT)
+			bottomD - topS <= STATICOBJECT_COLLISION_RANGE)
 			position = { leftS - _dynamicObject->getW(),
 				topS - _dynamicObject->getH() };
 		else if (0 <= bottomS - topD and
-			bottomS - topD <= COLLISION_RANGE_FOR_STATICOBJECT)
+			bottomS - topD <= STATICOBJECT_COLLISION_RANGE)
 			position = { leftS - _dynamicObject->getW(),
 				bottomS };
 		else

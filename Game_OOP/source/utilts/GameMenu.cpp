@@ -10,6 +10,11 @@ GameMenu::GameMenu()
 {
 	gameLoop = false;
 	menuLoop = true;
+	levelFlagForDrawing = false;
+	drawingTimeForDefeatOrVictory = 0;
+	drawingTimeForLevel = 0;
+	maxDrawingTimeForDefeatOrVictory = GAMEMENU_MAX_DRAWING_TIME_FOR_LOSE_OR_WIN;
+	maxDrawingTimeForLevel = GAMEMENU_MAX_DRAWING_TIME_FOR_LEVEL;
 	rectangleShape = new RectangleShape(Vector2f(MAP_BLOCK * MAP_SIZE, MAP_BLOCK * MAP_SIZE));
 	rectangleShape->setPosition(Vector2f(MAP_LEFT, MAP_UP));
 	rectangleShape->setFillColor(COLOR_BLACK);
@@ -68,6 +73,11 @@ bool GameMenu::isMenu()
 	return menuLoop;
 }
 
+bool GameMenu::isLevel()
+{
+	return levelFlagForDrawing;
+}
+
 GameMenu* GameMenu::getInstance()
 {
 	if (!instance)
@@ -84,7 +94,7 @@ void GameMenu::destroy()
 	}
 }
 
-void GameMenu::drawGame()
+void GameMenu::drawGameFirstLayer()
 {
 	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::ENEMY));
 	GameWindow::getInstance()->draw(*GameResources::getInstance()->getTextForCounters(GameResources::TextTypeForCounters::ENEMY));
@@ -94,6 +104,20 @@ void GameMenu::drawGame()
 	GameWindow::getInstance()->draw(*rectangleShape);
 }
 
+void GameMenu::drawGameLastLayer()
+{
+	if (GameController::getInstance()->isLose())
+		GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::LOSE));
+	else if (GameController::getInstance()->isWin())
+		GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::WIN));
+}
+
+void GameMenu::drawGameLevel()
+{
+	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::LEVEL));
+	GameWindow::getInstance()->draw(*GameResources::getInstance()->getTextForCounters(GameResources::TextTypeForCounters::LEVEL));
+}
+
 void GameMenu::drawMenu()
 {
 	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::CONTINUE));
@@ -101,58 +125,68 @@ void GameMenu::drawMenu()
 	GameWindow::getInstance()->draw(*GameResources::getInstance()->getText(GameResources::TextType::NEW_GAME));
 }
 
-void GameMenu::setMenu()
+void GameMenu::updateGame(float _time)
 {
-	gameLoop = false;
-	menuLoop = true;
-}
-
-void GameMenu::updateGame()
-{
-	isMouseOnText(*GameResources::getInstance()->getText(GameResources::TextType::MENU));
-	if (onLeftClick() and
-		isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::MENU)))
-		setMenu();
+	if (!levelFlagForDrawing)
+	{
+		isMouseOnText(*GameResources::getInstance()->getText(GameResources::TextType::MENU));
+		if (onLeftClick() and
+			isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::MENU)))
+		{
+			drawingTimeForDefeatOrVictory = 0;
+			gameLoop = false;
+			menuLoop = true;
+		}
+		if ((GameController::getInstance()->isLose() or
+			GameController::getInstance()->isWin()) and
+			drawingTimeForDefeatOrVictory < maxDrawingTimeForDefeatOrVictory)
+			drawingTimeForDefeatOrVictory += _time;
+		else if (drawingTimeForDefeatOrVictory >= maxDrawingTimeForDefeatOrVictory)
+		{
+			drawingTimeForDefeatOrVictory = 0;
+			gameLoop = false;
+			menuLoop = true;
+		}
+	}
+	if (GameController::getInstance()->isNewLevel())
+		levelFlagForDrawing = true;
+	if (levelFlagForDrawing and
+		drawingTimeForLevel < maxDrawingTimeForLevel)
+		drawingTimeForLevel += _time;
+	else if (drawingTimeForLevel >= maxDrawingTimeForLevel)
+	{
+		drawingTimeForLevel = 0;
+		levelFlagForDrawing = false;
+	}
 }
 
 void GameMenu::updateMenu()
 {
-	static bool flagContinue = true;
 	if (GameController::getInstance()->isContinue())
 	{
-		if (!flagContinue)
-		{
-			GameResources::getInstance()->getText(GameResources::TextType::CONTINUE)->setFillColor(COLOR_WHITE);
-			flagContinue = true;
-		}
+		GameResources::getInstance()->getText(GameResources::TextType::CONTINUE)->setFillColor(COLOR_WHITE);
 		isMouseOnText(*GameResources::getInstance()->getText(GameResources::TextType::CONTINUE));
 	}
-	else if (flagContinue)
-	{
+	else
 		GameResources::getInstance()->getText(GameResources::TextType::CONTINUE)->setFillColor(COLOR_WHITE_TRANSPARENT);
-		flagContinue = false;
-	}
 	isMouseOnText(*GameResources::getInstance()->getText(GameResources::TextType::EXIT));
 	isMouseOnText(*GameResources::getInstance()->getText(GameResources::TextType::NEW_GAME));
 	if (onLeftClick())
 	{
-		if (isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::EXIT)))
+		if (isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::CONTINUE)) and
+			GameController::getInstance()->isContinue())
+		{
+			menuLoop = false;
+			gameLoop = true;
+		}
+		else if (isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::EXIT)))
 			GameWindow::getInstance()->close();
 		else if (isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::NEW_GAME)))
 		{
 			menuLoop = false;
 			gameLoop = true;
-			if (GameController::getInstance()->isContinue())
-				Game::getInstance()->message(new GameObject::Message(NULL,
-					GameObject::MessageType::DESTROY_ALL));
-			else
-				GameController::getInstance()->setContinue();
-		}
-		else if (isCollisionMouseWithText(*GameResources::getInstance()->getText(GameResources::TextType::CONTINUE)) and
-			GameController::getInstance()->isContinue())
-		{
-			menuLoop = false;
-			gameLoop = true;
+			Game::getInstance()->message(new GameObject::Message(NULL,
+				GameObject::MessageType::DESTROY_ALL));
 		}
 	}
 }
