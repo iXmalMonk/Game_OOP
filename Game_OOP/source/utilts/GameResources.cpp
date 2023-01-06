@@ -146,15 +146,15 @@ void GameResources::loadText(Color _color, Font& _font, int _y, Side _side, Stri
 	switch (_side)
 	{
 	case Side::LEFT:
-		text->setPosition(Vector2f((MAP_BLOCK * MAP_SIZE / 2 - text->getLocalBounds().width) / 2,
+		text->setPosition(Vector2f((TEXTURE_WIDTH_AND_HEIGHT_32 * MAP_SIZE / 2 - text->getLocalBounds().width) / 2,
 			float(_y)));
 		break;
 	case Side::MIDDLE:
-		text->setPosition(Vector2f(MAP_BLOCK * MAP_SIZE / 2 + (MAP_BLOCK * MAP_SIZE - text->getLocalBounds().width) / 2,
+		text->setPosition(Vector2f(TEXTURE_WIDTH_AND_HEIGHT_32 * MAP_SIZE / 2 + (TEXTURE_WIDTH_AND_HEIGHT_32 * MAP_SIZE - text->getLocalBounds().width) / 2,
 			float(_y)));
 		break;
 	case Side::RIGHT:
-		text->setPosition(Vector2f(MAP_BLOCK * MAP_SIZE + MAP_BLOCK * MAP_SIZE / 2 + (MAP_BLOCK * MAP_SIZE / 2 - text->getLocalBounds().width) / 2,
+		text->setPosition(Vector2f(TEXTURE_WIDTH_AND_HEIGHT_32 * MAP_SIZE + TEXTURE_WIDTH_AND_HEIGHT_32 * MAP_SIZE / 2 + (TEXTURE_WIDTH_AND_HEIGHT_32 * MAP_SIZE / 2 - text->getLocalBounds().width) / 2,
 			float(_y)));
 		break;
 	}

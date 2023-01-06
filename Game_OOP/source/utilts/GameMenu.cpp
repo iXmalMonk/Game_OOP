@@ -15,7 +15,7 @@ GameMenu::GameMenu()
 	drawingTimeForLevel = 0;
 	maxDrawingTimeForDefeatOrVictory = GAMEMENU_MAX_DRAWING_TIME_FOR_LOSE_OR_WIN;
 	maxDrawingTimeForLevel = GAMEMENU_MAX_DRAWING_TIME_FOR_LEVEL;
-	rectangleShape = new RectangleShape(Vector2f(MAP_BLOCK * MAP_SIZE, MAP_BLOCK * MAP_SIZE));
+	rectangleShape = new RectangleShape(Vector2f(TEXTURE_WIDTH_AND_HEIGHT_32 * MAP_SIZE, TEXTURE_WIDTH_AND_HEIGHT_32 * MAP_SIZE));
 	rectangleShape->setPosition(Vector2f(MAP_LEFT, MAP_UP));
 	rectangleShape->setFillColor(COLOR_BLACK);
 }

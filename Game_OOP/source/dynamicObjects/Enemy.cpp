@@ -87,7 +87,7 @@ Enemy::Enemy(Vector2f _position) :
 		GameResources::getInstance()->getTexture(GameObjectType::ENEMY),
 		_position)
 {
-	cooldownMaxTimeForRandomDirection = ENEMY_COOLDOWN_MAX_TIME_FOR_RANDOM_DIRECTION;
+	cooldownMaxTimeForRandomDirection = ENEMY_MAX_COOLDOWN_TIME_FOR_RANDOM_DIRECTION;
 	cooldownTimeForRandomDirection = 0;
 }
 

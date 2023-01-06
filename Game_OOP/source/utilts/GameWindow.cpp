@@ -8,8 +8,8 @@ GameWindow::GameWindow()
 	clock = new Clock;
 	event = new Event;
 	time = 0;
-	renderWindow = new RenderWindow(VideoMode(GAMEWINDOW_W,
-		GAMEWINDOW_H),
+	renderWindow = new RenderWindow(VideoMode(GAMEWINDOW_WIDTH,
+		GAMEWINDOW_HEIGHT),
 		GAMEWINDOW_TITLE,
 		Style::None);
 	renderWindow->setFramerateLimit(GAMEWINDOW_FPS);

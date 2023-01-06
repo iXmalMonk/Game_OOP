@@ -55,12 +55,12 @@ Tank::Tank(Direction _direction, float _velocity, GameObjectType _gameObjectType
 	DynamicObject(_direction,
 		_velocity,
 		_gameObjectType,
-		TANK_W,
-		TANK_H,
+		TEXTURE_WIDTH_AND_HEIGHT_64,
+		TEXTURE_WIDTH_AND_HEIGHT_64,
 		_texture,
 		_position)
 {
-	cooldownMaxTimeForShooting = TANK_COOLDOWN_MAX_TIME_FOR_SHOOTING;
+	cooldownMaxTimeForShooting = TANK_MAX_COOLDOWN_TIME_FOR_SHOOTING;
 	cooldownTimeForShooting = 0;
 	healthPoints = TANK_HEALTHPOINTS;
 }

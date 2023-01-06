@@ -3,7 +3,7 @@
 
 Flag::Flag(Vector2f _position) :
 	StaticObject(GameObjectType::FLAG,
-		STATICOBJECT_BIG_W,
-		STATICOBJECT_BIG_H,
+		TEXTURE_WIDTH_AND_HEIGHT_64,
+		TEXTURE_WIDTH_AND_HEIGHT_64,
 		GameResources::getInstance()->getTexture(GameObjectType::FLAG),
 		_position) {}

@@ -8,20 +8,20 @@ Vector2f Projectile::getPositionForProjectile(Direction _direction, Vector2f _po
 	switch (_direction)
 	{
 	case Direction::UP:
-		temporary.x = float(_position.x + TANK_W / 2 - PROJECTILE_W / 2);
-		temporary.y = float(_position.y - PROJECTILE_H);
+		temporary.x = float(_position.x + TEXTURE_WIDTH_AND_HEIGHT_64 / 2 - TEXTURE_WIDTH_AND_HEIGHT_16 / 2);
+		temporary.y = float(_position.y - TEXTURE_WIDTH_AND_HEIGHT_16);
 		break;
 	case Direction::DOWN:
-		temporary.x = float(_position.x + TANK_W / 2 - PROJECTILE_W / 2);
-		temporary.y = float(_position.y + TANK_H);
+		temporary.x = float(_position.x + TEXTURE_WIDTH_AND_HEIGHT_64 / 2 - TEXTURE_WIDTH_AND_HEIGHT_16 / 2);
+		temporary.y = float(_position.y + TEXTURE_WIDTH_AND_HEIGHT_64);
 		break;
 	case Direction::LEFT:
-		temporary.x = float(_position.x - PROJECTILE_W);
-		temporary.y = float(_position.y + TANK_H / 2 - PROJECTILE_H / 2);
+		temporary.x = float(_position.x - TEXTURE_WIDTH_AND_HEIGHT_16);
+		temporary.y = float(_position.y + TEXTURE_WIDTH_AND_HEIGHT_64 / 2 - TEXTURE_WIDTH_AND_HEIGHT_16 / 2);
 		break;
 	case Direction::RIGHT:
-		temporary.x = float(_position.x + TANK_W);
-		temporary.y = float(_position.y + TANK_H / 2 - PROJECTILE_H / 2);
+		temporary.x = float(_position.x + TEXTURE_WIDTH_AND_HEIGHT_64);
+		temporary.y = float(_position.y + TEXTURE_WIDTH_AND_HEIGHT_64 / 2 - TEXTURE_WIDTH_AND_HEIGHT_16 / 2);
 		break;
 	}
 	return temporary;
@@ -70,7 +70,8 @@ Projectile::Projectile(Direction _direction, GameObject* _gameObjectWhoShooted, 
 	DynamicObject(_direction,
 		PROJECTILE_VELOCITY,
 		GameObjectType::PROJECTILE,
-		PROJECTILE_W, PROJECTILE_H,
+		TEXTURE_WIDTH_AND_HEIGHT_16,
+		TEXTURE_WIDTH_AND_HEIGHT_16,
 		GameResources::getInstance()->getTexture(GameObjectType::PROJECTILE),
 		getPositionForProjectile(_direction, _position))
 {

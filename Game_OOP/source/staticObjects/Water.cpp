@@ -3,7 +3,7 @@
 
 Water::Water(Vector2f _position) :
 	StaticObject(GameObjectType::WATER,
-		STATICOBJECT_SMALL_W,
-		STATICOBJECT_SMALL_H,
+		TEXTURE_WIDTH_AND_HEIGHT_32,
+		TEXTURE_WIDTH_AND_HEIGHT_32,
 		GameResources::getInstance()->getTexture(GameObjectType::WATER),
 		_position) {}

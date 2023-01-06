@@ -3,7 +3,7 @@
 
 Forest::Forest(Vector2f _position) :
 	StaticObject(GameObjectType::FOREST,
-		STATICOBJECT_SMALL_W,
-		STATICOBJECT_SMALL_H,
+		TEXTURE_WIDTH_AND_HEIGHT_32,
+		TEXTURE_WIDTH_AND_HEIGHT_32,
 		GameResources::getInstance()->getTexture(GameObjectType::FOREST),
 		_position) {}
