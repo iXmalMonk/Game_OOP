@@ -1,30 +1,30 @@
-1             2             3 
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-          cccccccccc          
-          c   0    c          
-                              
-             cccc             
-             ch c             
-ff           c  c           ff
-ff           cccc           ff
-ffff         bbbb         ffff
-ffff         bbbb         ffff
+1     cc      2       cc    3 
+      cc              cc      
+  bb  ccbb          bbcc  bb  
+  bb  ccbb          bbcc  bb  
+  bb                      bb  
+  bb                      bb  
+      bb              bb      
+      bb              bb      
+ff    bb              bb    ff
+ff    bb              bb    ff
+ffff                      ffff
+ffff                      ffff
+  bbbbbbffffbbccbbffffbbbbbb  
+  bbbbbbffffbbccbbffffbbbbbb  
+      ccff  bb  bb  ffcc      
+      ccff  bb  bb  ffcc      
+ccbb  cc    bb  bb    cc  bbcc
+ccbb  cc    bb  bb    cc  bbcc
+  bb  bb    bb  bb    bb  bb  
+  bb  bb    bb  bb    bb  bb  
+  bb  bb    bb  bb    bb  bb  
+  bb  bb    bbbbbb    bb  bb  
+  bb  bb    bbbbbb    bb  bb  
+  bb  bb    bbbbbb    bb  bb  
+  bb  bb    bbbbbb    bb  bb  
+  bb  bb      0       bb  bb  
+  bb                      bb  
+  bb         bbbb         bb  
+  bb  bb     bh b     bb  bb  
+  bb  bb     b  b     bb  bb  

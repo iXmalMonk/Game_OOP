@@ -20,11 +20,11 @@ cc  bbbbbb          bbbbbb  cc
   bbb  bbb  bb  bb  bbb  bbb  
   bbb  bbb  bb  bb  bbb  bbb  
   bbb  bbb  bb  bb  bbb  bbb  
+  bbb  bbb  bb  bb  bbb  bbb  
+  bbb  bbb  bb  bb  bbb  bbb  
+  bbb  bbb  bb  bb  bbb  bbb  
   bbb  bbb    0     bbb  bbb  
   bbb  bbb          bbb  bbb  
   bbb  bbb   bbbb   bbb  bbb  
-  bbb  bbb   bh b   bbb  bbb  
-  bbb  bbb   b  b   bbb  bbb  
-  bbb  bbb   bbbb   bbb  bbb  
-                              
-                              
+             bh b             
+             b  b             
