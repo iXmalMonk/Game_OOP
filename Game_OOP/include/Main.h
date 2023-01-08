@@ -33,6 +33,7 @@ using namespace std;
 #define FILENAME_FONT_SAMSON "fonts/samson.ttf"
 #define FILENAME_MAP_1 "maps/map1.txt"
 #define FILENAME_MAP_2 "maps/map2.txt"
+#define FILENAME_MAP_3 "maps/map3.txt"
 #define FILENAME_TEXTURE_BRICKWALL "textures/brickWall.png"
 #define FILENAME_TEXTURE_CONCRETEWALL "textures/concreteWall.png"
 #define FILENAME_TEXTURE_ENEMY "textures/enemy.png"
@@ -56,7 +57,7 @@ using namespace std;
 #define GAMEWINDOW_FPS 60
 
 // M
-#define MAP_AMOUNT 2
+#define MAP_AMOUNT 3
 #define MAP_SIZE 30
 #define MAP_UP (GAMEWINDOW_HEIGHT - TEXTURE_WIDTH_AND_HEIGHT_32 * MAP_SIZE) / 2
 #define MAP_DOWN MAP_UP + TEXTURE_WIDTH_AND_HEIGHT_32 * MAP_SIZE

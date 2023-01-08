@@ -178,6 +178,9 @@
     <Text Include="maps\map2.txt">
       <Filter>Файлы ресурсов\maps</Filter>
     </Text>
+    <Text Include="maps\map3.txt">
+      <Filter>Файлы ресурсов\maps</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Font Include="fonts\samson.ttf">
