@@ -24,6 +24,8 @@ GameController::GameController()
 		2);
 	loadMap(FILENAME_MAP_3,
 		3);
+	loadMap(FILENAME_MAP_4,
+		4);
 }
 
 void GameController::createMap()

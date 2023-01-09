@@ -1,0 +1,30 @@
+1 ffff        2           ff3 
+  ffff                    ff  
+ffff                        ff
+ffff                        ff 
+ff           bbbb           cc
+ff         bbbbbbbbbb         
+cc        bbbbbbbbbbbbb       
+          bbbbbbbbbbbbbbb     
+         bbbbbbbbbbbbbbbbb    
+         bbbbbbbbbbbbbbbbb    
+        bbb      bbbbbb  b    
+        b          bbbb  b    
+ww      b  c   c   bbb        
+ww      b  c   c   bbb        
+       bb          bbb   wwwww
+       bb  bbbb    bbb   wwwww
+       bbbbbbbbbbbbbbbb       
+       bbbbbbbbbbbbbbbb       
+      bbbbbbbbbbbbbbbbbb      
+      bbbbbbbbbbbbbbbbbb      
+     bbbbbbbbbbbbbbbbbbbb     
+         bbbbbbbbbbbb         
+     bbbb  bbbbbbbb  bbbb     
+     bbbbbb  bbbb  bbbbbb     
+       bbbb        bbbb     ff
+              0             ff
+ff                        ffff
+ff           bbbb         ffff
+ccff         bh b       ffffcc
+ccff         b  b       ffffcc
